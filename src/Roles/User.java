@@ -1,12 +1,7 @@
 package Roles;
 
-import Features.Features;
-
-import java.util.ArrayList;
-import java.util.Date;
-
 public class User {
-    private final String user_data = "src/Database/User.txt";
+    private final String user_data = "src/Database/Manager.txt";
     private String id;
     private String fullname;
     private String dateOfBirth;
@@ -19,7 +14,7 @@ public class User {
     private String password;
 
 
-    public User(String id, String fullname, String dateOfBirth, String address, String phoneNumber, String email, String userType, String status, String username, String password ) {
+    public User(String id, String fullname, String dateOfBirth, String address, String phoneNumber, String email, String userType, String status, String username, String password) {
         this.id = id;
         this.fullname = fullname;
         this.dateOfBirth = dateOfBirth;
@@ -30,6 +25,10 @@ public class User {
         this.status = status;
         this.username = username;
         this.password = password;
+    }
+
+    public User() {
+
     }
 
     public String getId() {
