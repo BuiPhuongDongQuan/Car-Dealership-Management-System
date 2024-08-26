@@ -121,7 +121,7 @@ public class User {
 
 
 
-    // Method to read data from the file
+    // read data from database and add to arraylist
     public void readData() {
         users.clear();
 
@@ -145,6 +145,10 @@ public class User {
         }
     }
 
+    public boolean authenticate(String username, String password, String userType) {
+        return this.username.equals(username) && this.password.equals(password) && this.userType.equals(userType);
+    }
+
     public User getUser(String username) {
         for (User user : users) {
             if (user.getUsername() != null && user.getUsername().equals(username)) {
@@ -153,5 +157,6 @@ public class User {
         }
         return null;
     }
+
 
 }
