@@ -1,9 +1,7 @@
 package Roles;
-import Features.Features;
 import Menu.Menu;
 
 import java.io.IOException;
-import java.util.*;
 
 
 public class Manager extends User {
@@ -39,10 +37,11 @@ public class Manager extends User {
             if(loginValidation == true){
                 System.out.println("Login success! Welcome back manager!");
                 Menu.managerMenu();
+
             }
             else{
                 System.out.println("Login failed! Username or password is incorrect.");
-                Menu.managerLoginMenu();
+                Menu.ManagerLoginMenu();
             }
         }
     }

@@ -31,13 +31,13 @@ public class Menu {
 
         switch (choice) {
             case 1:
-                managerLoginMenu();
+                ManagerLoginMenu();
                 break;
         }
 
     }
     // manager login
-    public static void managerLoginMenu() throws IOException {
+    public static void ManagerLoginMenu() throws IOException {
         System.out.println("============================== Manager - Login ==============================");
         System.out.print("Enter your username: ");
         String username = sc.nextLine();
