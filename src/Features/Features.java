@@ -1,8 +1,6 @@
 package Features;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 
 public class Features {
@@ -49,32 +47,17 @@ public class Features {
         return colData.toArray(new String[0]);
     }
 
-    public static int[] ReadColAsInt(int col, String filepath, String delimiter){
-        String currentLine;
-        String data[];
-        ArrayList<Integer> colData = new ArrayList<>();
-
+    public static void writeToFile(String filePath, String string){
         try{
-            FileReader fr = new FileReader(filepath);
-            BufferedReader br = new BufferedReader(fr);
+            FileWriter fw = new FileWriter(filePath, true);
+            BufferedWriter bw = new BufferedWriter(fw);
+            bw.write(string);
 
-            while((currentLine = br.readLine()) != null) {
-                data = currentLine.split(delimiter);
-                colData.add(Integer.valueOf(data[col]));
-            }
-
-            fr.close();
-            br.close();
+            bw.close();
+            fw.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
-        catch (Exception e){
-            System.out.println(e);
-            return null;
-        }
-
-        //remove the first comment line in files
-        colData.remove(0);
-
-        return colData.toArray(new int[]);
-
     }
+
 }
