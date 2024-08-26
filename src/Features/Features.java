@@ -49,32 +49,5 @@ public class Features {
         return colData.toArray(new String[0]);
     }
 
-    public static int[] ReadColAsInt(int col, String filepath, String delimiter){
-        String currentLine;
-        String data[];
-        ArrayList<Integer> colData = new ArrayList<>();
 
-        try{
-            FileReader fr = new FileReader(filepath);
-            BufferedReader br = new BufferedReader(fr);
-
-            while((currentLine = br.readLine()) != null) {
-                data = currentLine.split(delimiter);
-                colData.add(Integer.valueOf(data[col]));
-            }
-
-            fr.close();
-            br.close();
-        }
-        catch (Exception e){
-            System.out.println(e);
-            return null;
-        }
-
-        //remove the first comment line in files
-        colData.remove(0);
-
-        return colData.toArray(new int[]);
-
-    }
 }

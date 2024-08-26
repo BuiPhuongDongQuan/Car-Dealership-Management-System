@@ -6,19 +6,20 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class User {
+    private final String user_data = "src/Database/User.txt";
     private String id;
     private String fullname;
-    private Date dateOfBirth;
+    private String dateOfBirth;
     private String address;
-    private int phoneNumber;
+    private String phoneNumber;
     private String email;
     private String userType;
-    private boolean status;
+    private String status;
     private String username;
     private String password;
 
 
-    public User(String id, String fullname, Date dateOfBirth, String address, int phoneNumber, String email, String userType, boolean status, String username, String password ) {
+    public User(String id, String fullname, String dateOfBirth, String address, String phoneNumber, String email, String userType, String status, String username, String password ) {
         this.id = id;
         this.fullname = fullname;
         this.dateOfBirth = dateOfBirth;
@@ -47,11 +48,11 @@ public class User {
         this.fullname = fullname;
     }
 
-    public Date getDateOfBirth() {
+    public String getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(Date dateOfBirth) {
+    public void setDateOfBirth(String dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 
@@ -63,11 +64,11 @@ public class User {
         this.address = address;
     }
 
-    public int getPhoneNumber() {
+    public String getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(int phoneNumber) {
+    public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 
@@ -87,11 +88,11 @@ public class User {
         this.userType = userType;
     }
 
-    public boolean getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(boolean status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 
