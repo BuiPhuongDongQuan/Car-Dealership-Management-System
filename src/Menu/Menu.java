@@ -2,18 +2,20 @@ package Menu;
 
 import Roles.Manager;
 
-import java.io.IOException;
-import java.util.Scanner;
+import java.io.*;
+import java.util.*;
 
 
 public class Menu {
     static Manager manager = new Manager();
     static Scanner sc = new Scanner(System.in);
+    static Scanner keyboard = new Scanner(System.in);
+
 
     // user input their choice
     public static int optionInput(){
         Scanner sc = new Scanner(System.in);
-        System.out.println("Enter Your Choice: ");
+        System.out.print("Enter Your Choice: ");
         int optionInput = sc.nextInt();
         return optionInput;
     }
@@ -31,7 +33,6 @@ public class Menu {
             case 1:
                 managerLoginMenu();
                 break;
-
         }
 
     }
@@ -45,6 +46,7 @@ public class Menu {
 
         manager.login(username, password);
     }
+
     // manager menu
     public static void adminMenu() throws IOException {
         System.out.println("============================== Manager - Menu ==============================");

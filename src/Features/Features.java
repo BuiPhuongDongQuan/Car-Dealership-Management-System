@@ -1,8 +1,6 @@
 package Features;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 
 public class Features {
@@ -49,5 +47,17 @@ public class Features {
         return colData.toArray(new String[0]);
     }
 
+    public static void writeToFile(String filePath, String string){
+        try{
+            FileWriter fw = new FileWriter(filePath, true);
+            BufferedWriter bw = new BufferedWriter(fw);
+            bw.write(string);
+
+            bw.close();
+            fw.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 }
