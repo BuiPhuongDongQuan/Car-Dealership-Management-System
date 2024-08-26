@@ -27,7 +27,7 @@ public class Manager extends User {
             Menu.systemMenu();
         }
         else{
-            if(user.getUsername()!= null && user.getUsername().equals(username)&& user.getPassword().equals(password) &&user.getUserType().equals("Manager")){;
+            if(user.authenticate(username, password, "Manager")){;
                 loginValidation = true;
             }
             else {
@@ -36,7 +36,8 @@ public class Manager extends User {
 
             if(loginValidation == true){
                 System.out.println("Login success! Welcome back manager!");
-                Menu.AdminMenu();
+                Menu.managerMenu();
+
             }
             else{
                 System.out.println("Login failed! Username or password is incorrect.");
