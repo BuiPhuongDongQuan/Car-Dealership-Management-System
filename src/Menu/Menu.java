@@ -48,7 +48,7 @@ public class Menu {
     }
 
     // manager menu
-    public static void adminMenu() throws IOException {
+    public static void managerMenu() throws IOException {
         System.out.println("============================== Manager - Menu ==============================");
         System.out.println("Welcome admin to Auto316 Management System");
     }
