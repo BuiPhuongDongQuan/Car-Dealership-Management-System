@@ -1,1 +1,2 @@
 #ID, Fullname, Date of birth, Address, Phone Number, Email, User type, Status, Username, Password
+U1, Nguyen Minh Khoi, 11-11-2004, Q7, 123456789, 123@gmail.com, Manager, Active, user1, password1

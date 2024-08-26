@@ -1,1 +1,0 @@
-#ID, Fullname, Date of birth, Address, Phone Number, User type, Status, Username, Password
