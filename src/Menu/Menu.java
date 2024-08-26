@@ -31,13 +31,13 @@ public class Menu {
 
         switch (choice) {
             case 1:
-                managerLoginMenu();
+                ManagerLoginMenu();
                 break;
         }
 
     }
     // manager login
-    public static void managerLoginMenu() throws IOException {
+    public static void ManagerLoginMenu() throws IOException {
         System.out.println("============================== Manager - Login ==============================");
         System.out.print("Enter your username: ");
         String username = sc.nextLine();
@@ -48,7 +48,7 @@ public class Menu {
     }
 
     // manager menu
-    public static void adminMenu() throws IOException {
+    public static void AdminMenu() throws IOException {
         System.out.println("============================== Manager - Menu ==============================");
         System.out.println("Welcome admin to Auto316 Management System");
     }
