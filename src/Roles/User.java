@@ -132,9 +132,7 @@ public class User {
 
         // Check if arrays have the same length
         for (int i = 0; i < countLine - 1; i++) {
-            users.add(new User(
-                    id[i], fullname[i], datesOfBirth[i], address[i], phoneNumber[i], email[i], userType[i], status[i], username[i], password[i]
-            ));
+            users.add(new User(id[i], fullname[i], datesOfBirth[i], address[i], phoneNumber[i], email[i], userType[i], status[i], username[i], password[i]));
         }
     }
 

@@ -5,7 +5,6 @@ import java.io.IOException;
 
 
 public class Manager extends User {
-    private final String user_data = "src/Database/User.txt";
 
     public Manager() {
         super();
@@ -14,35 +13,26 @@ public class Manager extends User {
         super(id, fullname, dateOfBirth, address, phoneNumber, email, userType, status, username, password);
     }
 
-
+    // allow manager login
     public void login(String username, String password) throws IOException{
         readData();
 
-        boolean loginValidation = false;
         User user = new User();
         user = getUser(username);
 
         if(user == null){
             System.out.println("Manager not found. Please register to begin.");
             Menu.systemMenu();
-        }
-        else{
+        } else{
             if(user.authenticate(username, password, "Manager")){;
-                loginValidation = true;
+                System.out.println("Login success! Welcome back manager!");
+                Menu.ManagerMenu();
             }
             else {
-                loginValidation = false;
-            }
-
-            if(loginValidation == true){
-                System.out.println("Login success! Welcome back manager!");
-                Menu.managerMenu();
-
-            }
-            else{
                 System.out.println("Login failed! Username or password is incorrect.");
                 Menu.ManagerLoginMenu();
             }
+
         }
     }
 
