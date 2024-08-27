@@ -1,3 +1,5 @@
 #ID, Fullname, Date of birth, Address, Phone Number, Email, User type, Status, Username, Password
-M1,Nguyen Minh Khoi,11-11-2004,Q7,123456789,123@gmail.com,Manager,Active,user1,password1
-M2,admin,11-11-2004,Q7,0123456789,admin@gmail.com,Employee,Active,admin,admin
+U1,Nguyen Minh Khoi,11-11-2004,Q7,123456789,123@gmail.com,Manager,Active,admin,admin
+U2,Dong Quan,03-07-2004,HM,0123456789,dongquan@gmail.com,Client,Active,dongquan,dongquan2004
+U3,Minh Khoi,11/11/2004,Q4,19511610,minhkhoi@gmail.com,Client,Active,minhkhoi,minhkhoi2004
+U4,Quang Nhat,09/04/2004,BC,206432032,quangnhat@gmail.com,Client,Active,quangnhat,quangnhat2004
