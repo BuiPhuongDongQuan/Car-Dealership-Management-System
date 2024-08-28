@@ -23,8 +23,8 @@ public class Manager extends User {
         user = getUser(username);
 
         if(user == null){
-            System.out.println("Manager not found. Please register to begin.");
-            Menu.SystemMenu();
+            System.out.println("Manager not found.");
+            Menu.ManagerLoginMenu();
         }
         else{
             if(user.authenticate(username, password, "Manager")){;
