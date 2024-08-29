@@ -118,7 +118,6 @@ public class User {
     // read data from database and add to arraylist
     public void readData() {
         users.clear();
-
         int countLine = Features.countLine(user_data);
         String[] id = Features.ReadCol(0, user_data, ",");
         String[] fullname = Features.ReadCol(1, user_data, ",");

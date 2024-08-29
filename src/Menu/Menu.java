@@ -2,6 +2,7 @@ package Menu;
 
 import Roles.Client;
 import Roles.Manager;
+import Roles.User;
 
 import java.io.*;
 import java.util.*;
@@ -10,9 +11,9 @@ import java.util.*;
 public class Menu {
     static Manager manager = new Manager();
     static Client client = new Client();
+
     static Scanner sc = new Scanner(System.in);
     static Scanner keyboard = new Scanner(System.in);
-
 
     // user input their choice
     public static int getValidatedInput(int min, int max){
@@ -54,12 +55,16 @@ public class Menu {
                 break;
             case 4:
                 ThankYouMenu();
+                System.exit(0);
                 break;
         }
     }
+    ////////////////////////////////////Manager//////////////////////////////////////
     // manager login
     public static void ManagerLoginMenu() throws IOException {
         System.out.println("============================== Manager - Login ==============================");
+        sc.nextLine();
+
         System.out.print("Enter your username (or type 'esc' to go back): ");
         String username = sc.nextLine();
         if (username.equalsIgnoreCase("esc")) {
@@ -83,6 +88,7 @@ public class Menu {
         System.out.println("Welcome admin to Auto316 Management System");
     }
 
+    ////////////////////////////////////Client//////////////////////////////////////
     public static void ClientWelcomeMenu() throws IOException {
         System.out.println("Returning to Client Welcome Menu...");
         System.out.println("============================== Client Welcome Menu ==========================");
@@ -104,12 +110,15 @@ public class Menu {
                 break;
             case 4:
                 ThankYouMenu();
+                System.exit(0);
                 break;
         }
     }
 
     public static void ClientLoginMenu() throws IOException {
         System.out.println("============================== Client - Login ==============================");
+        sc.nextLine();
+
         System.out.print("Enter your username (or type 'esc' to go back): ");
         String username = sc.nextLine();
         if (username.equalsIgnoreCase("esc")) {
@@ -128,7 +137,7 @@ public class Menu {
 
     }
 
-    //Allow customer to register
+    //Allow client to register
     public static void ClientRegisterMenu() throws IOException {
         System.out.println("============================== Client - Register ==============================");
 
@@ -140,7 +149,7 @@ public class Menu {
         }
 
         if(client.usernameValidation(username)) {
-            System.out.println("Username existed. Moving you back to Customer Welcome Menu");
+            System.out.println("Username existed. Moving you back to Client Welcome Menu");
             ClientWelcomeMenu();
         } else {
             System.out.print("Enter your password (or type 'esc' to go back): ");
@@ -195,6 +204,8 @@ public class Menu {
     public static void ClientMenu() throws IOException {
         System.out.println("============================== Client - Menu ==================================");
         System.out.println("1. View and Update personal information.");
+        System.out.println("2. List all cars and view product details.");
+
         int choice = getValidatedInput(1, 4);
 
         switch (choice){
@@ -202,20 +213,22 @@ public class Menu {
                 ClientUpdateMenu();
                 break;
             case 2:
-                ClientLoginMenu();
+
                 break;
             case 3:
                 SystemMenu();
                 break;
             case 4:
                 ThankYouMenu();
+                System.exit(0);
                 break;
         }
     }
 
+    //Client update data information
     public static void ClientUpdateMenu() throws IOException {
-        System.out.println("============================== Customer - View and Update Personal Information ==============================");
-        client.viewCustomerInfo(client.getUsername());
+        System.out.println("============================== Client - View and Update Personal Information ==============================");
+        client.viewClientInfo(client.getUsername());
 
         //Ask user for which update option
         System.out.println("----- What do you want to update? -----");
@@ -225,17 +238,14 @@ public class Menu {
         System.out.println("4. Address.");
         System.out.println("5. Phone number.");
         System.out.println("6. Password.");
-        System.out.println("7: No update, return to Customer Action Menu.");
+        System.out.println("7. No update, return to Client Menu.");
         System.out.println("8. Exit.");
-        System.out.print("Enter your option in NUMBER format (1-8): ");
         int choice = getValidatedInput(1, 8);
 
-
         System.out.println();
-        client.customerUpdateInfo(choice, client.getUsername());
+        client.clientUpdateInfo(choice, client.getUsername());
         ClientMenu();
     }
-
 
     public static void ThankYouMenu(){
         System.out.println("============================== Thank you for using our system! Goodbye ==============================");
@@ -246,5 +256,5 @@ public class Menu {
         System.out.println("s3978862, Nguyen Minh Khoi");
         System.out.println("s3975939, Bui Phuong Dong Quan");
         System.out.println("s3980424, Lam Quang Nhat");
-    }
+   }
 }
