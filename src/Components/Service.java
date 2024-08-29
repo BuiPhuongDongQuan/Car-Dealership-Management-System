@@ -1,9 +1,9 @@
 package Components;
 
 import Features.Features;
-
-
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Service{
     private final String service_data = "src/Database/Service.txt";
@@ -115,7 +115,91 @@ public class Service{
         }
     }
 
-    public void getServiceDate(String serviceDate){
+    public boolean checkServiceDate(String serviceDate){
+        readData();
+        boolean validateServiceDate = false;
+        for(Service service: services) {
+            if (service.getServiceDate().equals(serviceDate)) {
+                validateServiceDate = true;
+            }
+        }
+        return validateServiceDate;
+    }
 
+    public void getServiceDate(String serviceDate){
+        readData();
+        System.out.println("Here is the service in : " + serviceDate);
+        System.out.println("ID, Client ID, Mechanic ID, Service Type, List of Replaced Part, Service Cost, Additional Notes ");
+        for(Service service: services) {
+            if (service.getServiceDate().equals(serviceDate)) {
+                String costFormat = String .format("%,d", service.getServiceCost());
+                System.out.println(service.getId() +", " + ", "+ service.getClientId() +", "+ service.getMechanicId() +", "+ service.getServiceType() +", "+ service.getListOfReplacedPart() + ", "+ costFormat +", "+ service.getAdditionalNotes());
+            }
+        }
+    }
+
+    //calculate total service cost
+    public void calculateServiceCost(){
+        readData();
+         long totalCost = 0;
+         for(Service service: services) {
+             totalCost += service.getServiceCost();
+         }
+         String priceFormat = String.format("The service total revenue is: %,d", totalCost);
+         System.out.println(priceFormat + " VND");
+    }
+
+    // calculate total service cost on specific date
+    public void calculateServiceCostDate(String serviceDate){
+        readData();
+        long totalCost = 0;
+        for(Service service: services) {
+            if(service.getServiceDate().equals(serviceDate)) {
+                totalCost += service.getServiceCost();
+            }
+        }
+        String priceFormat = String.format("The service total revenue is: %,d", totalCost);
+        System.out.println(priceFormat + " VND");
+    }
+
+    //calculate total service cost in a month
+    public void calculateServiceCostMonth(String serviceMonth){
+        readData();
+        long totalCost = 0;
+        String regex = "(\\d{2})-(\\d{2})-\\d{4}";
+        Pattern pattern = Pattern.compile(regex);
+
+        for(Service service: services) {
+            Matcher matcher = pattern.matcher(service.getServiceDate());
+            if(matcher.find()) {
+                String month = matcher.group(2);
+                if(serviceMonth.equals(month)) {
+                    totalCost += service.getServiceCost();
+                }
+            }
+
+        }
+        String priceFormat = String.format("The service total revenue is: %,d", totalCost);
+        System.out.println(priceFormat + " VND");
+    }
+
+    //calculate total service cost in one year
+    public void calculateServiceCostYear(String serviceYear){
+        readData();
+        long totalCost = 0;
+        String regex = "(\\d{2})-(\\d{2})-\\d{4}";
+        Pattern pattern = Pattern.compile(regex);
+
+        for(Service service: services) {
+            Matcher matcher = pattern.matcher(service.getServiceDate());
+            if(matcher.find()) {
+                String year = matcher.group(3);
+                if(serviceYear.equals(year)) {
+                    totalCost += service.getServiceCost();
+                }
+            }
+        }
+        String priceFormat = String.format("The service total revenue is: %,d", totalCost);
+        System.out.println(priceFormat + " VND");
     }
 }

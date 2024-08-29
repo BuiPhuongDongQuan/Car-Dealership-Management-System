@@ -1,7 +1,9 @@
 package Menu;
 
+import Components.Service;
 import Roles.Employee;
 import Roles.Manager;
+import Roles.Mechanic;
 
 import java.io.*;
 import java.util.*;
@@ -10,6 +12,8 @@ import java.util.*;
 public class Menu {
     static Manager manager = new Manager();
     static Employee employee = new Employee();
+    static Mechanic mechanic = new Mechanic();
+    static Service service = new Service();
 
     static Scanner sc = new Scanner(System.in);
 
@@ -39,6 +43,7 @@ public class Menu {
                 break;
             case 2:
                 EmployeeLoginMenu();
+                break;
 
         }
 
@@ -83,6 +88,63 @@ public class Menu {
     // mechanic menu
     public static void MechanicMenu() throws IOException {
         System.out.println("============================== Mechanic - Menu ==============================");
-    }
+        System.out.println("1. View information");
+        System.out.println("2. Change information");
+        System.out.println("3. Perform statistics operator");
+        int choice = optionInput();
 
+        switch (choice) {
+            case 1:
+                System.out.println("============================== Mechanic Information ==============================");
+                mechanic.viewMechanicInfo(employee.getUsername());
+                break;
+            case 2:
+                break;
+            case 3:
+                MechanicStatisticsOperator();
+                break;
+        }
+    }
+    // mechanic statistics operator menu
+    public static void MechanicStatisticsOperator() throws IOException {
+        System.out.println("============================== Mechanic Statistics Operator - Menu =============================");
+        System.out.println("1. Calculate total revenue");
+        System.out.println("2. Calculate revenue in a specific date");
+        System.out.println("3. Calculate revenue in a month");
+        System.out.println("4. Calculate revenue in a year");
+        System.out.println("5. List the number of service in a specific date");
+        System.out.println("6. List the number of service in a month");
+        System.out.println("7. List the number of service in a year");
+        int choice = optionInput();
+
+        switch (choice) {
+            case 1:
+                System.out.println("============================== Mechanic - Service Total Revenue ==============================");
+                service.calculateServiceCost();
+                Menu.MechanicStatisticsOperator();
+                break;
+            case 2:
+                System.out.println("============================== Mechanic - Service Total Revenue ==============================");
+                System.out.print("Enter a date dd-MM-yyyy: ");
+                String serviceDate = sc.nextLine();
+                if (service.checkServiceDate(serviceDate) == true) {
+                    service.calculateServiceCostDate(serviceDate);
+                }
+                Menu.MechanicStatisticsOperator();
+                break;
+            case 3:
+                System.out.println("============================== Mechanic - Service Total Revenue =============================");
+                System.out.println("Enter a month MM: ");
+                String serviceMonth = sc.nextLine();
+                service.calculateServiceCostMonth(serviceMonth);
+                Menu.MechanicStatisticsOperator();
+                break;
+            case 4:
+                System.out.println("============================== Mechanic - Service Total Revenue =============================");
+                System.out.println("Enter a year yyyy: ");
+                String serviceYear = sc.nextLine();
+                service.calculateServiceCostYear(serviceYear);
+                Menu.MechanicStatisticsOperator();
+        }
+    }
 }

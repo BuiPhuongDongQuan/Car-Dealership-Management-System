@@ -25,10 +25,12 @@ public class Employee extends User {
         } else {
             if(user.authenticate(username, password, "Salesperson")){
                 System.out.println("Login success! Welcome to Salesperson!");
+                setUsername(username);
                 Menu.SalespersonMenu();
             }
             else if (user.authenticate(username, password, "Mechanic")){
                 System.out.println("Login success! Welcome to Mechanic!");
+                setUsername(username);
                 Menu.MechanicMenu();
             } else {
                 System.out.println("Login failed! Username or password is incorrect.");
