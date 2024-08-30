@@ -1,7 +1,10 @@
 package Menu;
 
+import Components.Service;
+import Roles.Employee;
 import Roles.Client;
 import Roles.Manager;
+import Roles.Mechanic;
 
 import java.io.*;
 import java.util.*;
@@ -9,11 +12,15 @@ import java.util.*;
 
 public class Menu {
     static Manager manager = new Manager();
+    static Employee employee = new Employee();
+    static Mechanic mechanic = new Mechanic();
+    static Service service = new Service();
     static Client client = new Client();
     static Car car = new Car();
 
     static Scanner sc = new Scanner(System.in);
-    static Scanner keyboard = new Scanner(System.in);
+
+
 
     // user input their choice
     public static int getValidatedInput(int min, int max){
@@ -50,6 +57,9 @@ public class Menu {
             case 1:
                 ManagerLoginMenu();
                 break;
+            case 2:
+                EmployeeLoginMenu();
+                break;
             case 3:
                 ClientWelcomeMenu();
                 break;
@@ -59,6 +69,7 @@ public class Menu {
                 break;
         }
     }
+
     ////////////////////////////////////Manager//////////////////////////////////////
     // manager login
     public static void ManagerLoginMenu() throws IOException {
@@ -84,10 +95,93 @@ public class Menu {
 
     // manager menu
     public static void ManagerMenu() throws IOException {
+
         System.out.println("============================== Manager - Menu ===============================");
         System.out.println("Welcome admin to Auto316 Management System");
+        System.out.println("1. View information of user ");
+        System.out.println("2. Remove user from database");
+        System.out.println("3. ");
+        System.out.println("4. ");
     }
 
+    // employee login menu
+    public static void EmployeeLoginMenu() throws IOException {
+        System.out.println("============================== Employee - Login ===============================");
+        System.out.print("Enter your username: ");
+        String username = sc.nextLine();
+        System.out.print("Enter your password: ");
+        String password = sc.nextLine();
+
+        employee.login(username, password);
+    }
+
+    // salesperson menu
+    public static void SalespersonMenu() throws IOException {
+        System.out.println("============================== Salesperson - Menu ===============================");
+    }
+
+    // mechanic menu
+    public static void MechanicMenu() throws IOException {
+        System.out.println("============================== Mechanic - Menu ==============================");
+        System.out.println("1. View information");
+        System.out.println("2. Change information");
+        System.out.println("3. Perform statistics operator");
+        int choice = optionInput();
+
+        switch (choice) {
+            case 1:
+                System.out.println("============================== Mechanic Information ==============================");
+                mechanic.viewMechanicInfo(employee.getUsername());
+                break;
+            case 2:
+                break;
+            case 3:
+                MechanicStatisticsOperator();
+                break;
+        }
+    }
+    // mechanic statistics operator menu
+    public static void MechanicStatisticsOperator() throws IOException {
+        System.out.println("============================== Mechanic Statistics Operator - Menu =============================");
+        System.out.println("1. Calculate total revenue");
+        System.out.println("2. Calculate revenue in a specific date");
+        System.out.println("3. Calculate revenue in a month");
+        System.out.println("4. Calculate revenue in a year");
+        System.out.println("5. List the number of service in a specific date");
+        System.out.println("6. List the number of service in a month");
+        System.out.println("7. List the number of service in a year");
+        int choice = optionInput();
+
+        switch (choice) {
+            case 1:
+                System.out.println("============================== Mechanic - Service Total Revenue ==============================");
+                service.calculateServiceCost();
+                Menu.MechanicStatisticsOperator();
+                break;
+            case 2:
+                System.out.println("============================== Mechanic - Service Total Revenue ==============================");
+                System.out.print("Enter a date dd-MM-yyyy: ");
+                String serviceDate = sc.nextLine();
+                if (service.checkServiceDate(serviceDate) == true) {
+                    service.calculateServiceCostDate(serviceDate);
+                }
+                Menu.MechanicStatisticsOperator();
+                break;
+            case 3:
+                System.out.println("============================== Mechanic - Service Total Revenue =============================");
+                System.out.println("Enter a month MM: ");
+                String serviceMonth = sc.nextLine();
+                service.calculateServiceCostMonth(serviceMonth);
+                Menu.MechanicStatisticsOperator();
+                break;
+            case 4:
+                System.out.println("============================== Mechanic - Service Total Revenue =============================");
+                System.out.println("Enter a year yyyy: ");
+                String serviceYear = sc.nextLine();
+                service.calculateServiceCostYear(serviceYear);
+                Menu.MechanicStatisticsOperator();
+        }
+    }
     ////////////////////////////////////Client//////////////////////////////////////
     public static void ClientWelcomeMenu() throws IOException {
         System.out.println("Returning to Client Welcome Menu...");
