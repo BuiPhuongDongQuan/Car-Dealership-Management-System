@@ -5,6 +5,7 @@ import Roles.Employee;
 import Roles.Client;
 import Roles.Manager;
 import Roles.Mechanic;
+import Components.Car;
 
 import java.io.*;
 import java.util.*;
@@ -103,6 +104,7 @@ public class Menu {
         System.out.println("3. ");
         System.out.println("4. ");
     }
+    ////////////////////////////////////Employee//////////////////////////////////////
 
     // employee login menu
     public static void EmployeeLoginMenu() throws IOException {
@@ -126,7 +128,7 @@ public class Menu {
         System.out.println("1. View information");
         System.out.println("2. Change information");
         System.out.println("3. Perform statistics operator");
-        int choice = optionInput();
+        int choice = getValidatedInput(1,3);
 
         switch (choice) {
             case 1:
@@ -150,7 +152,7 @@ public class Menu {
         System.out.println("5. List the number of service in a specific date");
         System.out.println("6. List the number of service in a month");
         System.out.println("7. List the number of service in a year");
-        int choice = optionInput();
+        int choice = getValidatedInput(1,7);
 
         switch (choice) {
             case 1:
@@ -236,7 +238,7 @@ public class Menu {
         System.out.println("============================== Client - Register ==============================");
 
         System.out.print("Enter your username (or type 'esc' to go back): ");
-        String username = keyboard.nextLine();
+        String username = sc.nextLine();
         if (username.equalsIgnoreCase("esc")) {
             SystemMenu();
             return;
@@ -247,42 +249,42 @@ public class Menu {
             ClientWelcomeMenu();
         } else {
             System.out.print("Enter your password (or type 'esc' to go back): ");
-            String password = keyboard.nextLine();
+            String password = sc.nextLine();
             if (password.equalsIgnoreCase("esc")) {
                 SystemMenu();
                 return;
             }
 
             System.out.print("Enter your full name (or type 'esc' to go back): ");
-            String fullname = keyboard.nextLine();
+            String fullname = sc.nextLine();
             if (fullname.equalsIgnoreCase("esc")) {
                 SystemMenu();
                 return;
             }
 
             System.out.print("Enter your date of birth (or type 'esc' to go back): ");
-            String dateOfBirth = keyboard.nextLine();
+            String dateOfBirth = sc.nextLine();
             if (dateOfBirth.equalsIgnoreCase("esc")) {
                 SystemMenu();
                 return;
             }
 
             System.out.print("Enter your email (or type 'esc' to go back): ");
-            String email = keyboard.nextLine();
+            String email = sc.nextLine();
             if (email.equalsIgnoreCase("esc")) {
                 SystemMenu();
                 return;
             }
 
             System.out.print("Enter your address (or type 'esc' to go back): ");
-            String address = keyboard.nextLine();
+            String address = sc.nextLine();
             if (address.equalsIgnoreCase("esc")) {
                 SystemMenu();
                 return;
             }
 
             System.out.print("Enter your phone number (or type 'esc' to go back): ");
-            String phoneNumber = keyboard.nextLine();
+            String phoneNumber = sc.nextLine();
             if (phoneNumber.equalsIgnoreCase("esc")) {
                 SystemMenu();
                 return;
@@ -307,7 +309,7 @@ public class Menu {
                 ClientUpdateMenu();
                 break;
             case 2:
-                ViewProductMenu();
+                ViewCartMenu();
                 break;
             case 3:
                 SystemMenu();
@@ -342,8 +344,8 @@ public class Menu {
     }
 
     //allow customer to view product with sorting options
-    public static void ViewProductMenu() throws IOException {
-        System.out.println("============================== Customer - View Product Detail ==============================");
+    public static void ViewCartMenu() throws IOException {
+        System.out.println("============================== Customer - View Car Categories ==============================");
         System.out.println("Would you like to sort your product?");
         System.out.println("1. View all product.");
         System.out.println("2. Ascending price.");
@@ -357,62 +359,63 @@ public class Menu {
 
         switch (option){
             case 1:
-                product.viewAllProductSort("none");
-                ViewProductMenu();
+                car.viewAllCarSort("none");
+                ViewCartMenu();
                 break;
 
             case 2:
-                product.viewAllProductSort("ascending");
-                ViewProductMenu();
+                car.viewAllCarSort("ascending");
+                ViewCartMenu();
                 break;
 
             case 3:
-                product.viewAllProductSort("descending");
-                ViewProductMenu();
+                car.viewAllCarSort("descending");
+                ViewCartMenu();
                 break;
 
-            case 4:
-                System.out.println("Here is the category list: " + product.getCategoryList());
-                System.out.print("Please enter a category for sorting: ");
-                String category = keyboard.nextLine();
-
-                System.out.println("How would you like to sort?");
-                System.out.println("1. Ascending price.");
-                System.out.println("2. Descending price.");
-                System.out.println("3. None.");
-                System.out.println("4. Return to View Product Detail Menu.");
-                System.out.print("Enter your option in NUMBER format (1-3): ");
-                option = keyboard.nextInt();
-                System.out.println();
-
-                switch (option){
-                    case 1:
-                        product.viewCategorySort(category,"ascending");
-                        ViewProductMenu();
-                        break;
-                    case 2:
-                        product.viewCategorySort(category,"descending");
-                        ViewProductMenu();
-                        break;
-                    case 3:
-                        product.viewCategorySort(category,"none");
-                        ViewProductMenu();
-                        break;
-                    case 4:
-                        ViewProductMenu();
-                        break;
-                }
-                break;
-
-            case 5:
-                product.viewPriceRangeSort();
-                ViewProductMenu();
-                break;
+//            case 4:
+//                System.out.println("Here is the category list: " + car.getCategoryList());
+//                System.out.print("Please enter a category for sorting: ");
+//                String category = sc.nextLine();
+//
+//                System.out.println("How would you like to sort?");
+//                System.out.println("1. Ascending price.");
+//                System.out.println("2. Descending price.");
+//                System.out.println("3. None.");
+//                System.out.println("4. Return to View Product Detail Menu.");
+//                System.out.print("Enter your option in NUMBER format (1-3): ");
+//                option = getValidatedInput(1,4);
+//                System.out.println();
+//
+//                switch (option){
+//                    case 1:
+//                        car.viewCategorySort(category,"ascending");
+//                        ViewCartMenu();
+//                        break;
+//                    case 2:
+//                        car.viewCategorySort(category,"descending");
+//                        ViewCartMenu();
+//                        break;
+//                    case 3:
+//                        car.viewCategorySort(category,"none");
+//                        ViewCartMenu();
+//                        break;
+//                    case 4:
+//                        ViewCartMenu();
+//                        break;
+//                }
+//                break;
+//
+//            case 5:
+//                car.viewPriceRangeSort();
+//                ViewCartMenu();
+//                break;
             case 6:
-                CustomerActionMenu();
+                ClientMenu();
                 break;
             case 7:
                 ThankYouMenu();
+                System.exit(0);
                 break;
         }
     }

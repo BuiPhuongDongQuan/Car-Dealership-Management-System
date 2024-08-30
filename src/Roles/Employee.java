@@ -21,7 +21,7 @@ public class Employee extends User {
 
         if(user == null){
             System.out.println("Employee not found");
-            Menu.systemMenu();
+            Menu.SystemMenu();
         } else {
             if(user.authenticate(username, password, "Salesperson")){
                 System.out.println("Login success! Welcome to Salesperson!");
