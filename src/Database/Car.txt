@@ -1,0 +1,21 @@
+#ID, Fullname, Date of birth, Address, Phone Number, Email, User type, Status, Username, Password
+U1, Nguyen Minh Khoi, 11-11-2004, Q7, 123456789, 123@gmail.com, Manager, Active, user1, password1
+U2, Bui Phuong Dong Quan, 07-03-2004, Q7,0934758925, 321@gmail.com, Manager, Active, user2, bpdq2222
+U3, Lam Quang Nhat, 09-04-2004, Q7, 09777067890, nhat@gmail.com, Manager, Active, user3, 33333333
+U4, Masew, 06-08-1996, Lao Cai, 0829655289, sew@gmail.com, Employee, Active, emp4, 12345678
+U5, Bray, 11-10-1993, Tp.HCM, 08989898989, bray@gmail.com, Employee, Active, emp5, 12345678
+U6, Nguyen Tuan Hung, 05-10-1978, Ha Noi, 09789693091, tuanhung@gmail.com, Employee, Inactive, emp5, 12345678
+U7, Ronaldo, 05-02-1985, Madeira, 07777777777, CR7@gmail.com, Client, Active, Cristiano, 77777777
+U8, Tho Bay Mau, 10-10-2010, Tp.HCM, 0898981819, tho7mau@gmail.com, Employee, Active, emp6, 12345678
+U9,Tommy Shelby, 25-05-1976, Ireland, 0789987654, tommyshelby@gmail.com, Client, Active, Tommy, 68686868
+U10, Messi, 24-06-1987, Rosario, 0938758942, m10@gmail.com, CLient, Active, Lionel, 10101010
+U11, Vini, 12-07-2000, 	São Gonçalo, 0777897777, vini@gmail.com, Client, Inactive, Vinicius, 923123123
+U12, Ricon, 10-01-2010, Portugal, 0873276819, ricon@gmail.com, Employee, Active, emp7, 12345678
+U13, Sita, 01-10-2010, Argentina, 0839725487, sita@gmail.com, Employee, Active, emp8, 12345678
+U14, Kobe, 23-08-1978, Pennsylvania, 098765432, kbb@gmail.com, Client, Active,  Kobe Bryant, 67876780
+U15, hieuthuhai, 28-09-1999, Tp.HCM, 089854378, hieuthuhai@gmail.com, Client, Active, hieuthuhai, 28091999
+U16, Shiki, 17-12-2001, An Giang, 092849251, shiki@gmail.com, Client, Inactive, Shiki, 00000000
+U17, Obito, 20-09-2001, An Giang, 0989711122, obito@gmail.com, Client, Active, Obito, 11322378
+U18, Billie, 18-12-2001, Los Angeles, 8729083629, billieeilish@gmail.com, Client, Inactive, Billie, 56255533
+U19, Frank Sinatra, 12-12-1915, New Jersey, 11119898770, franksinatra@gmail.com, Client, Active, Frank.S, 1212121212
+U20, Henry Ford, 30-07-1863, Michigan, 01264647878, henryford@gmail.com, Client, Active, H.Ford, 99999999
