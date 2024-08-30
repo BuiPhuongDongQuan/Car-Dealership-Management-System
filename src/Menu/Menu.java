@@ -2,7 +2,6 @@ package Menu;
 
 import Roles.Client;
 import Roles.Manager;
-import Roles.User;
 
 import java.io.*;
 import java.util.*;
@@ -11,6 +10,7 @@ import java.util.*;
 public class Menu {
     static Manager manager = new Manager();
     static Client client = new Client();
+    static Car car = new Car();
 
     static Scanner sc = new Scanner(System.in);
     static Scanner keyboard = new Scanner(System.in);
@@ -213,7 +213,7 @@ public class Menu {
                 ClientUpdateMenu();
                 break;
             case 2:
-
+                ViewProductMenu();
                 break;
             case 3:
                 SystemMenu();
@@ -245,6 +245,82 @@ public class Menu {
         System.out.println();
         client.clientUpdateInfo(choice, client.getUsername());
         ClientMenu();
+    }
+
+    //allow customer to view product with sorting options
+    public static void ViewProductMenu() throws IOException {
+        System.out.println("============================== Customer - View Product Detail ==============================");
+        System.out.println("Would you like to sort your product?");
+        System.out.println("1. View all product.");
+        System.out.println("2. Ascending price.");
+        System.out.println("3. Descending price.");
+        System.out.println("4. By product category.");
+        System.out.println("5. By price range.");
+        System.out.println("6. Return to Customer Action Menu.");
+        System.out.println("7. Exit.");
+        System.out.print("Enter your option in NUMBER format (1-7): ");
+        int option = getValidatedInput(1,7);
+
+        switch (option){
+            case 1:
+                product.viewAllProductSort("none");
+                ViewProductMenu();
+                break;
+
+            case 2:
+                product.viewAllProductSort("ascending");
+                ViewProductMenu();
+                break;
+
+            case 3:
+                product.viewAllProductSort("descending");
+                ViewProductMenu();
+                break;
+
+            case 4:
+                System.out.println("Here is the category list: " + product.getCategoryList());
+                System.out.print("Please enter a category for sorting: ");
+                String category = keyboard.nextLine();
+
+                System.out.println("How would you like to sort?");
+                System.out.println("1. Ascending price.");
+                System.out.println("2. Descending price.");
+                System.out.println("3. None.");
+                System.out.println("4. Return to View Product Detail Menu.");
+                System.out.print("Enter your option in NUMBER format (1-3): ");
+                option = keyboard.nextInt();
+                System.out.println();
+
+                switch (option){
+                    case 1:
+                        product.viewCategorySort(category,"ascending");
+                        ViewProductMenu();
+                        break;
+                    case 2:
+                        product.viewCategorySort(category,"descending");
+                        ViewProductMenu();
+                        break;
+                    case 3:
+                        product.viewCategorySort(category,"none");
+                        ViewProductMenu();
+                        break;
+                    case 4:
+                        ViewProductMenu();
+                        break;
+                }
+                break;
+
+            case 5:
+                product.viewPriceRangeSort();
+                ViewProductMenu();
+                break;
+            case 6:
+                CustomerActionMenu();
+                break;
+            case 7:
+                ThankYouMenu();
+                break;
+        }
     }
 
     public static void ThankYouMenu(){
