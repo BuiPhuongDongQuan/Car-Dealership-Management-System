@@ -60,4 +60,73 @@ public class Features {
         }
     }
 
+    //take array and turn it to CSV string
+    public static String arrayToCSVString(String[] array){
+        StringBuilder data = new StringBuilder();
+
+        for(int i = 0; i < array.length; i++){
+            data.append(array[i]);
+            if(i != array.length -1){
+                data.append(",");
+            }
+        }
+
+        String string = data.toString();
+
+        return string;
+    }
+
+    //take arraylist and turn it to CSV string
+    public static String arrayListToCSVString(ArrayList<String> arrayList){
+        StringBuilder data = new StringBuilder();
+
+        for(int i = 0; i < arrayList.size(); i++){
+            if(i != arrayList.size() - 1){
+                data.append(arrayList.get(i) + ",");
+            }
+            else{
+                data.append(arrayList.get(i));
+            }
+        }
+
+        String string = data.toString();
+
+        return string;
+    }
+
+    //remove specific string in file
+    //Source:https://javaconceptoftheday.com/modify-replace-specific-string-in-text-file-in-java/
+    public static void modifyFile(String filePath, String oldString, String newString){
+        File fileToBeModified = new File(filePath);
+        String oldContent = "";
+        BufferedReader reader = null;
+        FileWriter writer = null;
+
+        try {
+            reader = new BufferedReader(new FileReader(fileToBeModified));
+            //Reading all the lines of input text file into oldContent
+            String line = reader.readLine();
+            while (line != null)
+            {
+                oldContent = oldContent + line + System.lineSeparator();
+                line = reader.readLine();
+            }
+            //Replacing oldString with newString in the oldContent
+            String newContent = oldContent.replaceAll(oldString, newString);
+            //Rewriting the input text file with newContent
+            writer = new FileWriter(fileToBeModified);
+            writer.write(newContent);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                //Closing the resources
+                reader.close();
+                writer.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
 }

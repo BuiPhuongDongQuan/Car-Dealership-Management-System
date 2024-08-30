@@ -88,19 +88,15 @@ public class Menu {
     // mechanic menu
     public static void MechanicMenu() throws IOException {
         System.out.println("============================== Mechanic - Menu ==============================");
-        System.out.println("1. View information");
-        System.out.println("2. Change information");
-        System.out.println("3. Perform statistics operator");
+        System.out.println("1. View and update information");
+        System.out.println("2. Perform statistics operator");
         int choice = optionInput();
 
         switch (choice) {
             case 1:
-                System.out.println("============================== Mechanic Information ==============================");
-                mechanic.viewMechanicInfo(employee.getUsername());
+                viewAndUpdateMechanicInfo();
                 break;
             case 2:
-                break;
-            case 3:
                 MechanicStatisticsOperator();
                 break;
         }
@@ -146,5 +142,22 @@ public class Menu {
                 service.calculateServiceCostYear(serviceYear);
                 Menu.MechanicStatisticsOperator();
         }
+    }
+
+    public static void viewAndUpdateMechanicInfo() throws IOException {
+        System.out.println("============================== Mechanic Information ==============================");
+        mechanic.viewMechanicInfo(employee.getUsername());
+
+        System.out.println("============================== What do you want to update? =============================");
+        System.out.println("1. Update Full name");
+        System.out.println("2. Update Email");
+        System.out.println("3. Update Address");
+        System.out.println("4. Update Phone Number");
+        System.out.println("5. Update Password");
+        int choice = optionInput();
+
+        System.out.println();
+        mechanic.updateInfo(choice, employee.getUsername());
+        MechanicMenu();
     }
 }
