@@ -3,6 +3,7 @@ package Components;
 import Features.Features;
 
 import java.util.*;
+import java.util.regex.Pattern;
 
 public class Car {
     private String id;
@@ -13,15 +14,14 @@ public class Car {
     private String color;
     private float mileage;
     private String status;
-    private String additionalNotes;
-    private Service serviceHistory;
+
 
     private static String tableFormat = "%-20s%-20s%-20s%-20s%-20s%-20s%-20s%-20s\n";
     private final String car_data = "src/Database/Car.txt";
 
     ArrayList<Car> cars = new ArrayList<>();
 
-    public Car(String id, String make, String model, int year, long price, String color, float mileage, String status, String additionalNote, String string2) {
+    public Car(String id, String make, String model, int year, long price, String color, float mileage, String status) {
         this.id = id;
         this.make = make;
         this.model = model;
@@ -30,8 +30,6 @@ public class Car {
         this.color = color;
         this.mileage = mileage;
         this.status = status;
-        this.additionalNotes = null;
-        this.serviceHistory = null;
     }
 
     public Car() {
@@ -79,26 +77,200 @@ public class Car {
         printTableBottomBorder();
     }
 
+    //view all product within specific category
+    public void viewCarBrandSort(String category, String sortOrder) {
+        extractDatabase();
+
+        ArrayList<Car> brandCar = new ArrayList<>();
+
+        for(Car car: cars){
+            if(car.getMake().equalsIgnoreCase(category)){
+                brandCar.add(car);
+            }
+        }
+
+        printCarDetailHeader();
+
+        //Source: https://www.youtube.com/watch?v=wzWFQTLn8hI
+        if(sortOrder.equalsIgnoreCase("ascending")){
+            Collections.sort(brandCar, new Comparator<Car>()
+            {
+                public int compare(Car p1, Car p2){
+                    return Long.valueOf(p1.price).compareTo(p2.price);
+                }
+            });
+            for(int i = 0; i < brandCar.size(); i++){
+                String priceFormat = String.format("%,d", brandCar.get(i).getPrice());
+                System.out.printf(tableFormat, brandCar.get(i).getId(), brandCar.get(i).getMake(), brandCar.get(i).getModel(), brandCar.get(i).getYear(), brandCar.get(i).getMileage(), brandCar.get(i).getColor(), brandCar.get(i).getStatus(), priceFormat + " VND");
+            }
+        }
+        else if(sortOrder.equalsIgnoreCase("descending")){
+            Collections.sort(brandCar, new Comparator<Car>()
+            {
+                public int compare(Car p1, Car p2){
+                    return Long.valueOf(p2.price).compareTo(p1.price);
+                }
+            });
+            for(int i = 0; i < brandCar.size(); i++){
+                String priceFormat = String.format("%,d", brandCar.get(i).getPrice());
+                System.out.printf(tableFormat, brandCar.get(i).getId(), brandCar.get(i).getMake(), brandCar.get(i).getModel(), brandCar.get(i).getYear(), brandCar.get(i).getMileage(), brandCar.get(i).getColor(), brandCar.get(i).getStatus(), priceFormat + " VND");
+            }
+        }
+        else{
+            for(Car car: brandCar){
+                String priceFormat = String.format("%,d", car.getPrice());
+                System.out.printf(tableFormat, car.getId(), car.getMake(), car.getModel(), car.getYear(), car.getMileage(), car.getColor(), car.getStatus(), priceFormat + " VND");
+            }
+        }
+
+        printTableBottomBorder();
+    }
+
+
+    //get all available category
+    public String getCarBrandList(){
+        String[] category = Features.ReadCol(1,car_data, ",");
+        ArrayList<String> categoryList = new ArrayList<String>();
+
+
+        for(int i = 1; i < category.length; i++){
+            if(categoryList.contains(category[i]) == false){
+                categoryList.add(category[i]);
+            }
+        }
+        String list = Features.arrayListToCSVString(categoryList);
+        return list;
+    }
+
+    public void viewCarStatusSort(String status, String sortOrder) {
+        extractDatabase();
+
+        ArrayList<Car> statusCar = new ArrayList<>();
+
+        for(Car car: cars){
+            if(car.getStatus().equalsIgnoreCase(status)){
+                statusCar.add(car);
+            }
+        }
+
+        printCarDetailHeader();
+
+        //Source: https://www.youtube.com/watch?v=wzWFQTLn8hI
+        if(sortOrder.equalsIgnoreCase("ascending")){
+            Collections.sort(statusCar, new Comparator<Car>()
+            {
+                public int compare(Car p1, Car p2){
+                    return Long.valueOf(p1.price).compareTo(p2.price);
+                }
+            });
+            for(int i = 0; i < statusCar.size(); i++){
+                String priceFormat = String.format("%,d", statusCar.get(i).getPrice());
+                System.out.printf(tableFormat, statusCar.get(i).getId(), statusCar.get(i).getMake(), statusCar.get(i).getModel(), statusCar.get(i).getYear(), statusCar.get(i).getMileage(), statusCar.get(i).getColor(), statusCar.get(i).getStatus(), priceFormat + " VND");
+            }
+        }
+        else if(sortOrder.equalsIgnoreCase("descending")){
+            Collections.sort(statusCar, new Comparator<Car>()
+            {
+                public int compare(Car p1, Car p2){
+                    return Long.valueOf(p2.price).compareTo(p1.price);
+                }
+            });
+            for(int i = 0; i < statusCar.size(); i++){
+                String priceFormat = String.format("%,d", statusCar.get(i).getPrice());
+                System.out.printf(tableFormat, statusCar.get(i).getId(), statusCar.get(i).getMake(), statusCar.get(i).getModel(), statusCar.get(i).getYear(), statusCar.get(i).getMileage(), statusCar.get(i).getColor(), statusCar.get(i).getStatus(), priceFormat + " VND");
+            }
+        }
+        else{
+            for(Car car: statusCar){
+                String priceFormat = String.format("%,d", car.getPrice());
+                System.out.printf(tableFormat, car.getId(), car.getMake(), car.getModel(), car.getYear(), car.getMileage(), car.getColor(), car.getStatus(), priceFormat + " VND");
+            }
+        }
+
+        printTableBottomBorder();
+    }
+
+    //view product within a price range
+    public void viewPriceRangeSort() {
+        extractDatabase();
+
+        ArrayList<Car> priceRangeSort = new ArrayList<>();
+        Scanner keyboard = new Scanner(System.in);
+        String regex = "\\d{1,3}(\\.\\d{3})*"; // Regex to match prices with dots (e.g., 1.000.000)
+
+        System.out.print("Enter the MINIMUM price (Ex: 500000000 or 500.000.000): ");
+        String minInput = keyboard.nextLine().trim();
+        while (!Pattern.matches(regex, minInput)) {
+            System.out.println("Invalid format. Please enter the price in the correct format (e.g., 500000000 or 500.000.000).");
+            System.out.print("Enter the MINIMUM price (Ex: 500000000 or 500.000.000): ");
+            minInput = keyboard.nextLine().trim();
+        }
+
+        System.out.print("Enter the MAXIMUM price (Ex: 47256040000 or 47.256.040.000): ");
+        String maxInput = keyboard.nextLine().trim();
+        while (!Pattern.matches(regex, maxInput)) {
+            System.out.println("Invalid format. Please enter the price in the correct format (e.g., 47256040000 or 47.256.040.000).");
+            System.out.print("Enter the MAXIMUM price (Ex: 47256040000 or 47.256.040.000): ");
+            maxInput = keyboard.nextLine().trim();
+        }
+
+        long min = Long.parseLong(minInput.replace(".", ""));
+        long max = Long.parseLong(maxInput.replace(".", ""));
+
+        if (min <= max) {
+            printCarDetailHeader();
+            for (Car car : cars) {
+                if (car.getPrice() >= min && car.getPrice() <= max) {
+                    priceRangeSort.add(car);
+                }
+            }
+
+            for (Car car : priceRangeSort) {
+                String priceFormat = String.format("%,d", car.getPrice());
+                System.out.printf(tableFormat, car.getId(), car.getMake(), car.getModel(), car.getYear(), car.getMileage(), car.getColor(), car.getStatus(), priceFormat + " VND");
+            }
+
+            printTableBottomBorder();
+            System.out.println();
+        } else {
+            System.out.println("Minimum price cannot be greater than the maximum price.");
+            viewPriceRangeSort();
+        }
+    }
+
+
     //extract data from database when there are updates and add object to arraylist
-    public void extractDatabase(){
-        //empty an ArrayList to make sure no info was repeated
+    public void extractDatabase() {
+        // Empty the ArrayList to ensure no duplicate information
         cars.clear();
 
         int countLine = Features.countLine(car_data);
-        String[] id = Features.ReadCol(0, car_data,",");
-        String[] make = Features.ReadCol(1, car_data,",");
-        String[] model = Features.ReadCol(2, car_data,",");
-        String[] year = Features.ReadCol(3, car_data,",");
-        String[] price = Features.ReadCol(4, car_data,",");
-        String[] color = Features.ReadCol(5, car_data,",");
-        String[] mileague = Features.ReadCol(6, car_data,",");
-        String[] status = Features.ReadCol(7, car_data,",");
-        String[] additionalNotes = Features.ReadCol(8, car_data,",");
-        String[] serviceHistory = Features.ReadCol(9, car_data,",");
+        String[] id = Features.ReadCol(0, car_data, ",");
+        String[] make = Features.ReadCol(1, car_data, ",");
+        String[] model = Features.ReadCol(2, car_data, ",");
+        String[] year = Features.ReadCol(3, car_data, ",");
+        String[] price = Features.ReadCol(4, car_data, ",");
+        String[] color = Features.ReadCol(5, car_data, ",");
+        String[] mileage = Features.ReadCol(6, car_data, ",");
+        String[] status = Features.ReadCol(7, car_data, ",");
 
+        for (int i = 0; i < countLine - 1; i++) {
+            // Ensure correct parsing
+            String carId = id[i].trim();
+            String carMake = make[i].trim();
+            String carModel = model[i].trim();
+            int carYear = Integer.parseInt(year[i].trim());
+            long carPrice = Long.parseLong(price[i].trim().replace(".", ""));
+            String carColor = color[i].trim();
 
-        for(int i = 0; i < countLine - 1; i++){
-            cars.add(new Car(id[i], make[i], model[i], Integer.parseInt(year[i]), Long.parseLong(price[i]),color[i], Float.parseFloat(mileague[i]), status[i], additionalNotes[i],serviceHistory[i]));
+            // Handle mileage properly
+            float carMileage = 0f;
+            if (!mileage[i].trim().equalsIgnoreCase("Available")) {
+                carMileage = Float.parseFloat(mileage[i].trim().replace("km", "").replace(",", "").trim());
+            }
+
+            String carStatus = status[i].trim();
+            cars.add(new Car(carId, carMake, carModel, carYear, carPrice, carColor, carMileage, carStatus));
         }
     }
 
@@ -114,7 +286,7 @@ public class Car {
             }
         }
         System.out.println();
-        System.out.printf(tableFormat,"Product ID", "Title", "Price", "Catetory");
+        System.out.printf(tableFormat,"Product ID", "Brand", "Model", "Year", "Mileage", "Color", "Status", "Price");
         printTableBottomBorder();
     }
 
@@ -189,19 +361,4 @@ public class Car {
         this.status = status;
     }
 
-    public Service getServiceHistory() {
-        return serviceHistory;
-    }
-
-    public void setServiceHistory(Service serviceHistory) {
-        this.serviceHistory = serviceHistory;
-    }
-
-    public String getAdditionalNotes() {
-        return additionalNotes;
-    }
-
-    public void setAdditionalNotes(String additionalNotes) {
-        this.additionalNotes = additionalNotes;
-    }
 }

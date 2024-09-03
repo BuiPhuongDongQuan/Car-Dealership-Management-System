@@ -1,1 +1,26 @@
-#ID, Fullname, Date of birth, Address, Phone Number, Email, User type, Status, Username, Password
+#cID,make,model,year,price,color,mileage,status
+C1,Mercedes,EQSSedan,2025,5.009.000.000,Black,0km,Available
+C2,Mercedes,S-Class,2018,5.039.000.000,Silver,102km,Available
+C3,Mercedes,Maybach,2022,8.199.000.000,White,0km,Sold
+C4,Mercedes,GLC,2019,2.299.000.000,Blue,79km,Available
+C5,Mercedes,G-Class,2023,11.750.000.000,Green,134km,Sold
+C6,Porsche,718CaymanS,2020,3.199.000.000,Red,0km,Available
+C7,Porsche,718BoxsterS,2017,2.980.000.000,Yellow,265km,Available
+C8,Porsche,911CarreraCabriolet,2021,8.470.000.000,Black,200km,Available
+C9,Porsche,Taycan,2024,4.260.000.000,White,112km,Sold
+C10,Porsche,CrossTurismo,2018,4.880.000.000,Silver,132km,Sold
+C11,Roll-Royce,Phantom,2024,46.183.000.000,Black,280km,Available
+C12,Roll-Royce,Dawn,2023,36.068.000.000,Blue,0km,Available
+C13,Roll-Royce,Wraith,2022,33.649.000.000,Red,72km,Available
+C14,Roll-Royce,Cullinan,2022,32.000.000.000,White,320km,Available
+C15,Roll-Royce,Ghost,2020,31.391.000.000,Silver,80km,Sold
+C16,Roll-Royce,Bentayga,2022,18.900.000.000,Green,212km,Available
+C17,Roll-Royce,Mulsanne,2020,7.642.000.000,Black,149km,Sold
+C18,Roll-Royce,FlyingSpur,2018,16.123.000.000,Blue,278km,Available
+C19,Roll-Royce,ContinentalGT,2014,10.941.000.000,Red,199km,Available
+C20,Roll-Royce,MullinerBacalar,2024,47.256.040.000,Yellow,0km,Available
+C21,Vinfast,VF3,2024,730.000.000,White,89km,Available
+C22,Vinfast,VF5,2024,500.000.000,Blue,133km,Available
+C23,Vinfast,VF7,2024,924.000.000,Red,210km,Available
+C24,Vinfast,VF8,2024,1.220.000.000,Black,163km,Available
+C25,Vinfast,VF9,2024,2.014.000.000,Silver,330km,Available

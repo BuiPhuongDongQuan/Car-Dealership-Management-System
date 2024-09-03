@@ -108,4 +108,22 @@ public class Features {
             }
         }
     }
+
+    //take arraylist and turn it to CSV string
+    public static String arrayListToCSVString(ArrayList<String> arrayList){
+        StringBuilder data = new StringBuilder();
+
+        for(int i = 0; i < arrayList.size(); i++){
+            if(i != arrayList.size() - 1){
+                data.append(arrayList.get(i) + ",");
+            }
+            else{
+                data.append(arrayList.get(i));
+            }
+        }
+
+        String string = data.toString();
+
+        return string;
+    }
 }
