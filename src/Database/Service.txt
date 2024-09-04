@@ -1,3 +1,0 @@
-ID; Service Date; Client ID; MechanicID; Service Type; List Of Replaced Part ; Service Cost; Additional Notes
-S1;12-10-2023;U1;U3;Repair;Door;6000000;None
-S2;11-10-2023;U1;U3;Repair;Door;6000000;None
