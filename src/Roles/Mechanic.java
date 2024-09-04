@@ -2,6 +2,7 @@ package Roles;
 
 
 import Features.Features;
+import Menu.Menu;
 
 import java.io.IOException;
 import java.util.Scanner;
@@ -30,69 +31,83 @@ public class Mechanic extends Employee {
         }
     }
 
-    public void updateInfo(int userInput, String username) throws IOException {
-        Scanner sc = new Scanner(System.in);
-        User mechanic = getUser(username);
-        if (mechanic == null) {
-            System.out.println("User not found.");
-            return;
-        }
+    public void mechanicUpdateInfo(int userInput, String username) throws IOException {
+        Scanner keyboard = new Scanner(System.in);
+        User client = getUser(username);
+        String oldContent = client.getId() + "," + client.getFullname() + "," + client.getDateOfBirth() + "," + client.getAddress() + "," + client.getPhoneNumber() + "," + client.getEmail() + "," + client.getUserType() + "," + client.getStatus()+ "," + client.getUsername()+ "," + client.getPassword();
 
-        String oldData = mechanic.getId() + "," + mechanic.getFullname() + "," + mechanic.getDateOfBirth() + "," + mechanic.getAddress() + "," + mechanic.getPhoneNumber() + "," + mechanic.getEmail() + "," + mechanic.getUserType() + "," + mechanic.getStatus() + "," + mechanic.getUser(username) + "," + mechanic.getPassword();
-        System.out.println("Old data is: " + oldData);
+        String[] updateClientInfo = oldContent.split(",");
+        String updatedContent = "";
 
-        String[] updateInfo = oldData.split(",");
-        String updatedData = "";
-
-        switch(userInput) {
+        switch(userInput){
+            //update full name
             case 1:
-                System.out.println("----- Update Fullname -----");
-                System.out.print("Enter new fullname: ");
-                String newFullname = sc.nextLine();
-                updateInfo[1] = newFullname;
-                updatedData = Features.arrayToCSVString(updateInfo);
-                Features.modifyFile(user_data, oldData, updatedData);
+                System.out.println("----- Full name update -----");
+                System.out.print("Enter your new full name: ");
+                String newFullname = keyboard.nextLine();
+
+                updateClientInfo[1] = newFullname;
+                updatedContent = Features.arrayToCSVString(updateClientInfo);
+                Features.modifyFile(user_data, oldContent, updatedContent);
                 break;
 
+            //update date of birth
             case 2:
-                System.out.println("----- Update Email -----");
-                System.out.print("Enter new email: ");
-                String newEmail = sc.nextLine();
-                updateInfo[5] = newEmail;
-                updatedData = Features.arrayToCSVString(updateInfo);
-                Features.modifyFile(user_data, oldData, updatedData);
+                System.out.println("----- Date of birth update -----");
+                System.out.print("Enter your new date of birth: ");
+                String newDateOfBirth = keyboard.nextLine();
+
+                updateClientInfo[2] = newDateOfBirth;
+                updatedContent = Features.arrayToCSVString(updateClientInfo);
+                Features.modifyFile(user_data, oldContent, updatedContent);
                 break;
 
+            //update email
             case 3:
-                System.out.println("----- Update Address -----");
-                System.out.print("Enter new address: ");
-                String newAddress = sc.nextLine();
-                updateInfo[3] = newAddress;
-                updatedData = Features.arrayToCSVString(updateInfo);
-                Features.modifyFile(user_data, oldData, updatedData);
+                System.out.println("----- Address update -----");
+                System.out.print("Enter your new address: ");
+                String newAddress = keyboard.nextLine();
+
+                updateClientInfo[3] = newAddress;
+                updatedContent = Features.arrayToCSVString(updateClientInfo);
+                Features.modifyFile(user_data, oldContent, updatedContent);
                 break;
 
+            //update address
             case 4:
-                System.out.println("----- Update Phone Number -----");
-                System.out.print("Enter new phone number: ");
-                String newPhoneNumber = sc.nextLine();
-                updateInfo[4] = newPhoneNumber;
-                updatedData = Features.arrayToCSVString(updateInfo);
-                Features.modifyFile(user_data, oldData, updatedData);
+                System.out.println("----- Phone number update -----");
+                System.out.print("Enter your new phone number: ");
+                String newPhoneNumber = keyboard.nextLine();
+
+                updateClientInfo[4] = newPhoneNumber;
+                updatedContent = Features.arrayToCSVString(updateClientInfo);
+                Features.modifyFile(user_data, oldContent, updatedContent);
                 break;
 
+            //update phone number
             case 5:
-                System.out.println("----- Update Password -----");
-                System.out.print("Enter new password: ");
-                String newPassword = sc.nextLine();
-                updateInfo[9] = newPassword;
-                updatedData = Features.arrayToCSVString(updateInfo);
-                Features.modifyFile(user_data, oldData, updatedData);
+                System.out.println("----- Email update -----");
+                System.out.print("Enter your new email: ");
+                String newEmail = keyboard.nextLine();
+
+                updateClientInfo[5] = newEmail;
+                updatedContent = Features.arrayToCSVString(updateClientInfo);
+                Features.modifyFile(user_data, oldContent, updatedContent);
                 break;
+
+            //update password
+            case 6:
+                System.out.println("----- Password update -----");
+                System.out.print("Enter your new password: ");
+                String newPassword = keyboard.nextLine();
+
+                updateClientInfo[9] = newPassword;
+                updatedContent = Features.arrayToCSVString(updateClientInfo);
+                Features.modifyFile(user_data, oldContent, updatedContent);
+                break;
+            case 7:
+                Menu.MechanicMenu();
         }
-
-        System.out.println("New data is: " + updatedData);
-
     }
 
 }

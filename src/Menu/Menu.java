@@ -111,6 +111,7 @@ public class Menu {
         System.out.println("5. List the number of service in a specific date");
         System.out.println("6. List the number of service in a month");
         System.out.println("7. List the number of service in a year");
+        System.out.println("8. Exit");
         int choice = optionInput();
 
         switch (choice) {
@@ -123,24 +124,50 @@ public class Menu {
                 System.out.println("============================== Mechanic - Service Total Revenue ==============================");
                 System.out.print("Enter a date dd-MM-yyyy: ");
                 String serviceDate = sc.nextLine();
-                if (service.checkServiceDate(serviceDate) == true) {
+//                if (service.checkServiceDate(serviceDate) == true) {
                     service.calculateServiceCostDate(serviceDate);
-                }
+//                }
                 Menu.MechanicStatisticsOperator();
                 break;
             case 3:
                 System.out.println("============================== Mechanic - Service Total Revenue =============================");
-                System.out.println("Enter a month MM: ");
+                System.out.print("Enter a month MM: ");
                 String serviceMonth = sc.nextLine();
                 service.calculateServiceCostMonth(serviceMonth);
                 Menu.MechanicStatisticsOperator();
                 break;
             case 4:
                 System.out.println("============================== Mechanic - Service Total Revenue =============================");
-                System.out.println("Enter a year yyyy: ");
+                System.out.print("Enter a year yyyy: ");
                 String serviceYear = sc.nextLine();
                 service.calculateServiceCostYear(serviceYear);
                 Menu.MechanicStatisticsOperator();
+                break;
+            case 5:
+                System.out.println("============================== Mechanic - Service Detail =============================");
+                System.out.print("Enter a date dd-MM-yyyy: ");
+                String serviceDetailDate = sc.nextLine();
+//                if (service.checkServiceDate(serviceDetailDate) == true) {
+                    service.listAllServicesDate(serviceDetailDate);
+//                }
+                Menu.MechanicStatisticsOperator();
+                break;
+            case 6:
+                System.out.println("============================== Mechanic - Service Detail =============================");
+                System.out.print("Enter a month MM: ");
+                String serviceDetailMonth = sc.nextLine();
+                service.listAllServicesMonth(serviceDetailMonth);
+                Menu.MechanicStatisticsOperator();
+                break;
+            case 7:
+                System.out.println("============================== Mechanic - Service Detail =============================");
+                System.out.print("Enter a year yyyy: ");
+                String serviceDetailYear = sc.nextLine();
+                service.listAllServicesYear(serviceDetailYear);
+                Menu.MechanicStatisticsOperator();
+                break;
+            case 8:
+                Menu.MechanicMenu();
         }
     }
 
@@ -150,14 +177,16 @@ public class Menu {
 
         System.out.println("============================== What do you want to update? =============================");
         System.out.println("1. Update Full name");
-        System.out.println("2. Update Email");
+        System.out.println("2. Update Date of Birth");
         System.out.println("3. Update Address");
         System.out.println("4. Update Phone Number");
-        System.out.println("5. Update Password");
+        System.out.println("5. Update Email");
+        System.out.println("6. Update Password");
+        System.out.println("7. Exit");
         int choice = optionInput();
 
         System.out.println();
-        mechanic.updateInfo(choice, employee.getUsername());
+        mechanic.mechanicUpdateInfo(choice, employee.getUsername());
         MechanicMenu();
     }
 }
