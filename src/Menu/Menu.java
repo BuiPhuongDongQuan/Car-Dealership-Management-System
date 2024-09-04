@@ -1,7 +1,11 @@
 package Menu;
 
+import Components.Service;
+import Roles.Employee;
 import Roles.Client;
 import Roles.Manager;
+import Roles.Mechanic;
+import Components.Car;
 
 import java.io.*;
 import java.util.*;
@@ -9,28 +13,30 @@ import java.util.*;
 
 public class Menu {
     static Manager manager = new Manager();
+    static Employee employee = new Employee();
+    static Mechanic mechanic = new Mechanic();
+    static Service service = new Service();
     static Client client = new Client();
     static Car car = new Car();
 
-    static Scanner sc = new Scanner(System.in);
-    static Scanner keyboard = new Scanner(System.in);
+    static BufferedReader sc = new BufferedReader(new InputStreamReader(System.in));
 
     // user input their choice
-    public static int getValidatedInput(int min, int max){
-        int choice;
+    public static int getValidatedInput(int min, int max) throws IOException {
+        int choice = -1;
         while (true) {
             try {
                 System.out.print("Enter Your Choice (" + min + "-" + max + "): ");
-                choice = sc.nextInt();
+                String input = sc.readLine();
+                choice = Integer.parseInt(input);
 
                 if (choice >= min && choice <= max) {
                     break; // Valid input, exit the loop
                 } else {
                     System.out.println("Invalid choice. Please enter a number between " + min + " and " + max + ".");
                 }
-            } catch (InputMismatchException e) {
+            } catch (NumberFormatException e) {
                 System.out.println("Invalid input. Please enter a valid number.");
-                sc.next(); // Clear the invalid input from the scanner buffer
             }
         }
         return choice;
@@ -50,6 +56,9 @@ public class Menu {
             case 1:
                 ManagerLoginMenu();
                 break;
+            case 2:
+                EmployeeLoginMenu();
+                break;
             case 3:
                 ClientWelcomeMenu();
                 break;
@@ -59,35 +68,123 @@ public class Menu {
                 break;
         }
     }
+
     ////////////////////////////////////Manager//////////////////////////////////////
     // manager login
     public static void ManagerLoginMenu() throws IOException {
         System.out.println("============================== Manager - Login ==============================");
-        sc.nextLine();
+
+        // Clear any leftover newlines in the buffer
+        sc.readLine();
 
         System.out.print("Enter your username (or type 'esc' to go back): ");
-        String username = sc.nextLine();
+        String username = sc.readLine();
         if (username.equalsIgnoreCase("esc")) {
             SystemMenu();
             return; // Exit the current method to prevent further execution
         }
 
         System.out.print("Enter your password: ");
-        String password = sc.nextLine();
+        String password = sc.readLine();
         if (password.equalsIgnoreCase("esc")) {
             SystemMenu();
             return;
         }
 
+        // Call the manager login method with username and password
         manager.login(username, password);
     }
 
     // manager menu
     public static void ManagerMenu() throws IOException {
+
         System.out.println("============================== Manager - Menu ===============================");
         System.out.println("Welcome admin to Auto316 Management System");
+        System.out.println("1. View information of user ");
+        System.out.println("2. Remove user from database");
+        System.out.println("3. ");
+        System.out.println("4. ");
+    }
+    ////////////////////////////////////Employee//////////////////////////////////////
+
+    // employee login menu
+    public static void EmployeeLoginMenu() throws IOException {
+        System.out.println("============================== Employee - Login ===============================");
+        System.out.print("Enter your username: ");
+        String username = sc.readLine();
+        System.out.print("Enter your password: ");
+        String password = sc.readLine();
+
+        employee.login(username, password);
     }
 
+    // salesperson menu
+    public static void SalespersonMenu() throws IOException {
+        System.out.println("============================== Salesperson - Menu ===============================");
+    }
+
+    // mechanic menu
+    public static void MechanicMenu() throws IOException {
+        System.out.println("============================== Mechanic - Menu ==============================");
+        System.out.println("1. View information");
+        System.out.println("2. Change information");
+        System.out.println("3. Perform statistics operator");
+        int choice = getValidatedInput(1,3);
+
+        switch (choice) {
+            case 1:
+                System.out.println("============================== Mechanic Information ==============================");
+                mechanic.viewMechanicInfo(employee.getUsername());
+                break;
+            case 2:
+                break;
+            case 3:
+                MechanicStatisticsOperator();
+                break;
+        }
+    }
+    // mechanic statistics operator menu
+    public static void MechanicStatisticsOperator() throws IOException {
+        System.out.println("============================== Mechanic Statistics Operator - Menu =============================");
+        System.out.println("1. Calculate total revenue");
+        System.out.println("2. Calculate revenue in a specific date");
+        System.out.println("3. Calculate revenue in a month");
+        System.out.println("4. Calculate revenue in a year");
+        System.out.println("5. List the number of service in a specific date");
+        System.out.println("6. List the number of service in a month");
+        System.out.println("7. List the number of service in a year");
+        int choice = getValidatedInput(1,7);
+
+        switch (choice) {
+            case 1:
+                System.out.println("============================== Mechanic - Service Total Revenue ==============================");
+                service.calculateServiceCost();
+                Menu.MechanicStatisticsOperator();
+                break;
+            case 2:
+                System.out.println("============================== Mechanic - Service Total Revenue ==============================");
+                System.out.print("Enter a date dd-MM-yyyy: ");
+                String serviceDate = sc.readLine();
+                if (service.checkServiceDate(serviceDate) == true) {
+                    service.calculateServiceCostDate(serviceDate);
+                }
+                Menu.MechanicStatisticsOperator();
+                break;
+            case 3:
+                System.out.println("============================== Mechanic - Service Total Revenue =============================");
+                System.out.println("Enter a month MM: ");
+                String serviceMonth = sc.readLine();
+                service.calculateServiceCostMonth(serviceMonth);
+                Menu.MechanicStatisticsOperator();
+                break;
+            case 4:
+                System.out.println("============================== Mechanic - Service Total Revenue =============================");
+                System.out.println("Enter a year yyyy: ");
+                String serviceYear = sc.readLine();
+                service.calculateServiceCostYear(serviceYear);
+                Menu.MechanicStatisticsOperator();
+        }
+    }
     ////////////////////////////////////Client//////////////////////////////////////
     public static void ClientWelcomeMenu() throws IOException {
         System.out.println("Returning to Client Welcome Menu...");
@@ -117,17 +214,17 @@ public class Menu {
 
     public static void ClientLoginMenu() throws IOException {
         System.out.println("============================== Client - Login ==============================");
-        sc.nextLine();
+        sc.readLine();
 
         System.out.print("Enter your username (or type 'esc' to go back): ");
-        String username = sc.nextLine();
+        String username = sc.readLine();
         if (username.equalsIgnoreCase("esc")) {
             ClientWelcomeMenu();
             return; // Exit the current method to prevent further execution
         }
 
         System.out.print("Enter your password: ");
-        String password = sc.nextLine();
+        String password = sc.readLine();
         if (password.equalsIgnoreCase("esc")) {
             ClientWelcomeMenu();
             return;
@@ -142,7 +239,7 @@ public class Menu {
         System.out.println("============================== Client - Register ==============================");
 
         System.out.print("Enter your username (or type 'esc' to go back): ");
-        String username = keyboard.nextLine();
+        String username = sc.readLine();
         if (username.equalsIgnoreCase("esc")) {
             SystemMenu();
             return;
@@ -153,42 +250,42 @@ public class Menu {
             ClientWelcomeMenu();
         } else {
             System.out.print("Enter your password (or type 'esc' to go back): ");
-            String password = keyboard.nextLine();
+            String password = sc.readLine();
             if (password.equalsIgnoreCase("esc")) {
                 SystemMenu();
                 return;
             }
 
             System.out.print("Enter your full name (or type 'esc' to go back): ");
-            String fullname = keyboard.nextLine();
+            String fullname = sc.readLine();
             if (fullname.equalsIgnoreCase("esc")) {
                 SystemMenu();
                 return;
             }
 
             System.out.print("Enter your date of birth (or type 'esc' to go back): ");
-            String dateOfBirth = keyboard.nextLine();
+            String dateOfBirth = sc.readLine();
             if (dateOfBirth.equalsIgnoreCase("esc")) {
                 SystemMenu();
                 return;
             }
 
             System.out.print("Enter your email (or type 'esc' to go back): ");
-            String email = keyboard.nextLine();
+            String email = sc.readLine();
             if (email.equalsIgnoreCase("esc")) {
                 SystemMenu();
                 return;
             }
 
             System.out.print("Enter your address (or type 'esc' to go back): ");
-            String address = keyboard.nextLine();
+            String address = sc.readLine();
             if (address.equalsIgnoreCase("esc")) {
                 SystemMenu();
                 return;
             }
 
             System.out.print("Enter your phone number (or type 'esc' to go back): ");
-            String phoneNumber = keyboard.nextLine();
+            String phoneNumber = sc.readLine();
             if (phoneNumber.equalsIgnoreCase("esc")) {
                 SystemMenu();
                 return;
@@ -213,7 +310,7 @@ public class Menu {
                 ClientUpdateMenu();
                 break;
             case 2:
-                ViewProductMenu();
+                ViewCarMenu();
                 break;
             case 3:
                 SystemMenu();
@@ -248,80 +345,109 @@ public class Menu {
     }
 
     //allow customer to view product with sorting options
-    public static void ViewProductMenu() throws IOException {
-        System.out.println("============================== Customer - View Product Detail ==============================");
+    public static void ViewCarMenu() throws IOException {
+        System.out.println("============================== Customer - View Car Categories ==============================");
         System.out.println("Would you like to sort your product?");
-        System.out.println("1. View all product.");
+        System.out.println("1. View all products.");
         System.out.println("2. Ascending price.");
         System.out.println("3. Descending price.");
-        System.out.println("4. By product category.");
-        System.out.println("5. By price range.");
-        System.out.println("6. Return to Customer Action Menu.");
-        System.out.println("7. Exit.");
-        System.out.print("Enter your option in NUMBER format (1-7): ");
-        int option = getValidatedInput(1,7);
+        System.out.println("4. By car brand.");
+        System.out.println("5. By car status.");
+        System.out.println("6. By price range.");
+        System.out.println("7. Return to Customer Action Menu.");
+        System.out.println("8. Exit.");
+        int option = getValidatedInput(1, 8);
 
-        switch (option){
+        switch (option) {
             case 1:
-                product.viewAllProductSort("none");
-                ViewProductMenu();
+                car.viewAllCarSort("none");
                 break;
 
             case 2:
-                product.viewAllProductSort("ascending");
-                ViewProductMenu();
+                car.viewAllCarSort("ascending");
                 break;
 
             case 3:
-                product.viewAllProductSort("descending");
-                ViewProductMenu();
+                car.viewAllCarSort("descending");
                 break;
 
             case 4:
-                System.out.println("Here is the category list: " + product.getCategoryList());
+                System.out.println("Here is the category list: " + car.getCarBrandList());
                 System.out.print("Please enter a category for sorting: ");
-                String category = keyboard.nextLine();
+                String category = sc.readLine();
 
                 System.out.println("How would you like to sort?");
                 System.out.println("1. Ascending price.");
                 System.out.println("2. Descending price.");
                 System.out.println("3. None.");
                 System.out.println("4. Return to View Product Detail Menu.");
-                System.out.print("Enter your option in NUMBER format (1-3): ");
-                option = keyboard.nextInt();
+                option = getValidatedInput(1, 4);
                 System.out.println();
 
-                switch (option){
+                switch (option) {
                     case 1:
-                        product.viewCategorySort(category,"ascending");
-                        ViewProductMenu();
+                        car.viewCarBrandSort(category, "ascending");
                         break;
                     case 2:
-                        product.viewCategorySort(category,"descending");
-                        ViewProductMenu();
+                        car.viewCarBrandSort(category, "descending");
                         break;
                     case 3:
-                        product.viewCategorySort(category,"none");
-                        ViewProductMenu();
+                        car.viewCarBrandSort(category, "none");
                         break;
                     case 4:
-                        ViewProductMenu();
-                        break;
+                        ViewCarMenu();
+                        return;
                 }
                 break;
 
             case 5:
-                product.viewPriceRangeSort();
-                ViewProductMenu();
+                System.out.println("Please enter 1 for available cars and 2 for sold cars:");
+                int statusOption = getValidatedInput(1, 2);
+                String status = (statusOption == 1) ? "Available" : "Sold";
+
+                System.out.println("How would you like to sort?");
+                System.out.println("1. Ascending price.");
+                System.out.println("2. Descending price.");
+                System.out.println("3. None.");
+                System.out.println("4. Return to View Product Detail Menu.");
+                int statusSortOption = getValidatedInput(1, 4);
+
+                switch (statusSortOption) {
+                    case 1:
+                        car.viewCarStatusSort(status, "ascending");
+                        break;
+                    case 2:
+                        car.viewCarStatusSort(status, "descending");
+                        break;
+                    case 3:
+                        car.viewCarStatusSort(status, "none");
+                        break;
+                    case 4:
+                        ViewCarMenu();
+                        return;
+                }
                 break;
+
             case 6:
-                CustomerActionMenu();
-                break;
+                car.viewPriceRangeSort();
+                ViewCarMenu();
+                return;
+
             case 7:
+                ClientMenu();
+                return;
+
+            case 8:
                 ThankYouMenu();
-                break;
+                System.exit(0);
+                return;
         }
+
+        // Return to the menu after handling sorting or navigating
+        ViewCarMenu();
     }
+
+
 
     public static void ThankYouMenu(){
         System.out.println("============================== Thank you for using our system! Goodbye ==============================");
