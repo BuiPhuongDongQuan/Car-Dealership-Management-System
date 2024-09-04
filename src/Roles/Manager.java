@@ -1,4 +1,5 @@
 package Roles;
+import Features.Features;
 import Menu.Menu;
 
 import java.io.IOException;
@@ -34,6 +35,11 @@ public class Manager extends User {
             }
 
         }
+    }
+
+    // manager view all information
+    public void viewInformation(String filepath) throws IOException{
+        Features.readAllLines(filepath);
     }
 
 }
