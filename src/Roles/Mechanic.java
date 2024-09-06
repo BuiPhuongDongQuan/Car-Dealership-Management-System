@@ -32,9 +32,9 @@ public class Mechanic extends Employee {
     }
 
     public void mechanicUpdateInfo(int userInput, String username) throws IOException {
-        Scanner keyboard = new Scanner(System.in);
-        User client = getUser(username);
-        String oldContent = client.getId() + "," + client.getFullname() + "," + client.getDateOfBirth() + "," + client.getAddress() + "," + client.getPhoneNumber() + "," + client.getEmail() + "," + client.getUserType() + "," + client.getStatus()+ "," + client.getUsername()+ "," + client.getPassword();
+        Scanner sc = new Scanner(System.in);
+        User mechanic = getUser(username);
+        String oldContent = mechanic.getId() + "," + mechanic.getFullname() + "," + mechanic.getDateOfBirth() + "," + mechanic.getAddress() + "," + mechanic.getPhoneNumber() + "," + mechanic.getEmail() + "," + mechanic.getUserType() + "," + mechanic.getStatus()+ "," + mechanic.getUsername()+ "," + mechanic.getPassword();
 
         String[] updateClientInfo = oldContent.split(",");
         String updatedContent = "";
@@ -44,7 +44,7 @@ public class Mechanic extends Employee {
             case 1:
                 System.out.println("----- Full name update -----");
                 System.out.print("Enter your new full name: ");
-                String newFullname = keyboard.nextLine();
+                String newFullname = sc.nextLine();
 
                 updateClientInfo[1] = newFullname;
                 updatedContent = Features.arrayToCSVString(updateClientInfo);
@@ -55,7 +55,7 @@ public class Mechanic extends Employee {
             case 2:
                 System.out.println("----- Date of birth update -----");
                 System.out.print("Enter your new date of birth: ");
-                String newDateOfBirth = keyboard.nextLine();
+                String newDateOfBirth = sc.nextLine();
 
                 updateClientInfo[2] = newDateOfBirth;
                 updatedContent = Features.arrayToCSVString(updateClientInfo);
@@ -66,7 +66,7 @@ public class Mechanic extends Employee {
             case 3:
                 System.out.println("----- Address update -----");
                 System.out.print("Enter your new address: ");
-                String newAddress = keyboard.nextLine();
+                String newAddress = sc.nextLine();
 
                 updateClientInfo[3] = newAddress;
                 updatedContent = Features.arrayToCSVString(updateClientInfo);
@@ -77,7 +77,7 @@ public class Mechanic extends Employee {
             case 4:
                 System.out.println("----- Phone number update -----");
                 System.out.print("Enter your new phone number: ");
-                String newPhoneNumber = keyboard.nextLine();
+                String newPhoneNumber = sc.nextLine();
 
                 updateClientInfo[4] = newPhoneNumber;
                 updatedContent = Features.arrayToCSVString(updateClientInfo);
@@ -88,7 +88,7 @@ public class Mechanic extends Employee {
             case 5:
                 System.out.println("----- Email update -----");
                 System.out.print("Enter your new email: ");
-                String newEmail = keyboard.nextLine();
+                String newEmail = sc.nextLine();
 
                 updateClientInfo[5] = newEmail;
                 updatedContent = Features.arrayToCSVString(updateClientInfo);
@@ -99,7 +99,7 @@ public class Mechanic extends Employee {
             case 6:
                 System.out.println("----- Password update -----");
                 System.out.print("Enter your new password: ");
-                String newPassword = keyboard.nextLine();
+                String newPassword = sc.nextLine();
 
                 updateClientInfo[9] = newPassword;
                 updatedContent = Features.arrayToCSVString(updateClientInfo);

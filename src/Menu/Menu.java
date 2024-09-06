@@ -1,10 +1,8 @@
 package Menu;
 
 import Components.Service;
-import Roles.Employee;
-import Roles.Manager;
-import Roles.Mechanic;
-import Roles.User;
+import Components.saleTransaction;
+import Roles.*;
 
 import java.io.*;
 import java.util.*;
@@ -14,7 +12,9 @@ public class Menu {
     static Manager manager = new Manager();
     static Employee employee = new Employee();
     static Mechanic mechanic = new Mechanic();
+    static Salesperson salesperson = new Salesperson();
     static Service service = new Service();
+    static saleTransaction transaction = new saleTransaction();
 
     private static final String user_data = "src/Database/User.txt";
 
@@ -153,9 +153,114 @@ public class Menu {
         employee.login(username, password);
     }
 
+//////////////////////Salesperson////////////////////////
     // salesperson menu
     public static void SalespersonMenu() throws IOException {
         System.out.println("============================== Salesperson - Menu ===============================");
+        System.out.println("1. View and update information");
+        System.out.println("2. Perform statistics operator");
+        System.out.println("3. Exit");
+        int choice = optionInput();
+
+        switch (choice) {
+            case 1:
+                viewAndUpdateSalespersonInfo();
+                break;
+            case 2:
+                SalespersonStatisticsOperatorMenu();
+                break;
+            case 3:
+                systemMenu();
+                break;
+        }
+    }
+
+    //view and update salesperson information
+    public static void viewAndUpdateSalespersonInfo() throws IOException {
+        System.out.println("============================== Salesperson Information ==============================");
+        salesperson.viewSalespersonInfo(employee.getUsername());
+
+        System.out.println("============================== What do you want to update? =============================");
+        System.out.println("1. Update Full name");
+        System.out.println("2. Update Date of Birth");
+        System.out.println("3. Update Address");
+        System.out.println("4. Update Phone Number");
+        System.out.println("5. Update Email");
+        System.out.println("6. Update Password");
+        System.out.println("7. Exit");
+        int choice = optionInput();
+
+        System.out.println();
+        salesperson.salespersonUpdateInfo(choice, employee.getUsername());
+        SalespersonMenu();
+    }
+
+    // salesperson statistics operator menu
+    public static void SalespersonStatisticsOperatorMenu() throws IOException {
+        System.out.println("============================== Salesperson Statistics Operator - Menu =============================");
+        System.out.println("1. Calculate total amount");
+        System.out.println("2. Calculate amount in a specific date");
+        System.out.println("3. Calculate amount in a month");
+        System.out.println("4. Calculate amount in a year");
+        System.out.println("5. List the number of transaction in a specific date");
+        System.out.println("6. List the number of transaction in a month");
+        System.out.println("7. List the number of transaction in a year");
+        System.out.println("8. Exit");
+        int choice = optionInput();
+
+        switch (choice) {
+            case 1:
+                System.out.println("============================== Salesperson - Transaction Total Amount ==============================");
+                transaction.calculateTotalAmount();
+                Menu.SalespersonStatisticsOperatorMenu();
+                break;
+            case 2:
+                System.out.println("============================== Salesperson - Transaction Total Amount ==============================");
+                System.out.print("Enter a date dd-MM-yyyy: ");
+                String transactionDate = sc.nextLine();
+                transaction.calculateTotalAmountDate(transactionDate);
+                Menu.SalespersonStatisticsOperatorMenu();
+                break;
+            case 3:
+                System.out.println("============================== Salesperson - Transaction Total Amount ==============================");
+                System.out.print("Enter a month MM: ");
+                String transactionMonth = sc.nextLine();
+                transaction.calculateTotalAmountMonth(transactionMonth);
+                Menu.SalespersonStatisticsOperatorMenu();
+                break;
+            case 4:
+                System.out.println("============================== Salesperson - Transaction Total Amount ==============================");
+                System.out.print("Enter a year yyyy: ");
+                String transactionYear = sc.nextLine();
+                transaction.calculateTotalAmountYear(transactionYear);
+                Menu.SalespersonStatisticsOperatorMenu();
+                break;
+            case 5:
+                System.out.println("============================== Salesperson - Transaction Detail ==============================");
+                System.out.print("Enter a date dd-MM-yyyy: ");
+                String transactionDetailDate = sc.nextLine();
+                transaction.listAllTransactionsDate(transactionDetailDate);
+                Menu.SalespersonStatisticsOperatorMenu();
+                break;
+            case 6:
+                System.out.println("============================== Salesperson - Transaction Detail ==============================");
+                System.out.print("Enter a month MM: ");
+                String transactionDetailMonth = sc.nextLine();
+                transaction.listAllTransactionsMonth(transactionDetailMonth);
+                Menu.SalespersonStatisticsOperatorMenu();
+                break;
+            case 7:
+                System.out.println("============================== Salesperson - Transaction Detail ==============================");
+                System.out.print("Enter a year yyyy: ");
+                String transactionDetailYear = sc.nextLine();
+                transaction.listAllTransactionsYear(transactionDetailYear);
+                Menu.SalespersonStatisticsOperatorMenu();
+                break;
+            case 8:
+                Menu.SalespersonMenu();
+                break;
+
+        }
     }
 
 ///////////////////////////////////MECHANIC/////////////////////////////////////////////
@@ -239,9 +344,11 @@ public class Menu {
                 break;
             case 8:
                 Menu.MechanicMenu();
+                break;
         }
     }
 
+    // view and update mechanic information
     public static void viewAndUpdateMechanicInfo() throws IOException {
         System.out.println("============================== Mechanic Information ==============================");
         mechanic.viewMechanicInfo(employee.getUsername());

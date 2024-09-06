@@ -1,0 +1,3 @@
+transaction ID;date;client ID;salesperson ID;list of purchased items (cars/parts);discount;total amount; additional notes
+T1;05-09-2024;U2;C1;none;10%;1000000;none
+T3;05-09-2024;U2;C1;none;10%;1000000;none
