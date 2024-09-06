@@ -20,7 +20,7 @@ public class Menu {
     static saleTransaction transaction = new saleTransaction();
     private static final String user_data = "src/Database/User.txt";
     static Client client = new Client();
-    static Car car = new Car();
+
 
     static Scanner sc = new Scanner(System.in);
 
@@ -62,7 +62,7 @@ public class Menu {
                 ManagerLoginMenu();
                 break;
             case 2:
-                EmployeeLoginMenu();
+                EmployeeMenu();
                 break;
             case 3:
                 ClientWelcomeMenu();
@@ -109,7 +109,7 @@ public class Menu {
         System.out.println("4. Calculate the revenue in a day/month/year");
         System.out.println("5. Calculate the revenue of the services done of a mechanic");
         System.out.println("6. Calculate the revenue of cars sold of a salesperson");
-        int choice = optionInput();
+        int choice = getValidatedInput(1, 6);
 
         switch (choice) {
             case 1:
@@ -144,7 +144,7 @@ public class Menu {
         System.out.println("3. View Auto Part Information");
         System.out.println("4. View Service Information");
         System.out.println("5. View Sale Transaction Information");
-        int choice = optionInput();
+        int choice = getValidatedInput(1, 5);
 
         switch (choice) {
             case 1:
@@ -163,7 +163,7 @@ public class Menu {
         System.out.println("1. Calculate the revenue in a day");
         System.out.println("2. Calculate the revenue in a month");
         System.out.println("3. Calculate the revenue in a year");
-        int choice = optionInput();
+        int choice = getValidatedInput(1, 3);
 
         switch (choice) {
             case 1:
@@ -179,46 +179,35 @@ public class Menu {
         System.out.println("============================== Employee - Menu ===============================");
         System.out.println("1. Mechanic");
         System.out.println("2. Salesperson");
-        int choice = optionInput();
+        int choice = getValidatedInput(1, 2);
 
         switch (choice) {
             case 1:
                 MechanicLoginMenu();
                 break;
             case 2:
-
-
+                SalespersonLoginMenu();
+                break;
         }
     }
-    // mechanic login menu
-    public static void MechanicLoginMenu() throws IOException {
-        System.out.println("============================== Employee - Login ===============================");
-        System.out.print("Enter your username: ");
-        String username = sc.nextLine();
-        System.out.print("Enter your password: ");
-        String password = sc.nextLine();
 
-        mechanic.login(username, password);
-    }
-
+//////////////////////////Salesperson/////////////////////////
     public static void SalespersonLoginMenu() throws IOException {
         System.out.println("============================== Employee - Login ===============================");
         System.out.print("Enter your username: ");
         String username = sc.nextLine();
         System.out.print("Enter your password: ");
         String password = sc.nextLine();
-
         salesperson.login(username, password);
     }
 
-//////////////////////Salesperson////////////////////////
     // salesperson menu
     public static void SalespersonMenu() throws IOException {
         System.out.println("============================== Salesperson - Menu ===============================");
         System.out.println("1. View and update information");
         System.out.println("2. Perform statistics operator");
         System.out.println("3. Exit");
-        int choice = optionInput();
+        int choice = getValidatedInput(1, 3);
 
         switch (choice) {
             case 1:
@@ -228,7 +217,7 @@ public class Menu {
                 SalespersonStatisticsOperatorMenu();
                 break;
             case 3:
-                systemMenu();
+                SystemMenu();
                 break;
         }
     }
@@ -236,7 +225,7 @@ public class Menu {
     //view and update salesperson information
     public static void viewAndUpdateSalespersonInfo() throws IOException {
         System.out.println("============================== Salesperson Information ==============================");
-        salesperson.viewSalespersonInfo(employee.getUsername());
+        salesperson.viewSalespersonInfo(salesperson.getUsername());
 
         System.out.println("============================== What do you want to update? =============================");
         System.out.println("1. Update Full name");
@@ -246,10 +235,10 @@ public class Menu {
         System.out.println("5. Update Email");
         System.out.println("6. Update Password");
         System.out.println("7. Exit");
-        int choice = optionInput();
+        int choice = getValidatedInput(1, 7);
 
         System.out.println();
-        salesperson.salespersonUpdateInfo(choice, employee.getUsername());
+        salesperson.salespersonUpdateInfo(choice, salesperson.getUsername());
         SalespersonMenu();
     }
 
@@ -264,7 +253,7 @@ public class Menu {
         System.out.println("6. List the number of transaction in a month");
         System.out.println("7. List the number of transaction in a year");
         System.out.println("8. Exit");
-        int choice = optionInput();
+        int choice = getValidatedInput(1, 8);
 
         switch (choice) {
             case 1:
@@ -323,12 +312,24 @@ public class Menu {
 
 ///////////////////////////////////MECHANIC/////////////////////////////////////////////
 
+    // mechanic login menu
+    public static void MechanicLoginMenu() throws IOException {
+        System.out.println("============================== Employee - Login ===============================");
+        System.out.print("Enter your username: ");
+        String username = sc.nextLine();
+        System.out.print("Enter your password: ");
+        String password = sc.nextLine();
+
+        mechanic.login(username, password);
+    }
+
     // mechanic menu
     public static void MechanicMenu() throws IOException {
         System.out.println("============================== Mechanic - Menu ==============================");
         System.out.println("1. View and update information");
         System.out.println("2. Perform statistics operator");
-        int choice = optionInput();
+        System.out.println("3. Exit");
+        int choice = getValidatedInput(1, 3);
 
         switch (choice) {
             case 1:
@@ -337,6 +338,8 @@ public class Menu {
             case 2:
                 MechanicStatisticsOperator();
                 break;
+            case 3:
+                Menu.SalespersonMenu();
         }
     }
     // mechanic statistics operator menu
@@ -350,7 +353,7 @@ public class Menu {
         System.out.println("6. List the number of service in a month");
         System.out.println("7. List the number of service in a year");
         System.out.println("8. Exit");
-        int choice = optionInput();
+        int choice = getValidatedInput(1, 8);
 
         switch (choice) {
             case 1:
@@ -419,7 +422,7 @@ public class Menu {
         System.out.println("5. Update Email");
         System.out.println("6. Update Password");
         System.out.println("7. Exit");
-        int choice = optionInput();
+        int choice = getValidatedInput(1, 7);
 
         System.out.println();
         mechanic.mechanicUpdateInfo(choice, mechanic.getUsername());
@@ -480,7 +483,7 @@ public class Menu {
         System.out.println("============================== Client - Register ==============================");
 
         System.out.print("Enter your username (or type 'esc' to go back): ");
-        String username = keyboard.nextLine();
+        String username = sc.nextLine();
         if (username.equalsIgnoreCase("esc")) {
             SystemMenu();
             return;
@@ -491,42 +494,42 @@ public class Menu {
             ClientWelcomeMenu();
         } else {
             System.out.print("Enter your password (or type 'esc' to go back): ");
-            String password = keyboard.nextLine();
+            String password = sc.nextLine();
             if (password.equalsIgnoreCase("esc")) {
                 SystemMenu();
                 return;
             }
 
             System.out.print("Enter your full name (or type 'esc' to go back): ");
-            String fullname = keyboard.nextLine();
+            String fullname = sc.nextLine();
             if (fullname.equalsIgnoreCase("esc")) {
                 SystemMenu();
                 return;
             }
 
             System.out.print("Enter your date of birth (or type 'esc' to go back): ");
-            String dateOfBirth = keyboard.nextLine();
+            String dateOfBirth = sc.nextLine();
             if (dateOfBirth.equalsIgnoreCase("esc")) {
                 SystemMenu();
                 return;
             }
 
             System.out.print("Enter your email (or type 'esc' to go back): ");
-            String email = keyboard.nextLine();
+            String email = sc.nextLine();
             if (email.equalsIgnoreCase("esc")) {
                 SystemMenu();
                 return;
             }
 
             System.out.print("Enter your address (or type 'esc' to go back): ");
-            String address = keyboard.nextLine();
+            String address = sc.nextLine();
             if (address.equalsIgnoreCase("esc")) {
                 SystemMenu();
                 return;
             }
 
             System.out.print("Enter your phone number (or type 'esc' to go back): ");
-            String phoneNumber = keyboard.nextLine();
+            String phoneNumber = sc.nextLine();
             if (phoneNumber.equalsIgnoreCase("esc")) {
                 SystemMenu();
                 return;
@@ -551,7 +554,7 @@ public class Menu {
                 ClientUpdateMenu();
                 break;
             case 2:
-                ViewProductMenu();
+//                ViewProductMenu();
                 break;
             case 3:
                 SystemMenu();
@@ -586,80 +589,80 @@ public class Menu {
     }
 
     //allow customer to view product with sorting options
-    public static void ViewProductMenu() throws IOException {
-        System.out.println("============================== Customer - View Product Detail ==============================");
-        System.out.println("Would you like to sort your product?");
-        System.out.println("1. View all product.");
-        System.out.println("2. Ascending price.");
-        System.out.println("3. Descending price.");
-        System.out.println("4. By product category.");
-        System.out.println("5. By price range.");
-        System.out.println("6. Return to Customer Action Menu.");
-        System.out.println("7. Exit.");
-        System.out.print("Enter your option in NUMBER format (1-7): ");
-        int option = getValidatedInput(1,7);
+//    public static void ViewProductMenu() throws IOException {
+//        System.out.println("============================== Customer - View Product Detail ==============================");
+//        System.out.println("Would you like to sort your product?");
+//        System.out.println("1. View all product.");
+//        System.out.println("2. Ascending price.");
+//        System.out.println("3. Descending price.");
+//        System.out.println("4. By product category.");
+//        System.out.println("5. By price range.");
+//        System.out.println("6. Return to Customer Action Menu.");
+//        System.out.println("7. Exit.");
+//        System.out.print("Enter your option in NUMBER format (1-7): ");
+//        int option = getValidatedInput(1,7);
+//
+//        switch (option){
+//            case 1:
+//                product.viewAllProductSort("none");
+//                ViewProductMenu();
+//                break;
+//
+//            case 2:
+//                product.viewAllProductSort("ascending");
+//                ViewProductMenu();
+//                break;
+//
+//            case 3:
+//                product.viewAllProductSort("descending");
+//                ViewProductMenu();
+//                break;
+//
+//            case 4:
+//                System.out.println("Here is the category list: " + product.getCategoryList());
+//                System.out.print("Please enter a category for sorting: ");
+//                String category = sc.nextLine();
+//
+//                System.out.println("How would you like to sort?");
+//                System.out.println("1. Ascending price.");
+//                System.out.println("2. Descending price.");
+//                System.out.println("3. None.");
+//                System.out.println("4. Return to View Product Detail Menu.");
+//                System.out.print("Enter your option in NUMBER format (1-3): ");
+//                option = sc.nextInt();
+//                System.out.println();
 
-        switch (option){
-            case 1:
-                product.viewAllProductSort("none");
-                ViewProductMenu();
-                break;
-
-            case 2:
-                product.viewAllProductSort("ascending");
-                ViewProductMenu();
-                break;
-
-            case 3:
-                product.viewAllProductSort("descending");
-                ViewProductMenu();
-                break;
-
-            case 4:
-                System.out.println("Here is the category list: " + product.getCategoryList());
-                System.out.print("Please enter a category for sorting: ");
-                String category = keyboard.nextLine();
-
-                System.out.println("How would you like to sort?");
-                System.out.println("1. Ascending price.");
-                System.out.println("2. Descending price.");
-                System.out.println("3. None.");
-                System.out.println("4. Return to View Product Detail Menu.");
-                System.out.print("Enter your option in NUMBER format (1-3): ");
-                option = keyboard.nextInt();
-                System.out.println();
-
-                switch (option){
-                    case 1:
-                        product.viewCategorySort(category,"ascending");
-                        ViewProductMenu();
-                        break;
-                    case 2:
-                        product.viewCategorySort(category,"descending");
-                        ViewProductMenu();
-                        break;
-                    case 3:
-                        product.viewCategorySort(category,"none");
-                        ViewProductMenu();
-                        break;
-                    case 4:
-                        ViewProductMenu();
-                        break;
-                }
-                break;
-
-            case 5:
-                product.viewPriceRangeSort();
-                ViewProductMenu();
-                break;
-            case 6:
-                CustomerActionMenu();
-                break;
-            case 7:
-                ThankYouMenu();
-                break;
-        }
-    }
+//                switch (option){
+//                    case 1:
+//                        product.viewCategorySort(category,"ascending");
+//                        ViewProductMenu();
+//                        break;
+//                    case 2:
+//                        product.viewCategorySort(category,"descending");
+//                        ViewProductMenu();
+//                        break;
+//                    case 3:
+//                        product.viewCategorySort(category,"none");
+//                        ViewProductMenu();
+//                        break;
+//                    case 4:
+//                        ViewProductMenu();
+//                        break;
+//                }
+//                break;
+//
+//            case 5:
+//                product.viewPriceRangeSort();
+//                ViewProductMenu();
+//                break;
+//            case 6:
+//                CustomerActionMenu();
+//                break;
+//            case 7:
+//                ThankYouMenu();
+//                break;
+//        }
+//    }
 
     public static void ThankYouMenu(){
         System.out.println("============================== Thank you for using our system! Goodbye ==============================");

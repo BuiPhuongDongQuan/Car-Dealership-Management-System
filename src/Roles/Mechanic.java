@@ -25,7 +25,7 @@ public class Mechanic extends User {
 
         if(user == null){
             System.out.println("Manager not found. Please register to begin.");
-            Menu.systemMenu();
+            Menu.SystemMenu();
         } else{
             if(user.authenticate(username, password, "Mechanic")){;
                 System.out.println("Login success! Welcome back Mechanic!");
