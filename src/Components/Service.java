@@ -1,6 +1,7 @@
 package Components;
 
 import Features.Features;
+
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -15,6 +16,7 @@ public class Service{
     private String listOfReplacedPart;
     private long serviceCost;
     private String additionalNotes;
+
     ArrayList<Service> services = new ArrayList<>();
 
     public Service(){
@@ -115,38 +117,15 @@ public class Service{
         }
     }
 
-    public boolean checkServiceDate(String serviceDate){
-        readData();
-        boolean validateServiceDate = false;
-        for(Service service: services) {
-            if (service.getServiceDate().equals(serviceDate)) {
-                validateServiceDate = true;
-            }
-        }
-        return validateServiceDate;
-    }
-
-    public void getServiceDate(String serviceDate){
-        readData();
-        System.out.println("Here is the service in : " + serviceDate);
-        System.out.println("ID, Client ID, Mechanic ID, Service Type, List of Replaced Part, Service Cost, Additional Notes ");
-        for(Service service: services) {
-            if (service.getServiceDate().equals(serviceDate)) {
-                String costFormat = String .format("%,d", service.getServiceCost());
-                System.out.println(service.getId() +", " + ", "+ service.getClientId() +", "+ service.getMechanicId() +", "+ service.getServiceType() +", "+ service.getListOfReplacedPart() + ", "+ costFormat +", "+ service.getAdditionalNotes());
-            }
-        }
-    }
-
     //calculate total service cost
     public void calculateServiceCost(){
         readData();
-         long totalCost = 0;
-         for(Service service: services) {
-             totalCost += service.getServiceCost();
-         }
-         String priceFormat = String.format("The service total revenue is: %,d", totalCost);
-         System.out.println(priceFormat + " VND");
+        long totalCost = 0;
+        for(Service service: services) {
+            totalCost += service.getServiceCost();
+        }
+        String priceFormat = String.format("The service total revenue is: %,d", totalCost);
+        System.out.println(priceFormat + " VND");
     }
 
     // calculate total service cost on specific date
@@ -166,7 +145,7 @@ public class Service{
     public void calculateServiceCostMonth(String serviceMonth){
         readData();
         long totalCost = 0;
-        String regex = "(\\d{2})-(\\d{2})-\\d{4}";
+        String regex = "(\\d{2})-(\\d{2})-(\\d{4})";
         Pattern pattern = Pattern.compile(regex);
 
         for(Service service: services) {
@@ -177,7 +156,6 @@ public class Service{
                     totalCost += service.getServiceCost();
                 }
             }
-
         }
         String priceFormat = String.format("The service total revenue is: %,d", totalCost);
         System.out.println(priceFormat + " VND");
@@ -187,7 +165,7 @@ public class Service{
     public void calculateServiceCostYear(String serviceYear){
         readData();
         long totalCost = 0;
-        String regex = "(\\d{2})-(\\d{2})-\\d{4}";
+        String regex = "(\\d{2})-(\\d{2})-(\\d{4})";
         Pattern pattern = Pattern.compile(regex);
 
         for(Service service: services) {
@@ -201,5 +179,60 @@ public class Service{
         }
         String priceFormat = String.format("The service total revenue is: %,d", totalCost);
         System.out.println(priceFormat + " VND");
+    }
+
+    // list all services on a specific date
+    public void listAllServicesDate(String serviceDate){
+        readData();
+        System.out.println("Here is the service in : " + serviceDate);
+        System.out.println("ID, Client ID, Mechanic ID, Service Type, List of Replaced Part, Service Cost, Additional Notes ");
+        for(Service service: services) {
+            if (service.getServiceDate().equals(serviceDate)) {
+                String costFormat = String .format("%,d", service.getServiceCost());
+                System.out.println(service.getId() +", "+ service.getClientId() +", "+ service.getMechanicId() +", "+ service.getServiceType() +", "+ service.getListOfReplacedPart() + ", "+ costFormat +"VND" +", "+ service.getAdditionalNotes());
+            }
+        }
+    }
+
+    // list all services in month
+    public void listAllServicesMonth(String serviceMonth) {
+        readData();
+        System.out.println("Here is the service in month : " + serviceMonth);
+        System.out.println("ID, Client ID, Mechanic ID, Service Type, List of Replaced Part, Service Cost, Additional Notes ");
+
+        String regex = "(\\d{2})-(\\d{2})-(\\d{4})";
+        Pattern pattern = Pattern.compile(regex);
+
+        for (Service service : services) {
+            Matcher matcher = pattern.matcher(service.getServiceDate());
+            if (matcher.find()) {
+                String month = matcher.group(2);
+                if (serviceMonth.equals(month)) {
+                    String costFormat = String .format("%,d", service.getServiceCost());
+                    System.out.println(service.getId() +", "+ service.getClientId() +", "+ service.getMechanicId() +", "+ service.getServiceType() +", "+ service.getListOfReplacedPart() + ", "+ costFormat +"VND" +", "+ service.getAdditionalNotes());
+                }
+            }
+        }
+    }
+
+    // list all services in a year
+    public void listAllServicesYear(String serviceYear) {
+        readData();
+        System.out.println("Here is the service in year : " + serviceYear);
+        System.out.println("ID, Client ID, Mechanic ID, Service Type, List of Replaced Part, Service Cost, Additional Notes ");
+
+        String regex = "(\\d{2})-(\\d{2})-(\\d{4})";
+        Pattern pattern = Pattern.compile(regex);
+
+        for (Service service : services) {
+            Matcher matcher = pattern.matcher(service.getServiceDate());
+            if (matcher.find()) {
+                String year = matcher.group(3);
+                if (serviceYear.equals(year)) {
+                    String costFormat = String .format("%,d", service.getServiceCost());
+                    System.out.println(service.getId() +", "+ service.getClientId() +", "+ service.getMechanicId() +", "+ service.getServiceType() +", "+ service.getListOfReplacedPart() + ", "+ costFormat +"VND" +", "+ service.getAdditionalNotes());
+                }
+            }
+        }
     }
 }
