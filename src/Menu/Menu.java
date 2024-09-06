@@ -1,9 +1,10 @@
 package Menu;
 
 import Components.Service;
+
+
 import Components.saleTransaction;
 import Roles.*;
-import Roles.Employee;
 import Roles.Client;
 import Roles.Manager;
 import Roles.Mechanic;
@@ -13,7 +14,6 @@ import java.util.*;
 
 public class Menu {
     static Manager manager = new Manager();
-    static Employee employee = new Employee();
     static Mechanic mechanic = new Mechanic();
     static Salesperson salesperson = new Salesperson();
     static Service service = new Service();
@@ -174,17 +174,41 @@ public class Menu {
                 System.out.print("============================== Manager - Transaction Total Revenue ==============================");
         }
     }
+    // employee menu
+    public static void EmployeeMenu() throws IOException {
+        System.out.println("============================== Employee - Menu ===============================");
+        System.out.println("1. Mechanic");
+        System.out.println("2. Salesperson");
+        int choice = optionInput();
 
-////////////////////////EMPLOYEE////////////////////
-    // employee login menu
-    public static void EmployeeLoginMenu() throws IOException {
+        switch (choice) {
+            case 1:
+                MechanicLoginMenu();
+                break;
+            case 2:
+
+
+        }
+    }
+    // mechanic login menu
+    public static void MechanicLoginMenu() throws IOException {
         System.out.println("============================== Employee - Login ===============================");
         System.out.print("Enter your username: ");
         String username = sc.nextLine();
         System.out.print("Enter your password: ");
         String password = sc.nextLine();
 
-        employee.login(username, password);
+        mechanic.login(username, password);
+    }
+
+    public static void SalespersonLoginMenu() throws IOException {
+        System.out.println("============================== Employee - Login ===============================");
+        System.out.print("Enter your username: ");
+        String username = sc.nextLine();
+        System.out.print("Enter your password: ");
+        String password = sc.nextLine();
+
+        salesperson.login(username, password);
     }
 
 //////////////////////Salesperson////////////////////////
@@ -385,7 +409,7 @@ public class Menu {
     // view and update mechanic information
     public static void viewAndUpdateMechanicInfo() throws IOException {
         System.out.println("============================== Mechanic Information ==============================");
-        mechanic.viewMechanicInfo(employee.getUsername());
+        mechanic.viewMechanicInfo(mechanic.getUsername());
 
         System.out.println("============================== What do you want to update? =============================");
         System.out.println("1. Update Full name");
@@ -398,7 +422,7 @@ public class Menu {
         int choice = optionInput();
 
         System.out.println();
-        mechanic.mechanicUpdateInfo(choice, employee.getUsername());
+        mechanic.mechanicUpdateInfo(choice, mechanic.getUsername());
         MechanicMenu();
     }
 
