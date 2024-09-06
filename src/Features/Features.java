@@ -71,9 +71,7 @@ public class Features {
                 data.append(",");
             }
         }
-
         String string = data.toString();
-
         return string;
     }
 
@@ -89,9 +87,7 @@ public class Features {
                 data.append(arrayList.get(i));
             }
         }
-
         String string = data.toString();
-
         return string;
     }
 
