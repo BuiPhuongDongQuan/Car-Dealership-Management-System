@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class User {
-    private final String user_data = "src/Database/User.txt";
+    protected final String user_data = "src/Database/User.txt";
     ArrayList<User> users = new ArrayList<>();
 
     private String id;
