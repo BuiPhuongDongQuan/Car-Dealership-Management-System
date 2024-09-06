@@ -1,7 +1,6 @@
 package Components;
 
 import Features.Features;
-import Roles.Employee;
 
 import java.util.ArrayList;
 import java.util.regex.Matcher;
@@ -121,12 +120,12 @@ public class Service{
     //calculate total service cost
     public void calculateServiceCost(){
         readData();
-         long totalCost = 0;
-         for(Service service: services) {
-             totalCost += service.getServiceCost();
-         }
-         String priceFormat = String.format("The service total revenue is: %,d", totalCost);
-         System.out.println(priceFormat + " VND");
+        long totalCost = 0;
+        for(Service service: services) {
+            totalCost += service.getServiceCost();
+        }
+        String priceFormat = String.format("The service total revenue is: %,d", totalCost);
+        System.out.println(priceFormat + " VND");
     }
 
     // calculate total service cost on specific date
@@ -157,7 +156,6 @@ public class Service{
                     totalCost += service.getServiceCost();
                 }
             }
-
         }
         String priceFormat = String.format("The service total revenue is: %,d", totalCost);
         System.out.println(priceFormat + " VND");
@@ -183,7 +181,7 @@ public class Service{
         System.out.println(priceFormat + " VND");
     }
 
-    // list all services in a specific date
+    // list all services on a specific date
     public void listAllServicesDate(String serviceDate){
         readData();
         System.out.println("Here is the service in : " + serviceDate);

@@ -2,6 +2,7 @@ package Features;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Features {
     //Count lines and keep track of the ID
@@ -70,9 +71,7 @@ public class Features {
                 data.append(",");
             }
         }
-
         String string = data.toString();
-
         return string;
     }
 
@@ -88,9 +87,7 @@ public class Features {
                 data.append(arrayList.get(i));
             }
         }
-
         String string = data.toString();
-
         return string;
     }
 
@@ -126,6 +123,23 @@ public class Features {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+    //read all lines in a file
+    //Source: https://www.w3schools.com/java/java_files_read.asp
+    public static void readAllLines(String filepath){
+        try{
+            File file = new File(filepath);
+            Scanner reader = new Scanner(file);
+            while(reader.hasNextLine()){
+                String data = reader.nextLine();
+                System.out.println(data);
+            }
+            reader.close();
+        }catch(FileNotFoundException e){
+            System.out.println("An error occurred.");
+            e.printStackTrace();
         }
     }
 

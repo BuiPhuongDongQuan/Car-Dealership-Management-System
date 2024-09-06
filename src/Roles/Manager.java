@@ -1,4 +1,5 @@
 package Roles;
+import Features.Features;
 import Menu.Menu;
 
 import java.io.IOException;
@@ -21,9 +22,10 @@ public class Manager extends User {
         user = getUser(username);
 
         if(user == null){
-            System.out.println("Manager not found. Please register to begin.");
-            Menu.systemMenu();
-        } else{
+            System.out.println("Manager not found.");
+            Menu.ManagerLoginMenu();
+        }
+        else{
             if(user.authenticate(username, password, "Manager")){;
                 System.out.println("Login success! Welcome back manager!");
                 Menu.ManagerMenu();
@@ -36,5 +38,9 @@ public class Manager extends User {
         }
     }
 
+    // manager view all information
+    public void viewInformation(String filepath) throws IOException{
+        Features.readAllLines(filepath);
+    }
 }
 
