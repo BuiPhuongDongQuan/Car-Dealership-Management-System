@@ -12,16 +12,16 @@ public class Client extends User {
         super();
         readData();
     }
-    public Client(String id, String fullname, String dateOfBirth, String address, String phoneNumber, String email, String userType, String status, String username, String password) {
-        super(id, fullname, dateOfBirth, address, phoneNumber, email, userType, status, username, password);
+    public Client(String id, String fullname, String dateOfBirth, String address, String phoneNumber, String email, String userType, String status, String membership, String username, String password, long totalSpending) {
+        super(id, fullname, dateOfBirth, address, phoneNumber, email, userType, status, membership ,username, password, totalSpending);
     }
 
+    ArrayList<Client> clients = new ArrayList<>();
 
     public void login(String username, String password) throws IOException{
         readData();
 
-        User user = new User();
-        user = getUser(username);
+        User user = getUser(username);
 
         if(user == null){
             System.out.println("Client not found. Please register to begin.");
@@ -43,9 +43,11 @@ public class Client extends User {
     public void register(String fullName, String dateOfBirth, String address, String phoneNumber, String email, String username, String password) throws IOException {
         int countLine = Features.countLine(user_data);
         String id = "U" + countLine;
-        String user_type = "Client";
+        String user_type = "Customer";
         String status = "Active";
-        String newClient = "\n" + id+ "," + fullName+ "," + dateOfBirth+ "," + address+ "," + phoneNumber+ "," + email+ "," + user_type+ "," + status+ "," + username + "," + password;
+        String membership = "Regular";
+        long totalSpending = 0;
+        String newClient = "\n" + id+ "," + fullName+ "," + dateOfBirth+ "," + address+ "," + phoneNumber+ "," + email+ "," + user_type+ "," + status+ "," + membership+ "," + username + "," + password + "," + totalSpending;
         Features.writeToFile(user_data, newClient);
     }
 
@@ -86,15 +88,38 @@ public class Client extends User {
                         "- Email: " + client.getEmail() + "\n" +
                         "- Address: " + client.getAddress() + "\n" +
                         "- Phone number: " + client.getPhoneNumber() + "\n" +
+                        "- Membership: " + client.getMembership() + "\n" +
                         "- Password: " + client.getPassword());
             }
         }
     }
 
+    //search for client membership by username
+    public void viewMembership(String username) {
+        readData();
+
+        for (User client : users) {
+            if (client.getUsername().equals(username)) {
+                System.out.println("Your current membership is: " + client.getMembership());
+
+                String reward = switch (client.getMembership()) {
+                    case "Silver" -> "5%";
+                    case "Gold" -> "10%";
+                    case "Platinum" -> "15%";
+                    default -> "0%";
+                };
+
+                System.out.println("Your current reward is: " + reward + " discount.");
+                return; // Exit the method once the correct user is found and processed
+            }
+        }
+    }
+
+
     public void clientUpdateInfo(int userInput, String username) throws IOException {
         Scanner keyboard = new Scanner(System.in);
         User client = getUser(username);
-        String oldContent = client.getId() + "," + client.getFullname() + "," + client.getDateOfBirth() + "," + client.getAddress() + "," + client.getPhoneNumber() + "," + client.getEmail() + "," + client.getUserType() + "," + client.getStatus()+ "," + client.getUsername()+ "," + client.getPassword();
+        String oldContent = client.getId() + "," + client.getFullname() + "," + client.getDateOfBirth() + "," + client.getAddress() + "," + client.getPhoneNumber() + "," + client.getEmail() + "," + client.getUserType() + "," + client.getStatus() + "," + client.getMembership() + "," + client.getUsername() + "," + client.getPassword() + "," + client.getTotalSpending();
 
         String[] updateClientInfo = oldContent.split(",");
         String updatedContent = "";
@@ -122,7 +147,7 @@ public class Client extends User {
                 Features.modifyFile(user_data, oldContent, updatedContent);
                 break;
 
-            //update email
+            //update address
             case 3:
                 System.out.println("----- Address update -----");
                 System.out.print("Enter your new address: ");
@@ -133,7 +158,7 @@ public class Client extends User {
                 Features.modifyFile(user_data, oldContent, updatedContent);
                 break;
 
-            //update address
+            //update phone number
             case 4:
                 System.out.println("----- Phone number update -----");
                 System.out.print("Enter your new phone number: ");
@@ -144,7 +169,7 @@ public class Client extends User {
                 Features.modifyFile(user_data, oldContent, updatedContent);
                 break;
 
-            //update phone number
+            //update email
             case 5:
                 System.out.println("----- Email update -----");
                 System.out.print("Enter your new email: ");
@@ -161,7 +186,7 @@ public class Client extends User {
                 System.out.print("Enter your new password: ");
                 String newPassword = keyboard.nextLine();
 
-                updateClientInfo[9] = newPassword;
+                updateClientInfo[10] = newPassword;
                 updatedContent = Features.arrayToCSVString(updateClientInfo);
                 Features.modifyFile(user_data, oldContent, updatedContent);
                 break;

@@ -9,8 +9,8 @@ public class Mechanic extends Employee {
     public Mechanic() {
         super();
     }
-    public Mechanic(String id, String fullname, String dateOfBirth, String address, String phoneNumber, String email, String userType, String status, String username, String password) {
-        super(id, fullname, dateOfBirth, address, phoneNumber, email, userType, status, username, password);
+    public Mechanic(String id, String fullname, String dateOfBirth, String address, String phoneNumber, String email, String userType, String status, String membership, String username, String password, long totalSpending) {
+        super(id, fullname, dateOfBirth, address, phoneNumber, email, userType, status, membership ,username, password, totalSpending);
     }
 
     // view mechanic's information by username

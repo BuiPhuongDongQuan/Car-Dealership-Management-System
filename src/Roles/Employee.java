@@ -3,15 +3,19 @@ package Roles;
 import Menu.Menu;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class Employee extends User {
 
     public Employee() {
         super();
     }
-    public Employee(String id, String fullname, String dateOfBirth, String address, String phoneNumber, String email, String userType, String status, String username, String password) {
-        super(id, fullname, dateOfBirth, address, phoneNumber, email, userType, status, username, password);
+    public Employee(String id, String fullname, String dateOfBirth, String address, String phoneNumber, String email, String userType, String status, String membership, String username, String password, long totalSpending) {
+        super(id, fullname, dateOfBirth, address, phoneNumber, email, userType, status, membership ,username, password, totalSpending);
     }
+
+    ArrayList<Employee> employees = new ArrayList<>();
+
 
     public void login(String username, String password) throws IOException {
         readData();

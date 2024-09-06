@@ -2,6 +2,9 @@ package Components;
 
 import Features.Features;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.*;
 import java.util.regex.Pattern;
 
@@ -17,7 +20,7 @@ public class Car {
 
 
     private static String tableFormat = "%-20s%-20s%-20s%-20s%-20s%-20s%-20s%-20s\n";
-    private final String car_data = "src/Database/Car.txt";
+    private static final String car_data = "src/Database/Car.txt";
 
     ArrayList<Car> cars = new ArrayList<>();
 
@@ -36,7 +39,7 @@ public class Car {
 
     }
 
-    //view all product, allow sorting by price range
+    //view all car and sort by ascending or descending
     public void viewAllCarSort(String sortOrder){
         extractDatabase();
 
@@ -279,14 +282,14 @@ public class Car {
         System.out.println();
         for(int i = 0; i <=90;i++){
             if(i == 35){
-                System.out.print(" Product Detail ");
+                System.out.print(" Car Detail ");
             }
             if(i < 35 || i > 50){
                 System.out.print("-");
             }
         }
         System.out.println();
-        System.out.printf(tableFormat,"Product ID", "Brand", "Model", "Year", "Mileage", "Color", "Status", "Price");
+        System.out.printf(tableFormat,"Car ID", "Brand", "Model", "Year", "Mileage", "Color", "Status", "Price");
         printTableBottomBorder();
     }
 
@@ -295,6 +298,68 @@ public class Car {
             System.out.print("-");
         }
         System.out.println();
+    }
+
+    //validate productID
+    public boolean validateCarID(String productID){
+        extractDatabase();
+        boolean validateProductID = false;
+        for(Car car:cars) {
+            if (car.getId().equals(productID)) {
+                validateProductID = true;
+            }
+        }
+        return validateProductID;
+    }
+
+    //display product info
+    public void printCarInfo(String carID){
+        extractDatabase();
+        for(Car car:cars){
+            if(car.id.equals(carID)){
+                System.out.println("- CarID: " + car.id);
+                System.out.println("- Brand: " + car.make);
+                System.out.println("- Model: " + car.model);
+                System.out.println("- Year: " + car.year);
+                System.out.println("- Mileage: " + car.mileage);
+                System.out.println("- Color: " + car.color);
+                System.out.printf("- Price (in VND): %,d\n", car.price);
+            }
+        }
+    }
+
+    public Car getCar(String carID){
+        extractDatabase();
+
+        for(Car car:cars){
+            if(car.id.equals(carID)){
+                return car;
+            }
+        }
+
+        return null;
+    }
+
+    public boolean isAvailable() {
+        return "Available".equalsIgnoreCase(status);
+    }
+
+    public static void updateCarStatusInDatabase(Car car) throws IOException {
+        //
+        List<String> lines = Files.readAllLines(Paths.get(car_data));
+        List<String> updatedLines = new ArrayList<>();
+
+        for (String line : lines) {
+            if (line.contains(car.getId())) {
+                // Replace the line with the updated status
+                String updatedLine = line.replace(",Available", ",Sold");
+                updatedLines.add(updatedLine);
+            } else {
+                updatedLines.add(line);
+            }
+        }
+
+        Files.write(Paths.get(car_data), updatedLines);
     }
 
     public String getId() {

@@ -1,0 +1,31 @@
+Part ID,Part Name,Manufacturer,Part Number,Condition,Warranty,Cost
+P-0001,Brake Pad Set,Brembo,BP-1234,New,2 years,$150
+P-0002,Air Filter,Bosch,AF-5678,New,1 year,$20
+P-0003,Fuel Pump,Denso,FP-9102,Refurbished,6 months,$120
+P-0004,Spark Plug,NGK,SP-3345,New,1 year,$10
+P-0005,Oil Filter,Fram,OF-4456,New,1 year,$15
+P-0006,Alternator,Valeo,ALT-7834,Used,6 months,$180
+P-0007,Radiator,Behr,RAD-2938,New,2 years,$250
+P-0008,Timing Belt,Gates,TB-5543,New,1 year,$50
+P-0009,Water Pump,Aisin,WP-7856,Refurbished,6 months,$90
+P-0010,Oxygen Sensor,Bosch,OS-1237,New,1 year,$75
+P-0011,CV Joint,GKN,CVJ-4321,New,2 years,$200
+P-0012,Headlight Assembly,Hella,HL-2345,Used,1 year,$300
+P-0013,Windshield Wiper,Valeo,WW-5432,New,6 months,$25
+P-0014,Fuel Injector,Delphi,FI-9834,Refurbished,6 months,$110
+P-0015,Battery,Exide,BAT-2234,New,3 years,$130
+P-0016,Clutch Kit,Luk,CK-3346,New,2 years,$350
+P-0017,Exhaust Manifold,MagnaFlow,EM-4455,Used,1 year,$250
+P-0018,Power Steering Pump,ACDelco,PSP-7765,New,2 years,$220
+P-0019,Catalytic Converter,Walker,CC-3453,Refurbished,6 months,$400
+P-0020,Turbocharger,Garrett,TC-9856,New,2 years,$800
+P-0021,Timing Chain,Cloyes,TC-2238,New,1 year,$70
+P-0022,Suspension Strut,Monroe,SS-3347,New,1 year,$150
+P-0023,Brake Rotor,Brembo,BR-6543,New,2 years,$120
+P-0024,Fuel Tank,Spectra,FT-7834,Used,1 year,$300
+P-0025,Ignition Coil,Bosch,IC-5543,New,1 year,$45
+P-0026,Drive Shaft,Spicer,DS-3348,Refurbished,6 months,$180
+P-0027,Starter Motor,Denso,SM-7768,New,2 years,$250
+P-0028,Shock Absorber,Bilstein,SA-2245,New,2 years,$110
+P-0029,Throttle Body,Bosch,TB-9934,Refurbished,6 months,$250
+P-0030,Window Regulator,Dorman,WR-3344,New,1 year,$90

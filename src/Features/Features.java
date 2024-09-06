@@ -1,7 +1,9 @@
 package Features;
 
 import java.io.*;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Features {
     //Count lines and keep track of the ID
@@ -125,5 +127,11 @@ public class Features {
         String string = data.toString();
 
         return string;
+    }
+
+    public static String getDate(){
+        String pattern = "dd-MM-yyyy";
+        String dateInString = new SimpleDateFormat(pattern).format(new Date());
+        return dateInString;
     }
 }

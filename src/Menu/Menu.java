@@ -5,7 +5,12 @@ import Roles.Employee;
 import Roles.Client;
 import Roles.Manager;
 import Roles.Mechanic;
+import Roles.Salesperson;
+import Roles.User;
 import Components.Car;
+import Components.AutoPart;
+import Components.ServiceType;
+import Components.saleTransaction;
 
 import java.io.*;
 import java.util.*;
@@ -15,9 +20,13 @@ public class Menu {
     static Manager manager = new Manager();
     static Employee employee = new Employee();
     static Mechanic mechanic = new Mechanic();
+    static Salesperson salesperson = new Salesperson();
     static Service service = new Service();
     static Client client = new Client();
     static Car car = new Car();
+    static AutoPart autoPart = new AutoPart();
+    static ServiceType serviceType = new ServiceType();
+    static saleTransaction saleTransaction = new saleTransaction();
 
     static BufferedReader sc = new BufferedReader(new InputStreamReader(System.in));
 
@@ -214,8 +223,6 @@ public class Menu {
 
     public static void ClientLoginMenu() throws IOException {
         System.out.println("============================== Client - Login ==============================");
-        sc.readLine();
-
         System.out.print("Enter your username (or type 'esc' to go back): ");
         String username = sc.readLine();
         if (username.equalsIgnoreCase("esc")) {
@@ -301,21 +308,43 @@ public class Menu {
     public static void ClientMenu() throws IOException {
         System.out.println("============================== Client - Menu ==================================");
         System.out.println("1. View and Update personal information.");
-        System.out.println("2. List all cars and view product details.");
-
-        int choice = getValidatedInput(1, 4);
+        System.out.println("2. View membership and reward.");
+        System.out.println("3. List all cars and view car details.");
+        System.out.println("4. List all services.");
+        System.out.println("5. List all auto parts.");
+        System.out.println("6. Create car orders.");
+        System.out.println("7. Create service order.");
+        System.out.println("8. Create auto parts order.");
+        System.out.println("9. Exit.");
+        int choice = getValidatedInput(1, 9);
 
         switch (choice){
             case 1:
                 ClientUpdateMenu();
                 break;
             case 2:
-                ViewCarMenu();
+                System.out.println("============================== Membership Status ==============================");
+                client.viewMembership(client.getUsername());
+                ClientMenu();
                 break;
             case 3:
-                SystemMenu();
+                ViewCarMenu();
                 break;
             case 4:
+                System.out.println("============================== Services Categories ==============================");
+                serviceType.viewAllServiceSort("none");
+                ClientMenu();
+                break;
+            case 5:
+                System.out.println("============================== Auto Part Categories ==============================");
+                autoPart.viewAllAutoPartSort("none");
+                ClientMenu();
+                break;
+            case 6:
+                System.out.println("============================== Create Car Order =============================");
+                CreateCarTransactionMenu();
+                break;
+            case 9:
                 ThankYouMenu();
                 System.exit(0);
                 break;
@@ -324,7 +353,7 @@ public class Menu {
 
     //Client update data information
     public static void ClientUpdateMenu() throws IOException {
-        System.out.println("============================== Client - View and Update Personal Information ==============================");
+        System.out.println("============================== View and Update Personal Information ==============================");
         client.viewClientInfo(client.getUsername());
 
         //Ask user for which update option
@@ -346,8 +375,8 @@ public class Menu {
 
     //allow customer to view product with sorting options
     public static void ViewCarMenu() throws IOException {
-        System.out.println("============================== Customer - View Car Categories ==============================");
-        System.out.println("Would you like to sort your product?");
+        System.out.println("============================== View Car Categories ==============================");
+        System.out.println("Would you like to sort car?");
         System.out.println("1. View all products.");
         System.out.println("2. Ascending price.");
         System.out.println("3. Descending price.");
@@ -409,7 +438,7 @@ public class Menu {
                 System.out.println("1. Ascending price.");
                 System.out.println("2. Descending price.");
                 System.out.println("3. None.");
-                System.out.println("4. Return to View Product Detail Menu.");
+                System.out.println("4. Return to View Car Detail Menu.");
                 int statusSortOption = getValidatedInput(1, 4);
 
                 switch (statusSortOption) {
@@ -447,7 +476,29 @@ public class Menu {
         ViewCarMenu();
     }
 
+    //allow client to create car order
+    public static void CreateCarTransactionMenu() throws IOException {
+        System.out.print("Enter the car ID you wanted to order: ");
+        String carID = sc.readLine();
+        System.out.print("Enter the salesperson ID that serve you: ");
+        String salespersonID = sc.readLine();
+        if(car.validateCarID(carID) == true && salesperson.validateSalespersonID(salespersonID) == true){
+            System.out.println("Here is the salesperson name: ");
+            salesperson.viewSalespersonInfo(salespersonID);
 
+            System.out.println("Here is the car info: ");
+            car.printCarInfo(carID);
+
+            saleTransaction.createOrder(client.getUser(client.getUsername()), car.getCar(carID), salespersonID);
+        } else if (salesperson.validateSalespersonID(salespersonID) == false) {
+            System.out.println(salespersonID);
+            System.out.println("Salesperson not found.");
+            CreateCarTransactionMenu();
+        } else{
+            System.out.println("Car not found.");
+            CreateCarTransactionMenu();
+        }
+    }
 
     public static void ThankYouMenu(){
         System.out.println("============================== Thank you for using our system! Goodbye ==============================");

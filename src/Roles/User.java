@@ -3,7 +3,6 @@ package Roles;
 import Features.Features;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class User {
     private final String user_data = "src/Database/User.txt";
@@ -17,10 +16,12 @@ public class User {
     private String email;
     private String userType;
     private String status;
+    private String membership;
     private String username;
     private String password;
+    private long totalSpending;
 
-    public User(String id, String fullname, String dateOfBirth, String address, String phoneNumber, String email, String userType, String status, String username, String password) {
+    public User(String id, String fullname, String dateOfBirth, String address, String phoneNumber, String email, String userType, String status, String membership,String username, String password, long totalSpending) {
         this.id = id;
         this.fullname = fullname;
         this.dateOfBirth = dateOfBirth;
@@ -29,8 +30,10 @@ public class User {
         this.email = email;
         this.userType = userType;
         this.status = status;
+        this.membership = membership;
         this.username = username;
         this.password = password;
+        this.totalSpending = totalSpending;
     }
 
     public User() {}
@@ -99,6 +102,14 @@ public class User {
         this.status = status;
     }
 
+    public String getMembership() {
+        return membership;
+    }
+
+    public void setMembership(String membership) {
+        this.membership = membership;
+    }
+
     public String getUsername() {
         return username;
     }
@@ -115,6 +126,14 @@ public class User {
         this.password = password;
     }
 
+    public long getTotalSpending() {
+        return totalSpending;
+    }
+
+    public void setTotalSpending(long totalSpending) {
+        this.totalSpending = totalSpending;
+    }
+
     // read data from database and add to arraylist
     public void readData() {
         users.clear();
@@ -127,13 +146,15 @@ public class User {
         String[] email = Features.ReadCol(5, user_data, ",");
         String[] userType = Features.ReadCol(6, user_data, ",");
         String[] status = Features.ReadCol(7, user_data, ",");
-        String[] username = Features.ReadCol(8, user_data, ",");
-        String[] password = Features.ReadCol(9, user_data, ",");
+        String[] membership = Features.ReadCol(8, user_data, ",");
+        String[] username = Features.ReadCol(9, user_data, ",");
+        String[] password = Features.ReadCol(10, user_data, ",");
+        String[] totalSpending = Features.ReadCol(11, user_data, ",");
 
         // Check if arrays have the same length
         for (int i = 0; i < countLine - 1; i++) {
             users.add(new User(
-                    id[i], fullname[i], datesOfBirth[i], address[i], phoneNumber[i], email[i], userType[i], status[i], username[i], password[i]
+                    id[i], fullname[i], datesOfBirth[i], address[i], phoneNumber[i], email[i], userType[i], status[i], membership[i],username[i], password[i], Long.parseLong(totalSpending[i])
             ));
         }
     }
@@ -149,5 +170,49 @@ public class User {
             }
         }
         return null;
+    }
+
+    //update membership everytime their spending changes.
+    public void updateMembership(String username){
+        readData();
+
+        User user = getUser(username);
+        String oldContent = user.getId() + "," + user.getFullname() + "," + user.getDateOfBirth() + "," + user.getAddress() + "," + user.getPhoneNumber() + "," + user.getEmail() + "," + user.getUserType() + "," + user.getStatus() + "," + user.getMembership() + "," + user.getUsername() + "," + user.getPassword() + "," + user.getTotalSpending();
+
+        String[] updateCustomerInfo = oldContent.split(",");
+        String updatedContent = "";
+
+        String newMembership = "";
+
+        if(user.getTotalSpending() < 30000000){
+            newMembership = "Regular";
+        }
+        else if(user.getTotalSpending() < 100000000){
+            newMembership = "Silver";
+        }
+        else if(user.getTotalSpending() < 250000000){
+            newMembership = "Gold";
+        }
+        else{
+            newMembership = "Platinum";
+        }
+        updateCustomerInfo[8] = String.valueOf(newMembership);
+        updatedContent = Features.arrayToCSVString(updateCustomerInfo);
+        Features.modifyFile(user_data, oldContent, updatedContent);
+    }
+
+    public void addSpending(String username, long orderPrice){
+        readData();
+        User user = getUser(username);
+        String oldContent = user.getId() + "," + user.getFullname() + "," + user.getDateOfBirth() + "," + user.getAddress() + "," + user.getPhoneNumber() + "," + user.getEmail() + "," + user.getUserType() + "," + user.getStatus() + "," + user.getMembership() + "," + user.getUsername() + "," + user.getPassword() + "," + user.getTotalSpending();
+
+        String[] updateClientInfo = oldContent.split(",");
+        String updatedContent = "";
+
+        long newSpending = getTotalSpending()+orderPrice;
+
+        updateClientInfo[11] = String.valueOf(newSpending);
+        updatedContent = Features.arrayToCSVString(updateClientInfo);
+        Features.modifyFile(user_data, oldContent, updatedContent);
     }
 }

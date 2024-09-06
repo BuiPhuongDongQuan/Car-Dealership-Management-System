@@ -9,8 +9,8 @@ public class Manager extends User {
     public Manager() {
         super();
     }
-    public Manager(String id, String fullname, String dateOfBirth, String address, String phoneNumber, String email, String userType, String status, String username, String password) {
-        super(id, fullname, dateOfBirth, address, phoneNumber, email, userType, status, username, password);
+    public Manager(String id, String fullname, String dateOfBirth, String address, String phoneNumber, String email, String userType, String status, String membership, String username, String password, long totalSpending) {
+        super(id, fullname, dateOfBirth, address, phoneNumber, email, userType, status, membership ,username, password, totalSpending);
     }
 
     // allow manager login
