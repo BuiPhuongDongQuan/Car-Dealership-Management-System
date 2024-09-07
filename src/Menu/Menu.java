@@ -1,21 +1,17 @@
 package Menu;
 
 import Components.Service;
-
-
-import Roles.*;
 import Roles.Client;
 import Roles.Manager;
 import Roles.Mechanic;
 import Roles.Salesperson;
-import Roles.User;
 import Components.Car;
 import Components.AutoPart;
 import Components.ServiceType;
 import Components.saleTransaction;
 
+
 import java.io.*;
-import java.util.*;
 
 
 public class Menu {
@@ -103,7 +99,6 @@ public class Menu {
             return;
         }
 
-        // Call the manager login method with username and password
         manager.login(username, password);
     }
 
@@ -189,7 +184,8 @@ public class Menu {
         System.out.println("============================== Employee - Menu ===============================");
         System.out.println("1. Mechanic");
         System.out.println("2. Salesperson");
-        int choice = getValidatedInput(1, 2);
+        System.out.println("3. Return to Store System Screen ");
+        int choice = getValidatedInput(1, 3);
 
         switch (choice) {
             case 1:
@@ -197,6 +193,9 @@ public class Menu {
                 break;
             case 2:
                 SalespersonLoginMenu();
+                break;
+            case 3:
+                SystemMenu();
                 break;
         }
     }
@@ -561,8 +560,10 @@ public class Menu {
         System.out.println("6. Create car orders.");
         System.out.println("7. Create service order.");
         System.out.println("8. Create auto parts order.");
-        System.out.println("9. Exit.");
-        int choice = getValidatedInput(1, 9);
+        System.out.println("9. Look for specific order with order ID.");
+        System.out.println("10. Get information of all orders made.");
+        System.out.println("11. Exit.");
+        int choice = getValidatedInput(1,11);
 
         switch (choice){
             case 1:
@@ -590,7 +591,17 @@ public class Menu {
                 System.out.println("============================== Create Car Order =============================");
                 CreateCarTransactionMenu();
                 break;
+            case 7:
+                System.out.println("============================== Create Service Order =============================");
+                CreateServiceTransactionMenu();
+                break;
+            case 8:
+                System.out.println("============================== Create Auto part Order =============================");
+                CreateAutoPartTransactionMenu();
+                break;
             case 9:
+                break;
+            case 11:
                 ThankYouMenu();
                 System.exit(0);
                 break;
@@ -623,7 +634,7 @@ public class Menu {
     public static void ViewCarMenu() throws IOException {
         System.out.println("============================== View Car Categories ==============================");
         System.out.println("Would you like to sort car?");
-        System.out.println("1. View all products.");
+        System.out.println("1. View all cars.");
         System.out.println("2. Ascending price.");
         System.out.println("3. Descending price.");
         System.out.println("4. By car brand.");
@@ -652,22 +663,22 @@ public class Menu {
                 String category = sc.readLine();
 
                 System.out.println("How would you like to sort?");
+                System.out.println("1. View all cars.");
                 System.out.println("1. Ascending price.");
                 System.out.println("2. Descending price.");
-                System.out.println("3. None.");
-                System.out.println("4. Return to View Product Detail Menu.");
+                System.out.println("4. Return to View Car Detail Menu.");
                 option = getValidatedInput(1, 4);
                 System.out.println();
 
                 switch (option) {
                     case 1:
-                        car.viewCarBrandSort(category, "ascending");
+                        car.viewCarBrandSort(category, "none");
                         break;
                     case 2:
-                        car.viewCarBrandSort(category, "descending");
+                        car.viewCarBrandSort(category, "ascending");
                         break;
                     case 3:
-                        car.viewCarBrandSort(category, "none");
+                        car.viewCarBrandSort(category, "descending");
                         break;
                     case 4:
                         ViewCarMenu();
@@ -681,21 +692,21 @@ public class Menu {
                 String status = (statusOption == 1) ? "Available" : "Sold";
 
                 System.out.println("How would you like to sort?");
+                System.out.println("1. View all cars.");
                 System.out.println("1. Ascending price.");
                 System.out.println("2. Descending price.");
-                System.out.println("3. None.");
                 System.out.println("4. Return to View Car Detail Menu.");
                 int statusSortOption = getValidatedInput(1, 4);
 
                 switch (statusSortOption) {
                     case 1:
-                        car.viewCarStatusSort(status, "ascending");
+                        car.viewCarStatusSort(status, "none");
                         break;
                     case 2:
-                        car.viewCarStatusSort(status, "descending");
+                        car.viewCarStatusSort(status, "ascending");
                         break;
                     case 3:
-                        car.viewCarStatusSort(status, "none");
+                        car.viewCarStatusSort(status, "descending");
                         break;
                     case 4:
                         ViewCarMenu();
@@ -724,10 +735,20 @@ public class Menu {
 
     //allow client to create car order
     public static void CreateCarTransactionMenu() throws IOException {
-        System.out.print("Enter the car ID you wanted to order: ");
+        System.out.print("Enter the car ID you wanted to order (or type 'esc' to go back): ");
         String carID = sc.readLine();
-        System.out.print("Enter the salesperson ID that serve you: ");
+        if (carID.equalsIgnoreCase("esc")) {
+            ClientMenu();
+            return; // Exit the current method to prevent further execution
+        }
+
+        System.out.print("Enter the salesperson ID that serve you (or type 'esc' to go back): ");
         String salespersonID = sc.readLine();
+        if (salespersonID.equalsIgnoreCase("esc")) {
+            ClientMenu();
+            return; // Exit the current method to prevent further execution
+        }
+
         if(car.validateCarID(carID) == true && salesperson.validateSalespersonID(salespersonID) == true){
             System.out.println("Here is the salesperson name: ");
             salesperson.viewSalespersonIDandName(salespersonID);
@@ -735,7 +756,7 @@ public class Menu {
             System.out.println("Here is the car info: ");
             car.printCarInfo(carID);
 
-            saleTransaction.createOrder(client.getUser(client.getUsername()), car.getCar(carID), salespersonID);
+            saleTransaction.createOrder(client.getUser(client.getUsername()), car.getCar(carID), null, salespersonID);
         } else if (salesperson.validateSalespersonID(salespersonID) == false) {
             System.out.println(salespersonID);
             System.out.println("Salesperson not found.");
@@ -746,6 +767,70 @@ public class Menu {
         }
     }
 
+    public static void CreateAutoPartTransactionMenu() throws IOException {
+        System.out.print("Enter the auto part ID you want to order (or type 'esc' to go back): ");
+        String autoPartID = sc.readLine();
+        if (autoPartID.equalsIgnoreCase("esc")) {
+            ClientMenu();
+            return; // Exit the current method to prevent further execution
+        }
+
+        System.out.print("Enter the salesperson ID that served you (or type 'esc' to go back): ");
+        String salespersonID = sc.readLine();
+        if (salespersonID.equalsIgnoreCase("esc")) {
+            ClientMenu();
+            return; // Exit the current method to prevent further execution
+        }
+
+        if (autoPart.validateAutoPartID(autoPartID) && salesperson.validateSalespersonID(salespersonID)) {
+            System.out.println("Here is the salesperson name: ");
+            salesperson.viewSalespersonIDandName(salespersonID);
+
+            System.out.println("Here is the auto part info: ");
+            autoPart.printAutoPartInfo(autoPartID);
+
+            saleTransaction.createOrder(client.getUser(client.getUsername()), null, autoPart.getautoPart(autoPartID), salespersonID);
+        } else if (!salesperson.validateSalespersonID(salespersonID)) {
+            System.out.println("Salesperson not found.");
+            CreateAutoPartTransactionMenu();
+        } else {
+            System.out.println("Auto part not found.");
+            CreateAutoPartTransactionMenu();
+        }
+    }
+
+    public static void CreateServiceTransactionMenu() throws IOException {
+        System.out.print("Enter the service ID you wanted to order (or type 'esc' to go back): ");
+        String serviceTypeID = sc.readLine();
+        if (serviceTypeID.equalsIgnoreCase("esc")) {
+            ClientMenu();
+            return; // Exit the current method to prevent further execution
+        }
+
+        System.out.print("Enter the mechanic ID that serve you (or type 'esc' to go back): ");
+        String mechanicID = sc.readLine();
+        if (mechanicID.equalsIgnoreCase("esc")) {
+            ClientMenu();
+            return; // Exit the current method to prevent further execution
+        }
+
+        if(serviceType.validateServiceID(serviceTypeID) == true && mechanic.validateMechanicID(mechanicID) == true){
+            System.out.println("Here is the mechanic name: ");
+            mechanic.viewMechanicIDandName(mechanicID);
+
+            System.out.println("Here is the service info: ");
+            serviceType.printServiceInfo(serviceTypeID);
+
+            service.createOrder(client.getUser(client.getUsername()), serviceType.getService(serviceTypeID), mechanicID);
+        } else if (salesperson.validateSalespersonID(mechanicID) == false) {
+            System.out.println(mechanicID);
+            System.out.println("Salesperson not found.");
+            CreateCarTransactionMenu();
+        } else{
+            System.out.println("Car not found.");
+            CreateCarTransactionMenu();
+        }
+    }
     public static void ThankYouMenu(){
         System.out.println("============================== Thank you for using our system! Goodbye ==============================");
         System.out.println("COSC2081 GROUP ASSIGNMENT");

@@ -17,6 +17,7 @@ public class saleTransaction {
     private String transactionDate;
     private String clientId;
     private String carId;
+    private String autoPartId;
     private String salespersonId;
     private String discount;
     private long totalAmount;
@@ -26,12 +27,13 @@ public class saleTransaction {
 
     public saleTransaction(){}
 
-    public saleTransaction(String id, String transactionDate, String clientId, String salespersonId, String carId, String discount, long totalAmount, String additionalNotes) {
+    public saleTransaction(String id, String transactionDate, String clientId, String salespersonId, String carId, String autoPartId, String discount, long totalAmount, String additionalNotes) {
         this.id = id;
         this.transactionDate = transactionDate;
         this.clientId = clientId;
         this.salespersonId = salespersonId;
         this.carId = carId;
+        this.autoPartId = autoPartId;
         this.discount = discount;
         this.totalAmount = totalAmount;
         this.additionalNotes = additionalNotes;
@@ -67,6 +69,14 @@ public class saleTransaction {
 
     public void setCarId(String carId) {
         this.carId = carId;
+    }
+
+    public String getAutoPartId() {
+        return autoPartId;
+    }
+
+    public void setAutoPartId(String autoPartId) {
+        this.autoPartId = autoPartId;
     }
 
     public String getSalespersonId() {
@@ -110,15 +120,17 @@ public class saleTransaction {
         String[] clientId = Features.ReadCol(2, transaction_data, ";");
         String[] salespersonId = Features.ReadCol(3, transaction_data, ";");
         String[] carId = Features.ReadCol(4, transaction_data, ";");
-        String[] discount = Features.ReadCol(5, transaction_data, ";");
-        String[] totalAmount = Features.ReadCol(6, transaction_data, ";");
-        String[] additionalNotes = Features.ReadCol(7, transaction_data, ";");
+        String[] autoPartId = Features.ReadCol(5, transaction_data, ";"); // Read the autoPartId column
+        String[] discount = Features.ReadCol(6, transaction_data, ";");
+        String[] totalAmount = Features.ReadCol(7, transaction_data, ";");
+        String[] additionalNotes = Features.ReadCol(8, transaction_data, ";");
 
         // Check if arrays have the same length
-        for (int i = 0; i < countLine - 1; i++){
-            transactions.add(new saleTransaction(id[i], transactionDate[i], clientId[i], salespersonId[i], carId[i], discount[i], Long.parseLong(totalAmount[i]), additionalNotes[i]));
+        for (int i = 0; i < countLine - 1; i++) {
+            transactions.add(new saleTransaction(id[i], transactionDate[i], clientId[i], salespersonId[i], carId[i], autoPartId[i], discount[i], Long.parseLong(totalAmount[i]), additionalNotes[i]));
         }
     }
+
 
     //calculate total amount
     public void calculateTotalAmount() {
@@ -239,43 +251,60 @@ public class saleTransaction {
         }
     }
 
-    public void createOrder(User client, Car car, String salespersonID) throws IOException {
+    public void createOrder(User client, Car car, AutoPart autoPart, String salespersonID) throws IOException {
         Scanner sc = new Scanner(System.in);
 
+        // Initialize variables
+        long carPrice = 0;
+        long partPrice = 0;
+        boolean carAvailable = true;
+
         // Check if the car is available
-        if (!car.isAvailable()) {
-            System.out.println("Error: This car is already sold.");
+        if (car != null) {
+            if (!car.isAvailable()) {
+                System.out.println("Error: This car is already sold.");
+                carAvailable = false;
+            } else {
+                carPrice = car.getPrice();
+            }
+        }
+
+        // Check if the auto part is null before accessing its methods
+        if (autoPart != null) {
+            partPrice = autoPart.getPrice();
+        }
+
+        // If neither car nor part is available, return to the transaction menu
+        if (!carAvailable) {
             Menu.CreateCarTransactionMenu();
             return;
         }
 
+        // Set client and salesperson IDs
         this.clientId = client.getId();
-        this.carId = car.getId();
-        String reward = "";
+        this.salespersonId = salespersonID;
 
+        // Calculate total price based on membership discount
         String clientMembership = client.getMembership();
-
-        //Discount
-        reward = switch (clientMembership) {
+        String reward = switch (clientMembership) {
             case "Silver" -> "5%";
             case "Gold" -> "10%";
             case "Platinum" -> "15%";
             default -> "0%";
         };
 
-        // Calculating price based on membership reward
-        if (clientMembership.equals("Platinum")) {
-            totalAmount = car.getPrice() - (car.getPrice() * 15 / 100);
-        } else if (clientMembership.equals("Gold")) {
-            totalAmount = car.getPrice() - (car.getPrice() * 10 / 100);
-        } else if (clientMembership.equals("Silver")) {
-            totalAmount = car.getPrice() - (car.getPrice() * 5 / 100);
-        } else {
-            totalAmount = car.getPrice();
-        }
+        // Apply discount based on membership
+        long discountPercentage = switch (clientMembership) {
+            case "Platinum" -> 15;
+            case "Gold" -> 10;
+            case "Silver" -> 5;
+            default -> 0;
+        };
 
-        // Show new price
-        System.out.println("Based on your membership: " + clientMembership);
+        totalAmount = (carPrice + partPrice) - ((carPrice + partPrice) * discountPercentage / 100);
+
+        // Display total amount
+        System.out.printf("Based on your membership: %s\n", clientMembership);
         System.out.printf("The order total price will be (in VND): %,d\n", totalAmount);
         System.out.print("Pay and confirm order (Y/N): ");
         String orderConfirm = sc.next();
@@ -287,15 +316,20 @@ public class saleTransaction {
             // Set order status and date
             transactionDate = Features.getDate();
 
+            // Assign IDs for car and auto part
+            this.carId = (car != null) ? car.getId() : "N/A";
+            this.autoPartId = (autoPart != null) ? autoPart.getId() : "N/A";
+
             // Format order data and write to file
-            String data = "\n" + id + "," + transaction_data + "," + clientId + "," + salespersonID + "," + carId + "," + reward + "," + totalAmount;
+            String data = "\n" + id + "," + transactionDate + "," + clientId + "," + salespersonID + "," +
+                    carId + "," + autoPartId + "," + reward + "," + totalAmount + ",N/A"; // Additional notes can be set as needed
             Features.writeToFile(transaction_data, data);
 
-            // Mark the car as sold
-            car.setStatus("Sold");
-
-            // Update the car status in the database
-            Car.updateCarStatusInDatabase(car);
+            // Mark the car and/or auto part as sold
+            if (car != null) {
+                car.setStatus("Sold");
+                Car.updateCarStatusInDatabase(car);
+            }
 
             // Update customer spending and membership status
             client.addSpending(client.getUsername(), totalAmount);
@@ -306,6 +340,5 @@ public class saleTransaction {
         // Return to the customer action menu
         Menu.ClientMenu();
     }
-
 }
 

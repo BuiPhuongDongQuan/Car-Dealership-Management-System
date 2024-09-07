@@ -1,5 +1,5 @@
 #ID, Fullname, Date of birth, Address, Phone Number, Email, User type, Status, Membership, Username, Password, TotalSpending
 U1,Nguyen Minh Khoi,11-11-2004,Q7,123456789,123@gmail.com,Manager,Active,none,admin,admin,0
-U2,Be bim de thuong cute pho mai que,03-03-2004,HM,07894561,dongquan@gmail.com,Client,Active,Platinum,dongquan,dongquan,4508100000
-U4,Quang Nhat,09-04--2004,BC,206432032,quangnhat@gmail.com,Client,Active,Regular,quangnhat,quangnhat2004,0
+U2,Be bim de thuong cute pho mai que,03-03-2004,HM,07894561,dongquan@gmail.com,Client,Active,Platinum,dongquan,dongquan,4525644162
+U4,Quang Nhat,09-04--2004,BC,206432032,quangnhat@gmail.com,Mechanic,Active,Regular,quangnhat,quangnhat2004,0
 U5,Minh Khoi,11-11-2004,Q4,06516501620,minhkhoi@gmail.com,Salesperson,Active,none,minhkhoi,minhkhoi2004,0
