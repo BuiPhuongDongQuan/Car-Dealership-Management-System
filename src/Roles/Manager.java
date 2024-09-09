@@ -9,6 +9,7 @@ import Menu.Menu;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Scanner;
 
 
 public class Manager extends User {
@@ -104,6 +105,80 @@ public class Manager extends User {
         Features.readAllLines(filepath);
     }
 
+    //manager add car
+    public void addCar() throws IOException{
+        Scanner sc = new Scanner(System.in);
+        int carCount = Features.countLine(car_data);
+        String newCarId = "C" + carCount;
+
+        //enter car make
+        System.out.println("Enter Car Make: ");
+        String newCarMake  = sc.nextLine();
+
+        //enter car model
+        System.out.println("Enter Car Model: ");
+        String newCarModel = sc.nextLine();
+
+        //enter car year
+        System.out.println("Enter Car Year: ");
+        String newCarYear = sc.nextLine();
+
+        //enter car price
+        System.out.println("Enter Car Price(xxx.xxx.xxx): ");
+        String newCarPrice = sc.nextLine();
+
+        //enter car color
+        System.out.println("Enter Car Color: ");
+        String newCarColor = sc.nextLine();
+
+        //enter car mileage
+        System.out.println("Enter Car Mileage(ex: 0km): ");
+        String newCarMileage = sc.nextLine();
+
+        //enter car status
+        System.out.println("Enter Car Status(Available/Sold): ");
+        String newCarStatus = sc.nextLine();
+
+        String newCar = "\n" + newCarId + "," + newCarMake + "," + newCarModel + "," + newCarYear + "," + newCarPrice + "," + newCarColor + "," + newCarMileage + "," + newCarStatus;
+        Features.writeToFile(car_data, newCar);
+        System.out.println("New car added!");
+    }
+
+    //add new auto part
+    public void addPart(){
+        Scanner sc = new Scanner(System.in);
+        int partCount = Features.countLine(part_data);
+        String newPartId = "P" + partCount;
+
+        //enter Part name
+        System.out.println("Enter Part Name: ");
+        String newPartName  = sc.nextLine();
+
+        //enter Part brand
+        System.out.println("Enter Part Brand: ");
+        String newPartBrand = sc.nextLine();
+
+        //enter Part model
+        System.out.println("Enter Part Model: ");
+        String newPartModel = sc.nextLine();
+
+        //enter Part condition
+        System.out.println("Enter Part Condition: ");
+        String newPartCondition = sc.nextLine();
+
+        //enter Part warranty
+        System.out.println("Enter Part Warranty: ");
+        String newPartWarranty = sc.nextLine();
+
+        //enter Part price
+        System.out.println("Enter Part Price($xx): ");
+        String newPartPrice = sc.nextLine();
+
+        String newPart = "\n" + newPartId + "," + newPartName + "," + newPartBrand + "," + newPartModel + "," + newPartCondition + "," + newPartWarranty + "," + newPartPrice;
+        Features.writeToFile(part_data, newPart);
+        System.out.println("New part added!");
+    }
+
     //manager remove users
     public void removeUser(User user){
         String deleteUser = user.getId() + "," +user.getFullname() + "," +user.getDateOfBirth() + "," +user.getAddress() + "," +user.getPhoneNumber() + "," +user.getEmail() + "," + user.getUserType()+ "," +user.getStatus()+ "," + user.getMembership() +"," +user.getUsername() + "," +user.getPassword() + "," +user.getTotalSpending();
@@ -121,6 +196,7 @@ public class Manager extends User {
         System.out.println("Car removed successfully.");
     }
 
+    //manager remove parts
     public void removePart(AutoPart part){
         String formattedPrice = String.format("$%.0f", part.getPrice());
         String deletePart = part.getId() + "," + part.getName() + "," + part.getBrand() + "," + part.getModel() + "," + part.getCondition() + "," + part.getWarranty() + "," + formattedPrice;

@@ -119,7 +119,9 @@ public class Menu {
         System.out.println("4. Calculate the revenue in a day/month/year");
         System.out.println("5. Calculate the revenue of the services done of a mechanic");
         System.out.println("6. Calculate the revenue of cars sold of a salesperson");
-        int choice = getValidatedInput(1, 6);
+        System.out.println("7. Add new car");
+        System.out.println("8. Add new Auto Part");
+        int choice = getValidatedInput(1, 8);
 
         switch (choice) {
             case 1:
@@ -156,6 +158,14 @@ public class Menu {
                 System.out.println("Enter Salesperson ID: ");
                 String salespersonId = sc.readLine();
                 transaction.calculateAmountOfSalesperson(salespersonId);
+                ManagerMenu();
+                break;
+            case 7:
+                manager.addCar();
+                ManagerMenu();
+                break;
+            case 8:
+                manager.addPart();
                 ManagerMenu();
                 break;
         }
