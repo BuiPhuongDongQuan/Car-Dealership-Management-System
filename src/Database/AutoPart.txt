@@ -28,4 +28,3 @@ P-0026,Drive Shaft,Spicer,DS-3348,Refurbished,6 months,$180
 P-0027,Starter Motor,Denso,SM-7768,New,2 years,$250
 P-0028,Shock Absorber,Bilstein,SA-2245,New,2 years,$110
 P-0029,Throttle Body,Bosch,TB-9934,Refurbished,6 months,$250
-P-0030,Window Regulator,Dorman,WR-3344,New,1 year,$90

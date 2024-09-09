@@ -2,9 +2,8 @@ package Components;
 
 import Features.Features;
 import Menu.Menu;
-import Roles.Client;
 import Roles.User;
-import Roles.Salesperson;
+
 import java.io.IOException;
 import java.util.*;
 import java.util.ArrayList;
@@ -12,7 +11,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class saleTransaction {
-    private final String transaction_data = "src/Database/Transaction.txt";
+    private final String transaction_data = "src/Database/SaleTransaction.txt";
     private String id;
     private String transactionDate;
     private String clientId;
@@ -121,7 +120,7 @@ public class saleTransaction {
     }
 
     //calculate total amount
-    public void calculateTotalAmount() {
+    public long calculateTotalAmount() {
         readData();
         long totalAmount = 0;
         for (saleTransaction transaction : transactions) {
@@ -129,10 +128,11 @@ public class saleTransaction {
         }
         String priceFormat = String.format("The transaction total amount is: %,d", totalAmount);
         System.out.println(priceFormat + " VND");
+        return totalAmount;
     }
 
     //calculate total amount on a specific date
-    public void calculateTotalAmountDate(String transactionDate) {
+    public long calculateTotalAmountDate(String transactionDate) {
         readData();
         long totalAmount = 0;
         for (saleTransaction transaction : transactions) {
@@ -142,10 +142,11 @@ public class saleTransaction {
         }
         String priceFormat = String.format("The transaction total amount is: %,d", totalAmount);
         System.out.println(priceFormat + " VND");
+        return totalAmount;
     }
 
     //calculate total amount in a month
-    public void calculateTotalAmountMonth(String transactionMonth) {
+    public long calculateTotalAmountMonth(String transactionMonth) {
         readData();
         long totalAmount = 0;
         String regex = "(\\d{2})-(\\d{2})-(\\d{4})";
@@ -162,6 +163,7 @@ public class saleTransaction {
         }
         String priceFormat = String.format("The transaction total amount is: %,d", totalAmount);
         System.out.println(priceFormat + " VND");
+        return totalAmount;
     }
 
     //calculate total amount in a year
@@ -307,5 +309,17 @@ public class saleTransaction {
         Menu.ClientMenu();
     }
 
+    //calculate transaction amount of a salesperson
+    public void calculateAmountOfSalesperson(String salespersonID) throws IOException {
+        readData();
+        long salespersonAmount = 0;
+        for(saleTransaction saleTransactions: transactions) {
+            if(saleTransactions.getSalespersonId().equals(salespersonID)) {
+                salespersonAmount += saleTransactions.getTotalAmount();
+            }
+        }
+        String priceFormat = String.format("The total amount of this salesperson is: %,d", salespersonAmount);
+        System.out.println(priceFormat + " VND");
+    }
 }
 
