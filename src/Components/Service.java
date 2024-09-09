@@ -311,4 +311,53 @@ public class Service{
         }
         return null;
     }
+
+    public boolean validateServiceID(String serviceID){
+        readData();
+        boolean validateServiceID = false;
+        for(Service service:services) {
+            if (service.getId().equals(serviceID)) {
+                validateServiceID = true;
+            }
+        }
+        return validateServiceID;
+    }
+
+    public void searchOrder(String orderID, User client) throws IOException {
+        Service service = getService(orderID);
+        if(client.getId().equals(service.getClientId())){
+            System.out.println("The service " + service.getId() + " contains: ");
+            System.out.println("- Service Type: " + service.getServiceTypeId());
+            System.out.println("- List of replaced part: " + service.getListOfReplacedPart());
+            System.out.printf("- Total Price: %,d\n", service.getServiceCost());
+            System.out.println("- Order date: " + service.getServiceDate());
+        }
+        else{
+            System.out.println("Ineligible right.");
+        }
+
+        Menu.ClientMenu();
+    }
+
+    public void printAllService(User client) {
+        readData();
+        boolean hasPurchases = false;
+        this.clientId = client.getId();
+
+        for (Service service : services) {
+            if(service.getClientId().equals(clientId)) {
+                hasPurchases = true;
+                System.out.println("Service ID: " + service.getId());
+                System.out.println("Service Date: " + service.getServiceDate());
+                System.out.println("Mechanic ID: " + service.getMechanicId());
+                System.out.println("Service Type ID: " + service.getServiceTypeId());
+                System.out.printf("Total Amount: %,d\n", service.getServiceCost());
+                System.out.println("-------------------------");
+            }
+        }
+
+        if (!hasPurchases) {
+            System.out.println("No purchases found for client ID: " + clientId);
+        }
+    }
 }

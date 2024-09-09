@@ -2,9 +2,8 @@ package Components;
 
 import Features.Features;
 import Menu.Menu;
-import Roles.Client;
 import Roles.User;
-import Roles.Salesperson;
+
 import java.io.IOException;
 import java.util.*;
 import java.util.ArrayList;
@@ -12,7 +11,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class saleTransaction {
-    private final String transaction_data = "src/Database/Transaction.txt";
+    private final String transaction_data = "src/Database/SaleTransaction.txt";
     private String id;
     private String transactionDate;
     private String clientId;
@@ -21,13 +20,12 @@ public class saleTransaction {
     private String salespersonId;
     private String discount;
     private long totalAmount;
-    private String additionalNotes;
 
     ArrayList<saleTransaction> transactions = new ArrayList<>();
 
     public saleTransaction(){}
 
-    public saleTransaction(String id, String transactionDate, String clientId, String salespersonId, String carId, String autoPartId, String discount, long totalAmount, String additionalNotes) {
+    public saleTransaction(String id, String transactionDate, String clientId, String salespersonId, String carId, String autoPartId, String discount, long totalAmount) {
         this.id = id;
         this.transactionDate = transactionDate;
         this.clientId = clientId;
@@ -36,7 +34,6 @@ public class saleTransaction {
         this.autoPartId = autoPartId;
         this.discount = discount;
         this.totalAmount = totalAmount;
-        this.additionalNotes = additionalNotes;
     }
 
     public String getId() {
@@ -103,16 +100,7 @@ public class saleTransaction {
         this.totalAmount = totalAmount;
     }
 
-    public String getAdditionalNotes() {
-        return additionalNotes;
-    }
-
-    public void setAdditionalNotes(String additionalNotes) {
-        this.additionalNotes = additionalNotes;
-    }
-
     public void readData() {
-        transactions.clear();
 
         int countLine = Features.countLine(transaction_data);
         String[] id = Features.ReadCol(0, transaction_data, ";");
@@ -120,14 +108,13 @@ public class saleTransaction {
         String[] clientId = Features.ReadCol(2, transaction_data, ";");
         String[] salespersonId = Features.ReadCol(3, transaction_data, ";");
         String[] carId = Features.ReadCol(4, transaction_data, ";");
-        String[] autoPartId = Features.ReadCol(5, transaction_data, ";"); // Read the autoPartId column
+        String[] autoPartId = Features.ReadCol(5, transaction_data, ";");
         String[] discount = Features.ReadCol(6, transaction_data, ";");
         String[] totalAmount = Features.ReadCol(7, transaction_data, ";");
-        String[] additionalNotes = Features.ReadCol(8, transaction_data, ";");
 
         // Check if arrays have the same length
         for (int i = 0; i < countLine - 1; i++) {
-            transactions.add(new saleTransaction(id[i], transactionDate[i], clientId[i], salespersonId[i], carId[i], autoPartId[i], discount[i], Long.parseLong(totalAmount[i]), additionalNotes[i]));
+            transactions.add(new saleTransaction(id[i], transactionDate[i], clientId[i], salespersonId[i], carId[i], autoPartId[i], discount[i], Long.parseLong(totalAmount[i])));
         }
     }
 
@@ -204,7 +191,7 @@ public class saleTransaction {
         for (saleTransaction transaction : transactions) {
             if(transaction.getTransactionDate().equals(transactionDate)) {
                 String priceFormat = String.format("%,d", transaction.getTotalAmount());
-                System.out.println(transaction.getId() +","+ transaction.getClientId() +","+ transaction.getSalespersonId() +","+ transaction.getCarId() +","+ transaction.getDiscount() +","+ priceFormat +"VND" +","+ transaction.getAdditionalNotes());
+                System.out.println(transaction.getId() +","+ transaction.getClientId() +","+ transaction.getSalespersonId() +","+ transaction.getCarId() +","+ transaction.getDiscount() +","+ priceFormat +"VND");
             }
         }
     }
@@ -224,7 +211,7 @@ public class saleTransaction {
                 String month = matcher.group(2);
                 if(transactionMonth.equals(month)) {
                     String priceFormat = String.format("%,d", transaction.getTotalAmount());
-                    System.out.println(transaction.getId() +","+ transaction.getClientId() +","+ transaction.getSalespersonId() +","+ transaction.getCarId() +","+ transaction.getDiscount() +","+ priceFormat + "VND" +","+ transaction.getAdditionalNotes());
+                    System.out.println(transaction.getId() +","+ transaction.getClientId() +","+ transaction.getSalespersonId() +","+ transaction.getCarId() +","+ transaction.getDiscount() +","+ priceFormat + "VND");
                 }
             }
         }
@@ -245,7 +232,7 @@ public class saleTransaction {
                 String year = matcher.group(3);
                 if (transactionYear.equals(year)) {
                     String priceFormat = String.format("%,d", transaction.getTotalAmount());
-                    System.out.println(transaction.getId() +","+ transaction.getClientId() +","+ transaction.getSalespersonId() +","+ transaction.getCarId() +","+ transaction.getDiscount() +","+ priceFormat +"VND"+","+ transaction.getAdditionalNotes());
+                    System.out.println(transaction.getId() +","+ transaction.getClientId() +","+ transaction.getSalespersonId() +","+ transaction.getCarId() +","+ transaction.getDiscount() +","+ priceFormat +"VND");
                 }
             }
         }
@@ -320,9 +307,8 @@ public class saleTransaction {
             this.carId = (car != null) ? car.getId() : "N/A";
             this.autoPartId = (autoPart != null) ? autoPart.getId() : "N/A";
 
-            // Format order data and write to file
-            String data = "\n" + id + "," + transactionDate + "," + clientId + "," + salespersonID + "," +
-                    carId + "," + autoPartId + "," + reward + "," + totalAmount + ",N/A"; // Additional notes can be set as needed
+            String data = "\n" + id + ";" + transactionDate + ";" + clientId + ";" + salespersonID + ";" +
+                    carId + ";" + autoPartId + ";" + reward + ";" + totalAmount; // Additional notes can be set as needed
             Features.writeToFile(transaction_data, data);
 
             // Mark the car and/or auto part as sold
@@ -340,5 +326,87 @@ public class saleTransaction {
         // Return to the customer action menu
         Menu.ClientMenu();
     }
+
+    public saleTransaction getSaleTransaction(String id) {
+        readData();
+
+        for (saleTransaction saleTransaction : transactions) {
+            if (saleTransaction.getId().equals(id)) {
+                return saleTransaction;
+            }
+        }
+        return null;
+    }
+
+    //allow customer to view an order made by them only
+    public void searchOrder(String orderID, User client) throws IOException {
+        saleTransaction saleTransaction = getSaleTransaction(orderID);
+        if(client.getId().equals(saleTransaction.getClientId())){
+            System.out.println("The order " + saleTransaction.getId() + " contains:");
+
+            if (!Objects.equals(saleTransaction.getCarId(), "N/A")) {
+                System.out.println("- Car ID: " + saleTransaction.getCarId());
+            } else if (!Objects.equals(saleTransaction.getAutoPartId(), "N/A")) {
+                System.out.println("- Auto Part ID: " + saleTransaction.getAutoPartId());
+            } else {
+                System.out.println("- No valid car or auto part found for this order.");
+            }
+
+            System.out.printf("- Total Price: %,d\n", saleTransaction.getTotalAmount());
+            System.out.println("- Order date: " + saleTransaction.getTransactionDate());
+
+        }
+        else{
+            System.out.println("Ineligible right.");
+        }
+
+        Menu.ClientMenu();
+    }
+
+    //check if order id is valid
+    public boolean validateOrderID(String orderID){
+        readData();
+        boolean validateOrderID = false;
+        for (saleTransaction saleTransaction : transactions) {
+            if (saleTransaction.getId().equals(orderID)) {
+                validateOrderID = true;
+            }
+        }
+        return validateOrderID;
+    }
+
+    //get all car orders by current customer
+    public void printAllTransactions(User client) {
+        readData();
+        boolean hasPurchases = false;
+        this.clientId = client.getId();
+
+        for (saleTransaction transaction : transactions) {
+            if(transaction.getClientId().equals(clientId)) {
+                hasPurchases = true;
+                System.out.println("Transaction ID: " + transaction.getId());
+                System.out.println("Transaction Date: " + transaction.getTransactionDate());
+                System.out.println("Salesperson ID: " + transaction.getSalespersonId());
+
+                if (!transaction.getCarId().equals("N/A")) {
+                    System.out.println("Car ID: " + transaction.getCarId());
+                }
+
+                if (!transaction.getAutoPartId().equals("N/A")) {
+                    System.out.println("Auto Part ID: " + transaction.getAutoPartId());
+                }
+
+                System.out.println("Discount: " + transaction.getDiscount());
+                System.out.printf("Total Amount: %,d\n", transaction.getTotalAmount());
+                System.out.println("-------------------------");
+            }
+        }
+
+        if (!hasPurchases) {
+            System.out.println("No purchases found for client ID: " + clientId);
+        }
+    }
+
+
 }
 

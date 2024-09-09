@@ -61,15 +61,15 @@ public class ServiceType {
     }
 
     //validate service
-    public boolean validateServiceID(String serviceID){
+    public boolean validateServiceTypeID(String serviceID){
         extractDatabase();
-        boolean validateServiceID = false;
+        boolean validateServiceTypeID = false;
         for(ServiceType service:servicetypes) {
             if (service.getId().equals(serviceID)) {
-                validateServiceID = true;
+                validateServiceTypeID = true;
             }
         }
-        return validateServiceID;
+        return validateServiceTypeID;
     }
 
     //print service infor

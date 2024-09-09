@@ -31,7 +31,7 @@ public class Menu {
 
     // user input their choice
     public static int getValidatedInput(int min, int max) throws IOException {
-        int choice = -1;
+        int choice;
         while (true) {
             try {
                 System.out.print("Enter Your Choice (" + min + "-" + max + "): ");
@@ -89,7 +89,7 @@ public class Menu {
         String username = sc.readLine();
         if (username.equalsIgnoreCase("esc")) {
             SystemMenu();
-            return; // Exit the current method to prevent further execution
+            return; 
         }
 
         System.out.print("Enter your password: ");
@@ -472,7 +472,7 @@ public class Menu {
         String username = sc.readLine();
         if (username.equalsIgnoreCase("esc")) {
             ClientWelcomeMenu();
-            return; // Exit the current method to prevent further execution
+            return; 
         }
 
         System.out.print("Enter your password: ");
@@ -600,6 +600,12 @@ public class Menu {
                 CreateAutoPartTransactionMenu();
                 break;
             case 9:
+                SearchOrderMenu();
+                break;
+            case 10:
+                transaction.printAllTransactions(client.getUser(client.getUsername()));
+                service.printAllService(client.getUser(client.getUsername()));
+                ClientMenu();
                 break;
             case 11:
                 ThankYouMenu();
@@ -739,17 +745,17 @@ public class Menu {
         String carID = sc.readLine();
         if (carID.equalsIgnoreCase("esc")) {
             ClientMenu();
-            return; // Exit the current method to prevent further execution
+            return; 
         }
 
         System.out.print("Enter the salesperson ID that serve you (or type 'esc' to go back): ");
         String salespersonID = sc.readLine();
         if (salespersonID.equalsIgnoreCase("esc")) {
             ClientMenu();
-            return; // Exit the current method to prevent further execution
+            return;
         }
 
-        if(car.validateCarID(carID) == true && salesperson.validateSalespersonID(salespersonID) == true){
+        if(car.validateCarID(carID) && salesperson.validateSalespersonID(salespersonID)){
             System.out.println("Here is the salesperson name: ");
             salesperson.viewSalespersonIDandName(salespersonID);
 
@@ -757,7 +763,7 @@ public class Menu {
             car.printCarInfo(carID);
 
             saleTransaction.createOrder(client.getUser(client.getUsername()), car.getCar(carID), null, salespersonID);
-        } else if (salesperson.validateSalespersonID(salespersonID) == false) {
+        } else if (!salesperson.validateSalespersonID(salespersonID)) {
             System.out.println(salespersonID);
             System.out.println("Salesperson not found.");
             CreateCarTransactionMenu();
@@ -772,14 +778,14 @@ public class Menu {
         String autoPartID = sc.readLine();
         if (autoPartID.equalsIgnoreCase("esc")) {
             ClientMenu();
-            return; // Exit the current method to prevent further execution
+            return; 
         }
 
         System.out.print("Enter the salesperson ID that served you (or type 'esc' to go back): ");
         String salespersonID = sc.readLine();
         if (salespersonID.equalsIgnoreCase("esc")) {
             ClientMenu();
-            return; // Exit the current method to prevent further execution
+            return; 
         }
 
         if (autoPart.validateAutoPartID(autoPartID) && salesperson.validateSalespersonID(salespersonID)) {
@@ -804,17 +810,17 @@ public class Menu {
         String serviceTypeID = sc.readLine();
         if (serviceTypeID.equalsIgnoreCase("esc")) {
             ClientMenu();
-            return; // Exit the current method to prevent further execution
+            return; 
         }
 
         System.out.print("Enter the mechanic ID that serve you (or type 'esc' to go back): ");
         String mechanicID = sc.readLine();
         if (mechanicID.equalsIgnoreCase("esc")) {
             ClientMenu();
-            return; // Exit the current method to prevent further execution
+            return; 
         }
 
-        if(serviceType.validateServiceID(serviceTypeID) == true && mechanic.validateMechanicID(mechanicID) == true){
+        if(serviceType.validateServiceTypeID(serviceTypeID) && mechanic.validateMechanicID(mechanicID)){
             System.out.println("Here is the mechanic name: ");
             mechanic.viewMechanicIDandName(mechanicID);
 
@@ -822,7 +828,7 @@ public class Menu {
             serviceType.printServiceInfo(serviceTypeID);
 
             service.createOrder(client.getUser(client.getUsername()), serviceType.getService(serviceTypeID), mechanicID);
-        } else if (salesperson.validateSalespersonID(mechanicID) == false) {
+        } else if (!salesperson.validateSalespersonID(mechanicID)) {
             System.out.println(mechanicID);
             System.out.println("Salesperson not found.");
             CreateCarTransactionMenu();
@@ -831,6 +837,31 @@ public class Menu {
             CreateCarTransactionMenu();
         }
     }
+
+    //allow customer to search order
+    public static void SearchOrderMenu() throws IOException {
+        System.out.println("============================== Customer - Search Order ==============================");
+        System.out.print("Enter the ID of transaction or service (or type 'esc' to go back): ");
+        String orderID = sc.readLine();
+
+        if (orderID.equalsIgnoreCase("esc")) {
+            ClientMenu();
+            return;
+        }
+
+        if(service.validateServiceID(orderID)){
+            service.searchOrder(orderID, client.getUser(client.getUsername()));
+            ClientMenu();
+        }
+        else if(saleTransaction.validateOrderID(orderID)){
+            saleTransaction.searchOrder(orderID, client.getUser(client.getUsername()));
+        }
+        else {
+            System.out.println("Order not existed.");
+            SearchOrderMenu();
+        }
+    }
+
     public static void ThankYouMenu(){
         System.out.println("============================== Thank you for using our system! Goodbye ==============================");
         System.out.println("COSC2081 GROUP ASSIGNMENT");

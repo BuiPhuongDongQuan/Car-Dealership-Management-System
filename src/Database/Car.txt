@@ -1,13 +1,13 @@
 #cID,make,model,year,price,color,mileage,status
 C1,Mercedes,EQSSedan,2025,5.009.000.000,Black,0km,Sold
 C2,Mercedes,S-Class,2018,5.039.000.000,Silver,102km,Sold
-C3,Mercedes,Maybach,2022,8.199.000.000,White,0km,Available
+C3,Mercedes,Maybach,2022,8.199.000.000,White,0km,Sold
 C4,Mercedes,GLC,2019,2.299.000.000,Blue,79km,Sold
 C5,Mercedes,G-Class,2023,11.750.000.000,Green,134km,Available
-C6,Porsche,718CaymanS,2020,3.199.000.000,Red,0km,Sold
+C6,Porsche,718CaymanS,2020,3.199.000.000,Red,0km,Available
 C7,Porsche,718BoxsterS,2017,2.980.000.000,Yellow,265km,Available
 C8,Porsche,911CarreraCabriolet,2021,8.470.000.000,Black,200km,Available
-C9,Porsche,Taycan,2024,4.260.000.000,White,112km,Sold
+C9,Porsche,Taycan,2024,4.260.000.000,White,112km,Available
 C10,Porsche,CrossTurismo,2018,4.880.000.000,Silver,132km,Sold
 C11,Roll-Royce,Phantom,2024,46.183.000.000,Black,280km,Sold
 C12,Roll-Royce,Dawn,2023,36.068.000.000,Blue,0km,Sold
