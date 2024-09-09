@@ -1,31 +1,31 @@
 Part ID,Part Name,Manufacturer,Part Number,Condition,Warranty,Cost
-P-0001,Brake Pad Set,Brembo,BP-1234,New,2 years,3.600.000
-P-0002,Air Filter,Bosch,AF-5678,New,1 year,480.000
-P-0003,Fuel Pump,Denso,FP-9102,Refurbished,6 months,2.880.000
-P-0004,Spark Plug,NGK,SP-3345,New,1 year,240.000
-P-0005,Oil Filter,Fram,OF-4456,New,1 year,360.000
-P-0006,Alternator,Valeo,ALT-7834,Used,6 months,4.320.000
-P-0007,Radiator,Behr,RAD-2938,New,2 years,6.000.000
-P-0008,Timing Belt,Gates,TB-5543,New,1 year,1.200.000
-P-0009,Water Pump,Aisin,WP-7856,Refurbished,6 months,2.160.000
-P-0010,Oxygen Sensor,Bosch,OS-1237,New,1 year,1.800.000
-P-0011,CV Joint,GKN,CVJ-4321,New,2 years,4.800.000
-P-0012,Headlight Assembly,Hella,HL-2345,Used,1 year,7.200.000
-P-0013,Windshield Wiper,Valeo,WW-5432,New,6 months,600.000
-P-0014,Fuel Injector,Delphi,FI-9834,Refurbished,6 months,2.640.000
-P-0015,Battery,Exide,BAT-2234,New,3 years,3.120.000
-P-0016,Clutch Kit,Luk,CK-3346,New,2 years,8.400.000
-P-0017,Exhaust Manifold,MagnaFlow,EM-4455,Used,1 year,6.000.000
-P-0018,Power Steering Pump,ACDelco,PSP-7765,New,2 years,5.280.000
-P-0019,Catalytic Converter,Walker,CC-3453,Refurbished,6 months,9.600.000
-P-0020,Turbocharger,Garrett,TC-9856,New,2 years,19.200.000
-P-0021,Timing Chain,Cloyes,TC-2238,New,1 year,1.680.000
-P-0022,Suspension Strut,Monroe,SS-3347,New,1 year,3.600.000
-P-0023,Brake Rotor,Brembo,BR-6543,New,2 years,2.880.000
-P-0024,Fuel Tank,Spectra,FT-7834,Used,1 year,7.200.000
-P-0025,Ignition Coil,Bosch,IC-5543,New,1 year,1.080.000
-P-0026,Drive Shaft,Spicer,DS-3348,Refurbished,6 months,4.320.000
-P-0027,Starter Motor,Denso,SM-7768,New,2 years,6.000.000
-P-0028,Shock Absorber,Bilstein,SA-2245,New,2 years,2.640.000
-P-0029,Throttle Body,Bosch,TB-9934,Refurbished,6 months,6.000.000
-P-0030,Window Regulator,Dorman,WR-3344,New,1 year,2.160.000
+P1,Brake Pad Set,Brembo,BP-1234,New,2 years,3.600.000
+P2,Air Filter,Bosch,AF-5678,New,1 year,480.000
+P3,Fuel Pump,Denso,FP-9102,Refurbished,6 months,2.880.000
+P4,Spark Plug,NGK,SP-3345,New,1 year,240.000
+P5,Oil Filter,Fram,OF-4456,New,1 year,360.000
+P6,Alternator,Valeo,ALT-7834,Used,6 months,4.320.000
+P7,Radiator,Behr,RAD-2938,New,2 years,6.000.000
+P8,Timing Belt,Gates,TB-5543,New,1 year,1.200.000
+P9,Water Pump,Aisin,WP-7856,Refurbished,6 months,2.160.000
+P10,Oxygen Sensor,Bosch,OS-1237,New,1 year,1.800.000
+P11,CV Joint,GKN,CVJ-4321,New,2 years,4.800.000
+P12,Headlight Assembly,Hella,HL-2345,Used,1 year,7.200.000
+P13,Windshield Wiper,Valeo,WW-5432,New,6 months,600.000
+P14,Fuel Injector,Delphi,FI-9834,Refurbished,6 months,2.640.000
+P15,Battery,Exide,BAT-2234,New,3 years,3.120.000
+P16,Clutch Kit,Luk,CK-3346,New,2 years,8.400.000
+P17,Exhaust Manifold,MagnaFlow,EM-4455,Used,1 year,6.000.000
+P18,Power Steering Pump,ACDelco,PSP-7765,New,2 years,5.280.000
+P19,Catalytic Converter,Walker,CC-3453,Refurbished,6 months,9.600.000
+P20,Turbocharger,Garrett,TC-9856,New,2 years,19.200.000
+P21,Timing Chain,Cloyes,TC-2238,New,1 year,1.680.000
+P22,Suspension Strut,Monroe,SS-3347,New,1 year,3.600.000
+P23,Brake Rotor,Brembo,BR-6543,New,2 years,2.880.000
+P24,Fuel Tank,Spectra,FT-7834,Used,1 year,7.200.000
+P25,Ignition Coil,Bosch,IC-5543,New,1 year,1.080.000
+P26,Drive Shaft,Spicer,DS-3348,Refurbished,6 months,4.320.000
+P27,Starter Motor,Denso,SM-7768,New,2 years,6.000.000
+P28,Shock Absorber,Bilstein,SA-2245,New,2 years,2.640.000
+P29,Throttle Body,Bosch,TB-9934,Refurbished,6 months,6.000.000
+P30,Window Regulator,Dorman,WR-3344,New,1 year,2.160.000
