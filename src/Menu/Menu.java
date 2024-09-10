@@ -19,17 +19,22 @@ import java.util.*;
 
 
 public class Menu {
+    static User user = new User();
     static Manager manager = new Manager();
     static Mechanic mechanic = new Mechanic();
     static Salesperson salesperson = new Salesperson();
     static Service service = new Service();
     static saleTransaction transaction = new saleTransaction();
-    private static final String user_data = "src/Database/User.txt";
     static Client client = new Client();
     static Car car = new Car();
     static AutoPart autoPart = new AutoPart();
     static ServiceType serviceType = new ServiceType();
     static saleTransaction saleTransaction = new saleTransaction();
+
+    private static final String car_data = "src/Database/Car.txt";
+    private static final String autoPart_data = "src/Database/AutoPart.txt";
+    private static final String service_data = "src/Database/Service.txt";
+    private static final String transaction_data = "src/Database/SaleTransaction.txt";
 
     static BufferedReader sc = new BufferedReader(new InputStreamReader(System.in));
 
@@ -85,10 +90,6 @@ public class Menu {
     // manager login
     public static void ManagerLoginMenu() throws IOException {
         System.out.println("============================== Manager - Login ==============================");
-
-        // Clear any leftover newlines in the buffer
-        sc.readLine();
-
         System.out.print("Enter your username (or type 'esc' to go back): ");
         String username = sc.readLine();
         if (username.equalsIgnoreCase("esc")) {
@@ -112,60 +113,174 @@ public class Menu {
 
         System.out.println("============================== Manager - Menu ===============================");
         System.out.println("Welcome admin to Auto316 Management System");
-        System.out.println("1. View information of user ");
-        System.out.println("2. Remove user from database");
+        System.out.println("1. View information of all entities ");
+        System.out.println("2. Remove data from database");
         System.out.println("3. Calculate total revenue");
         System.out.println("4. Calculate the revenue in a day/month/year");
         System.out.println("5. Calculate the revenue of the services done of a mechanic");
         System.out.println("6. Calculate the revenue of cars sold of a salesperson");
-        int choice = getValidatedInput(1, 6);
+        System.out.println("7. Add new car");
+        System.out.println("8. Add new Auto Part");
+        int choice = getValidatedInput(1, 8);
 
         switch (choice) {
             case 1:
                 viewInfoMenu();
                 break;
             case 2:
+                managerRemoveMenu();
                 break;
             case 3:
                 System.out.println("============================== Manager - Service Total Revenue ==============================");
-                service.calculateServiceCost();
-                Menu.MechanicStatisticsOperator();
+                long serviceRevenue = service.calculateServiceCost();
+                System.out.println("============================== Manager - Transaction Total Revenue ==============================");
+                long transactionAmount = transaction.calculateTotalAmount();
+                System.out.println("============================== Manager - Total Revenue ==============================");
+                long totalRevenue = serviceRevenue + transactionAmount;
+                String priceFormat = String.format("The total revenue of Auto136 is: %,d", totalRevenue);
+                System.out.println(priceFormat + " VND");
+                Menu.ManagerMenu();
                 break;
             case 4:
                 managerCalculateMenu();
                 break;
             case 5:
-                System.out.println("============================== Manager - Revenue of a Mechanic ==============================");
-                System.out.print("Enter Mechanic ID: ");
+                System.out.println("============================== Manager - Service Total Revenue Of A Mechanic ==============================");
+                manager.viewMechanicInformation();
+                System.out.println("Enter Mechanic ID: ");
                 String mechanicID = sc.readLine();
-                if (service.getMechanicId() != null && service.getMechanicId().equals(mechanicID)) {
-                    service.calculateServiceCost();
-                }
-
+                service.calculateRevenueOfMechanic(mechanicID);
+                ManagerMenu();
+                break;
+            case 6:
+                System.out.println("============================== Manager - Transaction Total Amount Of A Salesperson ==============================");
+                manager.viewSalespersonInformation();
+                System.out.println("Enter Salesperson ID: ");
+                String salespersonId = sc.readLine();
+                transaction.calculateAmountOfSalesperson(salespersonId);
+                ManagerMenu();
+                break;
+            case 7:
+                manager.addCar();
+                ManagerMenu();
+                break;
+            case 8:
+                manager.addPart();
+                ManagerMenu();
+                break;
         }
     }
 
     // view information menu
     public static void viewInfoMenu() throws IOException {
         System.out.println("============================== View Information Menu ==============================");
-        System.out.println("1. View User Information");
-        System.out.println("2. View Car Information");
-        System.out.println("3. View Auto Part Information");
-        System.out.println("4. View Service Information");
-        System.out.println("5. View Sale Transaction Information");
-        int choice = getValidatedInput(1, 5);
+        System.out.println("1. View Client Information");
+        System.out.println("2. View Mechanic Information");
+        System.out.println("3. View Salesperson Information");
+        System.out.println("4. View Car Information");
+        System.out.println("5. View Auto Part Information");
+        System.out.println("6. View Service Information");
+        System.out.println("7. View Sale Transaction Information");
+        System.out.println("8. Exit");
+        int choice = getValidatedInput(1, 8);
 
         switch (choice) {
             case 1:
-                manager.viewInformation(user_data);
+                manager.viewClientInformation();
+                ManagerMenu();
+                break;
+            case 2:
+                manager.viewMechanicInformation();
+                ManagerMenu();
+                break;
+            case 3:
+                manager.viewSalespersonInformation();
+                ManagerMenu();
+                break;
+            case 4:
+                System.out.println("============================== Manager - View All Cars ==============================");
+                manager.viewAllInformation(car_data);
+                ManagerMenu();
+                break;
+            case 5:
+                System.out.println("============================== Manager - View All Auto Parts ==============================");
+                manager.viewAllInformation(autoPart_data);
+                ManagerMenu();
+                break;
+            case 6:
+                System.out.println("============================== Manager - View All Services ==============================");
+                manager.viewAllInformation(service_data);
+                ManagerMenu();
+                break;
+            case 7:
+                System.out.println("============================== Manager - View All Transactions ==============================");
+                manager.viewAllInformation(transaction_data);
+                ManagerMenu();
+                break;
+            case 8:
+                ManagerMenu();
+                break;
+        }
+    }
+
+    // manager remove user
+    public static void managerRemoveMenu() throws IOException {
+        System.out.println("============================== Manager Remove User Menu =============================");
+        System.out.println("1. Remove Mechanic");
+        System.out.println("2. Remove Salesperson");
+        System.out.println("3. Remove Client");
+        System.out.println("4. Remove Car");
+        System.out.println("5. Remove Auto Part");
+        System.out.println("6. Exit");
+        int choice = getValidatedInput(1, 6);
+
+        switch (choice) {
+            case 1:
+                System.out.println("============================== Manager Remove User Menu ==============================");
+                manager.viewMechanicInformation();
+                System.out.print("Enter Mechanic ID that you want to remove: ");
+                String mechanicID = sc.readLine();
+                manager.removeUser(user.getUserId(mechanicID));
+                ManagerMenu();
+                break;
+            case 2:
+                System.out.println("============================== Manager Remove User Menu ==============================");
+                manager.viewSalespersonInformation();
+                System.out.print("Enter Salesperson ID that you want to remove: ");
+                String salespersonId = sc.readLine();
+                manager.removeUser(user.getUserId(salespersonId));
+                ManagerMenu();
+                break;
+            case 3:
+                System.out.println("============================== Manager Remove User Menu ==============================");
+                manager.viewClientInformation();
+                System.out.print("Enter Client ID that you want to remove: ");
+                String clientId = sc.readLine();
+                manager.removeUser(user.getUserId(clientId));
+                ManagerMenu();
+                break;
+            case 4:
+                System.out.println("============================== Manager Remove Car Menu ==============================");
+                manager.viewAllInformation(car_data);
+                System.out.print("Enter Car ID that you want to remove: ");
+                String carId = sc.readLine();
+                manager.removeCar(car.getCar(carId));
+                ManagerMenu();
+                break;
+            case 5:
+                System.out.println("============================== Manager Remove Part Menu ==============================");
+                manager.viewAllInformation(autoPart_data);
+                System.out.print("Enter Part ID that you want to remove: ");
+                String partId = sc.readLine();
+                manager.removePart(autoPart.getPart(partId));
+                ManagerMenu();
+                break;
+            case 6:
                 ManagerMenu();
                 break;
         }
 
-
     }
-    ////////////////////////////////////Employee//////////////////////////////////////
-
 
     // manager calculate menu
     public static void managerCalculateMenu() throws IOException {
@@ -177,13 +292,47 @@ public class Menu {
 
         switch (choice) {
             case 1:
-                System.out.println("============================== Manager - Service Total Revenue ==============================");
                 System.out.print("Enter a date dd-MM-yyyy: ");
-                String serviceDate = sc.readLine();
-                service.calculateServiceCostDate(serviceDate);
-                System.out.print("============================== Manager - Transaction Total Revenue ==============================");
+                String date = sc.readLine();
+                System.out.println("============================== Manager - Service Total Revenue ==============================");
+                long serviceRevenueDate = service.calculateServiceCostDate(date);
+                System.out.println("============================== Manager - Transaction Total Revenue ==============================");
+                long transactionAmountDate = transaction.calculateTotalAmountDate(date);
+                System.out.println("============================== Manager - Total Revenue ==============================");
+                long totalRevenue = serviceRevenueDate + transactionAmountDate;
+                String priceFormat = String.format("The total revenue of Auto136 is: %,d", totalRevenue);
+                System.out.println(priceFormat + " VND");
+                Menu.ManagerMenu();
+                break;
+            case 2:
+                System.out.print("Enter a month MM: ");
+                String month = sc.readLine();
+                System.out.println("============================== Manager - Service Total Revenue ==============================");
+                long serviceRevenueMonth = service.calculateServiceCostMonth(month);
+                System.out.println("============================== Manager - Transaction Total Revenue ==============================");
+                long transactionAmountMonth = transaction.calculateTotalAmountMonth(month);
+                System.out.println("============================== Manager - Total Revenue ==============================");
+                long totalRevenueMonth = serviceRevenueMonth + transactionAmountMonth;
+                String priceFormatMonth = String.format("The total revenue of Auto136 is: %,d", totalRevenueMonth);
+                System.out.println(priceFormatMonth + " VND");
+                Menu.ManagerMenu();
+                break;
+            case 3:
+                System.out.print("Enter a year yyyy: ");
+                String year = sc.readLine(); System.out.println("============================== Manager - Service Total Revenue ==============================");
+                long serviceRevenueYear = service.calculateServiceCostMonth(year);
+                System.out.println("============================== Manager - Transaction Total Revenue ==============================");
+                long transactionAmountYear = transaction.calculateTotalAmountMonth(year);
+                System.out.println("============================== Manager - Total Revenue ==============================");
+                long totalRevenueYear = serviceRevenueYear + transactionAmountYear;
+                String priceFormatYear= String.format("The total revenue of Auto136 is: %,d", totalRevenueYear);
+                System.out.println(priceFormatYear + " VND");
+                Menu.ManagerMenu();
+                break;
         }
     }
+
+////////////////////////////////////////Employee////////////////////////////////////////////////
     // employee menu
     public static void EmployeeMenu() throws IOException {
         System.out.println("============================== Employee - Menu ===============================");
