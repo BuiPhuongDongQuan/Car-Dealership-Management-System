@@ -1,21 +1,21 @@
-service ID, service type, list of replaced parts, service cost
-S-0001,Oil Change,None,$50
-S-0002,Tire Rotation,None,$40
-S-0003,Brake Replacement,Brake Pad Set,$200
-S-0004,Transmission Repair,None,$600
-S-0005,Engine Tune-Up,Spark Plug,$150
-S-0006,Battery Replacement,Battery,$130
-S-0007,AC Service,None,$120
-S-0008,Headlight Replacement,Headlight Assembly,$300
-S-0009,Exhaust Repair,Exhaust Manifold,$250
-S-0010,Radiator Service,None,$250
-S-0011,Clutch Replacement,Clutch Kit,$350
-S-0012,Steering Repair,None,$220
-S-0013,Fuel System Service,Fuel Injector,$110
-S-0014,Suspension Repair,Suspension Strut,$150
-S-0015,Timing Belt Replacement,Timing Belt,$50
-S-0016,Oxygen Sensor Replacement,Oxygen Sensor,$75
-S-0017,Catalytic Converter Replacement,Catalytic Converter,$400
-S-0018,Power Steering Service,None,$180
-S-0019,Alternator Replacement,Alternator,$180
-S-0020,Water Pump Replacement,Water Pump,$90
+ID, service type, list of replaced parts, service cost
+S1,Oil Change,None,1.200.000
+S2,Tire Rotation,None,960.000
+S3,Brake Replacement,Brake Pad Set,4.800.000
+S4,Transmission Repair,None,14.400.000
+S5,Engine Tune-Up,Spark Plug,3.600.000
+S6,Battery Replacement,Battery,3.120.000
+S7,AC Service,None,2.880.000
+S8,Headlight Replacement,Headlight Assembly,7.200.000
+S9,Exhaust Repair,Exhaust Manifold,6.000.000
+S10,Radiator Service,None,6.000.000
+S11,Clutch Replacement,Clutch Kit,8.400.000
+S12,Steering Repair,None,5.280.000
+S13,Fuel System Service,Fuel Injector,2.640.000
+S14,Suspension Repair,Suspension Strut,3.600.000
+S15,Timing Belt Replacement,Timing Belt,1.200.000
+S16,Oxygen Sensor Replacement,Oxygen Sensor,1.800.000
+S17,Catalytic Converter Replacement,Catalytic Converter,9.600.000
+S18,Power Steering Service,None,4.320.000
+S19,Alternator Replacement,Alternator,4.320.000
+S20,Water Pump Replacement,Water Pump,2.160.000

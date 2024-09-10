@@ -133,4 +133,26 @@ public class Mechanic extends User {
         }
     }
 
+    //validate mechanic
+    public boolean validateMechanicID(String mechanicID){
+        readData();
+        boolean validatesalespersonID = false;
+        for(User mechanic :users) {
+            if (mechanic.getId().equals(mechanicID) && mechanic.getUserType().equals("Mechanic")) {
+                validatesalespersonID = true;
+            }
+        }
+        return validatesalespersonID;
+    }
+
+    public void viewMechanicIDandName(String mechanicID) throws IOException {
+        readData();
+
+        for(User mechanic :users) {
+            if (mechanic.getId().equals(mechanicID)) {
+                System.out.println("- Mechanic ID: " + mechanic.getId());
+                System.out.println("- Name: " + mechanic.getFullname());
+            }
+        }
+    }
 }
