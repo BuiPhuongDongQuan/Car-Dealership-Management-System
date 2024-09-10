@@ -1,8 +1,12 @@
 package Components;
 
 import Features.Features;
+import Menu.Menu;
+import Roles.User;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -12,7 +16,7 @@ public class Service{
     private String serviceDate;
     private String clientId;
     private String mechanicId;
-    private String serviceType;
+    private String serviceTypeId;
     private String listOfReplacedPart;
     private long serviceCost;
     private String additionalNotes;
@@ -28,7 +32,7 @@ public class Service{
         this.serviceDate = serviceDate;
         this.clientId = clientId;
         this.mechanicId = mechanicId;
-        this.serviceType = serviceType;
+        this.serviceTypeId = serviceType;
         this.listOfReplacedPart = listOfReplacedPart;
         this.serviceCost = serviceCost;
         this.additionalNotes = additionalNotes;
@@ -66,12 +70,12 @@ public class Service{
         this.mechanicId = mechanicId;
     }
 
-    public String getServiceType() {
-        return serviceType;
+    public String getServiceTypeId() {
+        return serviceTypeId;
     }
 
-    public void setServiceType(String serviceType) {
-        this.serviceType = serviceType;
+    public void setServiceTypeId(String serviceTypeId) {
+        this.serviceTypeId = serviceTypeId;
     }
 
     public String getListOfReplacedPart() {
@@ -97,6 +101,7 @@ public class Service{
     public void setAdditionalNotes(String additionalNotes) {
         this.additionalNotes = additionalNotes;
     }
+
 
     public void readData() {
         services.clear();
@@ -192,7 +197,7 @@ public class Service{
         for(Service service: services) {
             if (service.getServiceDate().equals(serviceDate)) {
                 String costFormat = String .format("%,d", service.getServiceCost());
-                System.out.println(service.getId() +", "+ service.getClientId() +", "+ service.getMechanicId() +", "+ service.getServiceType() +", "+ service.getListOfReplacedPart() + ", "+ costFormat +"VND" +", "+ service.getAdditionalNotes());
+                System.out.println(service.getId() +", "+ service.getClientId() +", "+ service.getMechanicId() +", "+ service.getServiceTypeId() +", "+ service.getListOfReplacedPart() + ", "+ costFormat +"VND" +", "+ service.getAdditionalNotes());
             }
         }
     }
@@ -212,7 +217,7 @@ public class Service{
                 String month = matcher.group(2);
                 if (serviceMonth.equals(month)) {
                     String costFormat = String .format("%,d", service.getServiceCost());
-                    System.out.println(service.getId() +", "+ service.getClientId() +", "+ service.getMechanicId() +", "+ service.getServiceType() +", "+ service.getListOfReplacedPart() + ", "+ costFormat +"VND" +", "+ service.getAdditionalNotes());
+                    System.out.println(service.getId() +", "+ service.getClientId() +", "+ service.getMechanicId() +", "+ service.getServiceTypeId() +", "+ service.getListOfReplacedPart() + ", "+ costFormat +"VND" +", "+ service.getAdditionalNotes());
                 }
             }
         }
@@ -233,7 +238,7 @@ public class Service{
                 String year = matcher.group(3);
                 if (serviceYear.equals(year)) {
                     String costFormat = String .format("%,d", service.getServiceCost());
-                    System.out.println(service.getId() +", "+ service.getClientId() +", "+ service.getMechanicId() +", "+ service.getServiceType() +", "+ service.getListOfReplacedPart() + ", "+ costFormat +"VND" +", "+ service.getAdditionalNotes());
+                    System.out.println(service.getId() +", "+ service.getClientId() +", "+ service.getMechanicId() +", "+ service.getServiceTypeId() +", "+ service.getListOfReplacedPart() + ", "+ costFormat +"VND" +", "+ service.getAdditionalNotes());
                 }
             }
         }
@@ -250,5 +255,126 @@ public class Service{
         }
         String priceFormat = String.format("The total revenue of this mechanic is: %,d", mechanicRevenue);
         System.out.println(priceFormat + " VND");
+    }
+}
+
+    //create service order
+    public void createOrder(User client, ServiceType serviceType, String mechanicId) throws IOException {
+        Scanner sc = new Scanner(System.in);
+
+        // Initialize variables
+        long servicePrice = 0;
+
+        // Set client and salesperson IDs
+        this.clientId = client.getId();
+        this.mechanicId = mechanicId;
+        this.serviceTypeId = serviceType.getId();
+        this.listOfReplacedPart = serviceType.getRepalcedpart();
+
+        // Calculate total price based on membership discount
+        String clientMembership = client.getMembership();
+        String reward = switch (clientMembership) {
+            case "Silver" -> "5%";
+            case "Gold" -> "10%";
+            case "Platinum" -> "15%";
+            default -> "0%";
+        };
+
+        // Apply discount based on membership
+        long discountPercentage = switch (clientMembership) {
+            case "Platinum" -> 15;
+            case "Gold" -> 10;
+            case "Silver" -> 5;
+            default -> 0;
+        };
+
+        serviceCost = (serviceType.getPrice()) - (serviceType.getPrice() * discountPercentage / 100);
+
+        // Display total amount
+        System.out.printf("Based on your membership: %s\n", clientMembership);
+        System.out.printf("The order total price will be (in VND): %,d\n", serviceCost);
+        System.out.print("Pay and confirm order (Y/N): ");
+        String orderConfirm = sc.next();
+
+        if (orderConfirm.equalsIgnoreCase("y")) {
+            // Generate order ID
+            id = "S" + Features.countLine(service_data);
+
+            // Set order status and date
+            serviceDate = Features.getDate();
+
+            // Format order data and write to file
+            String data = "\n" + id + "," + serviceDate + "," + clientId + "," + mechanicId + "," +
+                    serviceTypeId + "," + listOfReplacedPart + "," + serviceCost + ",N/A"; // Additional notes can be set as needed
+            Features.writeToFile(service_data, data);
+
+            // Update customer spending and membership status
+            client.addSpending(client.getUsername(), serviceCost);
+            client.updateMembership(client.getUsername());
+            System.out.println("Order confirmed! Your order ID is: " + id);
+        }
+
+        // Return to the customer action menu
+        Menu.ClientMenu();
+    }
+
+    public Service getService(String id) {
+        readData();
+
+        for (Service service : services) {
+            if (service.getId().equals(id)) {
+                return service;
+            }
+        }
+        return null;
+    }
+
+    public boolean validateServiceID(String serviceID){
+        readData();
+        boolean validateServiceID = false;
+        for(Service service:services) {
+            if (service.getId().equals(serviceID)) {
+                validateServiceID = true;
+            }
+        }
+        return validateServiceID;
+    }
+
+    public void searchOrder(String orderID, User client) throws IOException {
+        Service service = getService(orderID);
+        if(client.getId().equals(service.getClientId())){
+            System.out.println("The service " + service.getId() + " contains: ");
+            System.out.println("- Service Type: " + service.getServiceTypeId());
+            System.out.println("- List of replaced part: " + service.getListOfReplacedPart());
+            System.out.printf("- Total Price: %,d\n", service.getServiceCost());
+            System.out.println("- Order date: " + service.getServiceDate());
+        }
+        else{
+            System.out.println("Ineligible right.");
+        }
+
+        Menu.ClientMenu();
+    }
+
+    public void printAllService(User client) {
+        readData();
+        boolean hasPurchases = false;
+        this.clientId = client.getId();
+
+        for (Service service : services) {
+            if(service.getClientId().equals(clientId)) {
+                hasPurchases = true;
+                System.out.println("Service ID: " + service.getId());
+                System.out.println("Service Date: " + service.getServiceDate());
+                System.out.println("Mechanic ID: " + service.getMechanicId());
+                System.out.println("Service Type ID: " + service.getServiceTypeId());
+                System.out.printf("Total Amount: %,d\n", service.getServiceCost());
+                System.out.println("-------------------------");
+            }
+        }
+
+        if (!hasPurchases) {
+            System.out.println("No purchases found for client ID: " + clientId);
+        }
     }
 }

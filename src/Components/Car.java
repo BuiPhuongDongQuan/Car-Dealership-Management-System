@@ -80,7 +80,7 @@ public class Car {
         printTableBottomBorder();
     }
 
-    //view all product within specific category
+    //view all car within specific category
     public void viewCarBrandSort(String category, String sortOrder) {
         extractDatabase();
 
@@ -193,7 +193,7 @@ public class Car {
         printTableBottomBorder();
     }
 
-    //view product within a price range
+    //view car within a price range
     public void viewPriceRangeSort() {
         extractDatabase();
 
@@ -280,11 +280,11 @@ public class Car {
     //print table header and top border
     public static void printCarDetailHeader(){
         System.out.println();
-        for(int i = 0; i <=90;i++){
-            if(i == 35){
+        for(int i = 0; i <=190;i++){
+            if(i == 80){
                 System.out.print(" Car Detail ");
             }
-            if(i < 35 || i > 50){
+            if(i < 80 || i > 100){
                 System.out.print("-");
             }
         }
@@ -294,25 +294,25 @@ public class Car {
     }
 
     public static void printTableBottomBorder(){
-        for(int i = 0; i <=90;i++){
+        for(int i = 0; i <=180;i++){
             System.out.print("-");
         }
         System.out.println();
     }
 
-    //validate productID
-    public boolean validateCarID(String productID){
+    //validate carID
+    public boolean validateCarID(String carID){
         extractDatabase();
-        boolean validateProductID = false;
+        boolean validateCarID = false;
         for(Car car:cars) {
-            if (car.getId().equals(productID)) {
-                validateProductID = true;
+            if (car.getId().equals(carID)) {
+                validateCarID = true;
             }
         }
-        return validateProductID;
+        return validateCarID;
     }
 
-    //display product info
+    //display car info
     public void printCarInfo(String carID){
         extractDatabase();
         for(Car car:cars){

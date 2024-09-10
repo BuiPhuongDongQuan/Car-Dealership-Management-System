@@ -1,5 +1,4 @@
-transaction ID;date;client ID;salesperson ID;list of purchased items (cars/parts);discount;total amount;additional notes
-T14;06-09-2024;U2;U5;C4;10%;2069100000;none
-T15;06-09-2024;U2;U5;C5;10%;10575000000;none
-T16;06-09-2024;U2;U5;C8;10%;7623000000;none
-T17;06-09-2024;U2;U5;C1;10%;4508100000;none
+ID;date;client ID;salesperson ID;list of purchased items (cars/parts);discount;total amount; additional notes
+T1;07-09-2024;U2;U5;C3;N/A;15%;6969150000
+T2;09-09-2024;U2;U5;N/A;P-0010;15%;1530000
+T3;09-09-2024;U2;U5;C4;N/A;15%;1954150000

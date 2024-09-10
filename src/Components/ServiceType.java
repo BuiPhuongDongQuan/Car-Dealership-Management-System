@@ -8,13 +8,13 @@ public class ServiceType {
     private String id;
     private String servicetype;
     private String repalcedpart;
-    private double price;
+    private long price;
 
     private final String servicetype_data = "src/Database/ServiceType.txt";
 
     private ArrayList<ServiceType> servicetypes = new ArrayList<>();
 
-    public ServiceType(String id, String servicetype, String repalcedpart, double price) {
+    public ServiceType(String id, String servicetype, String repalcedpart, long price) {
         this.id = id;
         this.servicetype = servicetype;
         this.repalcedpart = repalcedpart;
@@ -53,11 +53,48 @@ public class ServiceType {
             String serviceID = serviceId[i].trim();
             String serviceTypeName = serviceType[i].trim();
             String replacedPartList = replacedParts[i].trim();
-            double servicePrice = Double.parseDouble(serviceCost[i].trim().replace("$", "").replace(",", "").trim());
+            long servicePrice = Long.parseLong(serviceCost[i].trim().replace(".", "").trim());
 
             // Add the Service object to the list
             servicetypes.add(new ServiceType(serviceID, serviceTypeName, replacedPartList, servicePrice));
         }
+    }
+
+    //validate service
+    public boolean validateServiceTypeID(String serviceID){
+        extractDatabase();
+        boolean validateServiceTypeID = false;
+        for(ServiceType service:servicetypes) {
+            if (service.getId().equals(serviceID)) {
+                validateServiceTypeID = true;
+            }
+        }
+        return validateServiceTypeID;
+    }
+
+    //print service infor
+    public void printServiceInfo(String serviceID){
+        extractDatabase();
+        for(ServiceType service:servicetypes) {
+            if(service.id.equals(serviceID)){
+                System.out.println("- Service ID: " + service.id);
+                System.out.println("- Service Type: " + service.servicetype);
+                System.out.println("- Replaced Part: " + service.repalcedpart);
+                System.out.printf("- Price (in VND): %,d\n", service.price);
+            }
+        }
+    }
+
+    public ServiceType getService(String serviceID){
+        extractDatabase();
+
+        for(ServiceType service:servicetypes) {
+            if(service.id.equals(serviceID)){
+                return service;
+            }
+        }
+
+        return null;
     }
 
     public String getId() {
@@ -84,11 +121,11 @@ public class ServiceType {
         this.repalcedpart = repalcedpart;
     }
 
-    public double getPrice() {
+    public long getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(long price) {
         this.price = price;
     }
 }

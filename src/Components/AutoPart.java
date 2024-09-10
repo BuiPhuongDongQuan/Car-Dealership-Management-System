@@ -11,13 +11,13 @@ public class AutoPart {
     private String model;
     private String condition;
     private String warranty;
-    private double price;
+    private long price;
 
     private final String part_data = "src/Database/AutoPart.txt";
 
     private ArrayList<AutoPart> autoParts = new ArrayList<>();
 
-    public AutoPart(String id, String name, String brand, String model, String condition, String warranty, double price) {
+    public AutoPart(String id, String name, String brand, String model, String condition, String warranty, long price) {
         this.id = id;
         this.name = name;
         this.brand = brand;
@@ -67,19 +67,52 @@ public class AutoPart {
             String autoPartNumber = partNumber[i].trim();
             String autoPartCondition = condition[i].trim();
             String autoPartWarranty = warranty[i].trim();
-            double autoPartCost = Double.parseDouble(cost[i].trim().replace("$", "").replace(",", "").trim());
+            long autoPartCost = Long.parseLong(cost[i].trim().replace(".", "").trim());
 
             // Add the AutoPart object to the list
             autoParts.add(new AutoPart(autoPartId, autoPartName, autoPartManufacturer, autoPartNumber, autoPartCondition, autoPartWarranty, autoPartCost));
         }
     }
 
-    //get Auto Part ID
+    //get Auto Part ID duplicate
     public AutoPart getPart(String partID){
         readData();
         for(AutoPart part: autoParts){
             if(partID.equals(part.getId())){
                 return part;
+              
+    public boolean validateAutoPartID(String autoPartID){
+        extractDatabase();
+        boolean validateautoPartID = false;
+        for(AutoPart autoPart :autoParts) {
+            if (autoPart.getId().equals(autoPartID)) {
+                validateautoPartID = true;
+            }
+        }
+        return validateautoPartID;
+    }
+
+    public void printAutoPartInfo(String autopartID){
+        extractDatabase();
+        for(AutoPart autoPart :autoParts) {
+            if(autoPart.id.equals(autopartID)){
+                System.out.println("- AutoPart: " + autoPart.id);
+                System.out.println("- Name: " + autoPart.name);
+                System.out.println("- Brand: " + autoPart.brand);
+                System.out.println("- Model: " + autoPart.model);
+                System.out.println("- Condition: " + autoPart.condition);
+                System.out.println("- Warranty: " + autoPart.warranty);
+                System.out.printf("- Price (in VND): %,d\n", autoPart.price);
+            }
+        }
+    }
+
+    public AutoPart getautoPart(String autoPartId){
+        extractDatabase();
+
+        for(AutoPart autoPart:autoParts){
+            if(autoPart.id.equals(autoPartId)){
+                return autoPart;
             }
         }
         return null;
@@ -133,12 +166,13 @@ public class AutoPart {
         this.warranty = warranty;
     }
 
-    public double getPrice() {
+    public long getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(long price) {
         this.price = price;
     }
+
 }
 
