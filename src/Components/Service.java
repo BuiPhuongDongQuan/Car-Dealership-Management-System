@@ -123,7 +123,7 @@ public class Service{
     }
 
     //calculate total service cost
-    public void calculateServiceCost(){
+    public long calculateServiceCost(){
         readData();
         long totalCost = 0;
         for(Service service: services) {
@@ -131,10 +131,11 @@ public class Service{
         }
         String priceFormat = String.format("The service total revenue is: %,d", totalCost);
         System.out.println(priceFormat + " VND");
+        return totalCost;
     }
 
     // calculate total service cost on specific date
-    public void calculateServiceCostDate(String serviceDate){
+    public long calculateServiceCostDate(String serviceDate){
         readData();
         long totalCost = 0;
         for(Service service: services) {
@@ -144,10 +145,11 @@ public class Service{
         }
         String priceFormat = String.format("The service total revenue is: %,d", totalCost);
         System.out.println(priceFormat + " VND");
+        return totalCost;
     }
 
     //calculate total service cost in a month
-    public void calculateServiceCostMonth(String serviceMonth){
+    public long calculateServiceCostMonth(String serviceMonth){
         readData();
         long totalCost = 0;
         String regex = "(\\d{2})-(\\d{2})-(\\d{4})";
@@ -164,6 +166,7 @@ public class Service{
         }
         String priceFormat = String.format("The service total revenue is: %,d", totalCost);
         System.out.println(priceFormat + " VND");
+        return totalCost;
     }
 
     //calculate total service cost in one year
@@ -240,6 +243,20 @@ public class Service{
             }
         }
     }
+
+    //calculate service revenue of a mechanic
+    public void calculateRevenueOfMechanic(String mechanicId) {
+        readData();
+        long mechanicRevenue = 0;
+        for(Service service: services) {
+            if(service.getMechanicId().equals(mechanicId)) {
+                mechanicRevenue += service.getServiceCost();
+            }
+        }
+        String priceFormat = String.format("The total revenue of this mechanic is: %,d", mechanicRevenue);
+        System.out.println(priceFormat + " VND");
+    }
+}
 
     //create service order
     public void createOrder(User client, ServiceType serviceType, String mechanicId) throws IOException {

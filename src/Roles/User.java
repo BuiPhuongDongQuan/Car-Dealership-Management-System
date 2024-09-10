@@ -3,6 +3,7 @@ package Roles;
 import Features.Features;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class User {
     protected final String user_data = "src/Database/User.txt";
@@ -37,6 +38,7 @@ public class User {
     }
 
     public User() {}
+
 
     public String getId() {
         return id;
@@ -212,5 +214,49 @@ public class User {
         updateClientInfo[11] = String.valueOf(newSpending);
         updatedContent = Features.arrayToCSVString(updateClientInfo);
         Features.modifyFile(user_data, oldContent, updatedContent);
+    }
+
+    //get list of clients
+    public List<User> getClients(){
+        List<User> clients = new ArrayList<>();
+        for (User user : users) {
+            if(user.getUserType().equals("Client")){
+                clients.add(user);
+            }
+        }
+        return clients;
+    }
+
+    //get list of mechanics
+    public List<User> getMechanics(){
+        List<User> mechanics = new ArrayList<>();
+        for (User user : users) {
+            if(user.getUserType().equals("Mechanic")){
+                mechanics.add(user);
+            }
+        }
+        return mechanics;
+    }
+
+    //get list of salespersons
+    public List<User> getSalesperson(){
+        List<User> salesperson = new ArrayList<>();
+        for (User user : users) {
+            if(user.getUserType().equals("Salesperson")){
+                salesperson.add(user);
+            }
+        }
+        return salesperson;
+    }
+
+    //get user id
+    public User getUserId(String userId){
+        readData();
+        for (User user : users) {
+            if(userId.equals(user.getId())){
+                return user;
+            }
+        }
+        return null;
     }
 }

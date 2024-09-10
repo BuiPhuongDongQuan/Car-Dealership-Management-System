@@ -149,4 +149,41 @@ public class Features {
         String dateInString = new SimpleDateFormat(pattern).format(new Date());
         return dateInString;
     }
+
+    //remove specific line in database
+    //Source: https://www.youtube.com/watch?v=ij07fW5q4oo
+    public static void removeLine(String filepath, String deleteLine) {
+        String tempFile = "src/Database/temp.txt";
+        File oldFile = new File(filepath);
+        File newFile = new File(tempFile);
+
+        String currentLine;
+
+        try {
+            FileWriter fw = new FileWriter(tempFile, true);
+            BufferedWriter bw = new BufferedWriter(fw);
+            PrintWriter pw = new PrintWriter(bw);
+
+            FileReader fr = new FileReader(filepath);
+            BufferedReader br = new BufferedReader(fr);
+
+            while ((currentLine = br.readLine()) != null) {
+                if (!currentLine.trim().equals(deleteLine)) {
+                    pw.println(currentLine);
+                }
+            }
+            pw.flush();
+            pw.close();
+            fr.close();
+            br.close();
+            bw.close();
+            fw.close();
+
+            oldFile.delete();
+            File dump = new File(filepath);
+            newFile.renameTo(dump);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
 }

@@ -330,7 +330,6 @@ public class Car {
 
     public Car getCar(String carID){
         extractDatabase();
-
         for(Car car:cars){
             if(car.id.equals(carID)){
                 return car;
@@ -360,6 +359,7 @@ public class Car {
 
         Files.write(Paths.get(car_data), updatedLines);
     }
+
 
     public String getId() {
         return id;

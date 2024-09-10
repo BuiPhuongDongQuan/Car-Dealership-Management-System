@@ -33,7 +33,7 @@ public class AutoPart {
 
     //view all part and sort by ascending or descending
     public void viewAllAutoPartSort(String sortOrder) {
-        extractDatabase();
+        readData();
         // Print header
         System.out.printf("%-8s %-20s %-10s %-10s %-15s %-15s %-10s\n",
                 "ID", "Name", "Brand", "Model", "Condition", "Warranty", "Price");
@@ -46,7 +46,7 @@ public class AutoPart {
 
     }
 
-    public void extractDatabase() {
+    public void readData() {
         // Empty the ArrayList to ensure no duplicate information
         autoParts.clear();
 
@@ -74,6 +74,13 @@ public class AutoPart {
         }
     }
 
+    //get Auto Part ID duplicate
+    public AutoPart getPart(String partID){
+        readData();
+        for(AutoPart part: autoParts){
+            if(partID.equals(part.getId())){
+                return part;
+              
     public boolean validateAutoPartID(String autoPartID){
         extractDatabase();
         boolean validateautoPartID = false;

@@ -45,16 +45,17 @@ public class Salesperson extends User {
         user = getUser(username);
 
         if(user == null){
-            System.out.println("Manager not found. Please register to begin.");
+            System.out.println("Salesperson not found.");
             Menu.SystemMenu();
         } else{
-            if(user.authenticate(username, password, "Mechanic")){;
-                System.out.println("Login success! Welcome back Mechanic!");
-                Menu.ManagerMenu();
+            if(user.authenticate(username, password, "Salesperson")){;
+                System.out.println("Login success! Welcome back Salesperson!");
+                setUsername(username);
+                Menu.SalespersonMenu();
             }
             else {
                 System.out.println("Login failed! Username or password is incorrect.");
-                Menu.ManagerLoginMenu();
+                Menu.SalespersonLoginMenu();
             }
 
         }
@@ -151,6 +152,7 @@ public class Salesperson extends User {
                 break;
             case 7:
                 Menu.SalespersonMenu();
+                break;
         }
     }
 }
