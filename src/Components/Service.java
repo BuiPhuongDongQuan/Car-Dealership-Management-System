@@ -256,7 +256,7 @@ public class Service{
         String priceFormat = String.format("The total revenue of this mechanic is: %,d", mechanicRevenue);
         System.out.println(priceFormat + " VND");
     }
-}
+
 
     //create service order
     public void createOrder(User client, ServiceType serviceType, String mechanicId) throws IOException {

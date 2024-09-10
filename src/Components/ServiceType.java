@@ -33,7 +33,7 @@ public class ServiceType {
                 "ID", "Name", "Associated Part", "Price");
 
         for (ServiceType service : servicetypes) {
-            System.out.printf("%-8s%-35s%-30s $%,.2f\n",
+            System.out.printf("%-8s%-35s%-30s %,d VND\n",
                     service.getId(), service.getServicetype(), service.getRepalcedpart(), service.getPrice());
         }
     }
@@ -53,7 +53,7 @@ public class ServiceType {
             String serviceID = serviceId[i].trim();
             String serviceTypeName = serviceType[i].trim();
             String replacedPartList = replacedParts[i].trim();
-            long servicePrice = Long.parseLong(serviceCost[i].trim().replace(".", "").trim());
+            long servicePrice = Long.parseLong(serviceCost[i].trim().replace(".", ""));
 
             // Add the Service object to the list
             servicetypes.add(new ServiceType(serviceID, serviceTypeName, replacedPartList, servicePrice));
