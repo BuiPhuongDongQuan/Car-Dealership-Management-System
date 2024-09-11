@@ -31,21 +31,7 @@ public class AutoPart {
 
     }
 
-    //view all part and sort by ascending or descending
-    public void viewAllAutoPartSort(String sortOrder) {
-        readData();
-        // Print header
-        System.out.printf("%-8s %-20s %-10s %-10s %-15s %-15s %-10s\n",
-                "ID", "Name", "Brand", "Model", "Condition", "Warranty", "Price");
-
-        for (AutoPart autoPart : autoParts) {
-            System.out.printf("%-8s %-20s %-10s %-10s %-15s %-15s %,d VND\n",
-                    autoPart.getId(), autoPart.getName(), autoPart.getBrand(), autoPart.getModel(),
-                    autoPart.getCondition(), autoPart.getWarranty(), autoPart.getPrice());
-        }
-
-    }
-
+    //read auto part data from the text file
     public void readData() {
         // Empty the ArrayList to ensure no duplicate information
         autoParts.clear();
@@ -74,7 +60,7 @@ public class AutoPart {
         }
     }
 
-    //get Auto Part ID duplicate
+    // get an AutoPart object by its ID (returns null if not found)
     public AutoPart getPart(String partID){
         readData();
         for(AutoPart part: autoParts) {
@@ -84,7 +70,22 @@ public class AutoPart {
         }
         return null;
     }
-              
+
+    //view all autopart
+    public void viewAllAutoPartSort() {
+        readData();
+        // Print header
+        System.out.printf("%-8s %-20s %-10s %-10s %-15s %-15s %-10s\n",
+                "ID", "Name", "Brand", "Model", "Condition", "Warranty", "Price");
+
+        for (AutoPart autoPart : autoParts) {
+            System.out.printf("%-8s %-20s %-10s %-10s %-15s %-15s %,d VND\n",
+                    autoPart.getId(), autoPart.getName(), autoPart.getBrand(), autoPart.getModel(),
+                    autoPart.getCondition(), autoPart.getWarranty(), autoPart.getPrice());
+        }
+    }
+
+    //check if an auto part ID is valid (returns true if found)
     public boolean validateAutoPartID(String autoPartID){
         readData();
         boolean validateautoPartID = false;
@@ -96,6 +97,7 @@ public class AutoPart {
         return validateautoPartID;
     }
 
+    //print details of a specific auto part by ID
     public void printAutoPartInfo(String autopartID){
         readData();
         for(AutoPart autoPart :autoParts) {
@@ -111,17 +113,6 @@ public class AutoPart {
         }
     }
 
-    public AutoPart getautoPart(String autoPartId){
-        readData();
-
-        for(AutoPart autoPart:autoParts){
-            if(autoPart.id.equals(autoPartId)){
-                return autoPart;
-            }
-        }
-        return null;
-    }
-
     public String getId() {
         return id;
     }
@@ -134,49 +125,23 @@ public class AutoPart {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getBrand() {
         return brand;
-    }
-
-    public void setBrand(String brand) {
-        this.brand = brand;
     }
 
     public String getModel() {
         return model;
     }
 
-    public void setModel(String model) {
-        this.model = model;
-    }
-
     public String getCondition() {
         return condition;
-    }
-
-    public void setCondition(String condition) {
-        this.condition = condition;
     }
 
     public String getWarranty() {
         return warranty;
     }
 
-    public void setWarranty(String warranty) {
-        this.warranty = warranty;
-    }
-
     public long getPrice() {
         return price;
     }
-
-    public void setPrice(long price) {
-        this.price = price;
-    }
-
 }
-

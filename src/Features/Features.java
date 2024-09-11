@@ -50,6 +50,7 @@ public class Features {
         return colData.toArray(new String[0]);
     }
 
+    //writes a given string to a specified file path.
     public static void writeToFile(String filePath, String string){
         try{
             FileWriter fw = new FileWriter(filePath, true);
@@ -144,6 +145,8 @@ public class Features {
             e.printStackTrace();
         }
     }
+
+    //returns the current date as a string in the format "dd-MM-yyyy"
     public static String getDate(){
         String pattern = "dd-MM-yyyy";
         String dateInString = new SimpleDateFormat(pattern).format(new Date());

@@ -16,7 +16,14 @@ public class Mechanic extends User {
         super(id, fullname, dateOfBirth, address, phoneNumber, email, userType, status, membership ,username, password, totalSpending);
     }
 
-    // allow mechanic login
+    /**
+     * Allows a mechanic to log in by verifying their username and password.
+     * If successful, it redirects to the mechanic menu; otherwise, it retries login.
+     *
+     * @param username The username of the mechanic.
+     * @param password The password of the mechanic.
+     * @throws IOException If an error occurs while reading data.
+     */
     public void login(String username, String password) throws IOException{
         readData();
 
@@ -40,7 +47,12 @@ public class Mechanic extends User {
         }
     }
 
-    // view mechanic's information by username
+    /**
+     * Displays the current mechanic's information based on their username.
+     *
+     * @param username The username of the mechanic.
+     * @throws IOException If an error occurs while reading data.
+     */
     public void viewMechanicInfo(String username) throws IOException {
         readData();
         System.out.println("Here is your information: ");
@@ -55,6 +67,13 @@ public class Mechanic extends User {
         }
     }
 
+    /**
+     * Allows a mechanic to update their information based on their input.
+     *
+     * @param userInput The type of information to update (1-6).
+     * @param username  The username of the mechanic.
+     * @throws IOException If an error occurs while reading or modifying data.
+     */
     public void mechanicUpdateInfo(int userInput, String username) throws IOException {
         Scanner sc = new Scanner(System.in);
         User mechanic = getUser(username);
@@ -134,7 +153,12 @@ public class Mechanic extends User {
         }
     }
 
-    //validate mechanic
+    /**
+     * Validates if a given mechanic ID exists and is assigned to a mechanic.
+     *
+     * @param mechanicID The ID of the mechanic to validate.
+     * @return True if the mechanic ID is valid; false otherwise.
+     */
     public boolean validateMechanicID(String mechanicID){
         readData();
         boolean validatesalespersonID = false;
@@ -146,6 +170,12 @@ public class Mechanic extends User {
         return validatesalespersonID;
     }
 
+    /**
+     * Displays the ID and name of a mechanic based on their ID.
+     *
+     * @param mechanicID The ID of the mechanic.
+     * @throws IOException If an error occurs while reading data.
+     */
     public void viewMechanicIDandName(String mechanicID) throws IOException {
         readData();
 

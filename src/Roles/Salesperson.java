@@ -16,6 +16,12 @@ public class Salesperson extends User {
     }
     ArrayList<Salesperson> salespersons = new ArrayList<>();
 
+    /**
+     * Validates if a given salesperson ID exists and is assigned to a salesperson.
+     *
+     * @param salespersonID The ID of the salesperson to validate.
+     * @return True if the salesperson ID is valid; false otherwise.
+     */
     public boolean validateSalespersonID(String salespersonID){
         readData();
         boolean validatesalespersonID = false;
@@ -27,6 +33,12 @@ public class Salesperson extends User {
         return validatesalespersonID;
     }
 
+    /**
+     * Displays the ID and name of a salesperson based on their ID.
+     *
+     * @param salespersonID The ID of the salesperson.
+     * @throws IOException If an error occurs while reading data.
+     */
     public void viewSalespersonIDandName(String salespersonID) throws IOException {
         readData();
 
@@ -37,7 +49,15 @@ public class Salesperson extends User {
             }
         }
     }
-    //allow salesperson login
+
+    /**
+     * Allows a salesperson to log in by verifying their username and password.
+     * If successful, it redirects to the salesperson menu; otherwise, it retries login.
+     *
+     * @param username The username of the salesperson.
+     * @param password The password of the salesperson.
+     * @throws IOException If an error occurs while reading data.
+     */
     public void login(String username, String password) throws IOException{
         readData();
 
@@ -61,7 +81,12 @@ public class Salesperson extends User {
         }
     }
 
-    // view salesperson's information by username
+    /**
+     * Displays the current salesperson's information based on their username.
+     *
+     * @param username The username of the salesperson.
+     * @throws IOException If an error occurs while reading data.
+     */
     public void viewSalespersonInfo(String username) throws IOException {
         readData();
         System.out.println("Here is your information: ");
@@ -76,6 +101,13 @@ public class Salesperson extends User {
         }
     }
 
+    /**
+     * Allows a salesperson to update their information based on their input.
+     *
+     * @param userInput The type of information to update (1-6).
+     * @param username  The username of the salesperson.
+     * @throws IOException If an error occurs while reading or modifying data.
+     */
     public void salespersonUpdateInfo(int userInput, String username) throws IOException {
         Scanner sc = new Scanner(System.in);
         User salesperson = getUser(username);
@@ -156,4 +188,3 @@ public class Salesperson extends User {
         }
     }
 }
-
