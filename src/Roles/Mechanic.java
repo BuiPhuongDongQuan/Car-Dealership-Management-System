@@ -132,6 +132,8 @@ public class Mechanic extends User {
             case 7:
                 Menu.MechanicMenu();
         }
+        System.out.println(oldContent);
+        System.out.println(updatedContent);
     }
 
     //validate mechanic
