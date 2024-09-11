@@ -773,9 +773,9 @@ public class Menu {
         System.out.println("----- What do you want to update? -----");
         System.out.println("1. Full name.");
         System.out.println("2. Date of birth.");
-        System.out.println("3. Email.");
-        System.out.println("4. Address.");
-        System.out.println("5. Phone number.");
+        System.out.println("3. Adress.");
+        System.out.println("4. Phone number.");
+        System.out.println("5. Email.");
         System.out.println("6. Password.");
         System.out.println("7. No update, return to Client Menu.");
         System.out.println("8. Exit.");
