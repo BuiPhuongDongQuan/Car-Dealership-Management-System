@@ -1,6 +1,16 @@
+/*
+  RMIT University Vietnam
+  Course: COSC2081 Programming 1
+  Semester: 2024B
+  Group Assignment
+  Author: Javalorant
+  ID: s3978862, s3975939, s3980424
+*/
+
 package Menu;
 
 import Components.Service;
+import Roles.User;
 import Roles.Client;
 import Roles.Manager;
 import Roles.Mechanic;
@@ -116,7 +126,8 @@ public class Menu {
         System.out.println("6. Calculate the revenue of cars sold of a salesperson");
         System.out.println("7. Add new car");
         System.out.println("8. Add new Auto Part");
-        int choice = getValidatedInput(1, 8);
+        System.out.println("9. Exit");
+        int choice = getValidatedInput(1, 9);
 
         switch (choice) {
             case 1:
@@ -162,6 +173,10 @@ public class Menu {
             case 8:
                 manager.addPart();
                 ManagerMenu();
+                break;
+            case 9:
+                ThankYouMenu();
+                System.exit(0);
                 break;
         }
     }
@@ -411,7 +426,8 @@ public class Menu {
         System.out.println("5. List the number of transaction in a specific date");
         System.out.println("6. List the number of transaction in a month");
         System.out.println("7. List the number of transaction in a year");
-        System.out.println("8. Exit");
+        System.out.println("8. Return to Salesperson Menu");
+        System.out.println("9. Exit");
         int choice = getValidatedInput(1, 8);
 
         switch (choice) {
@@ -465,7 +481,10 @@ public class Menu {
             case 8:
                 Menu.SalespersonMenu();
                 break;
-
+            case 9:
+                ThankYouMenu();
+                System.exit(0);
+                break;
         }
     }
 
@@ -498,7 +517,9 @@ public class Menu {
                 MechanicStatisticsOperator();
                 break;
             case 3:
-                Menu.SalespersonMenu();
+                ThankYouMenu();
+                System.exit(0);
+                break;
         }
     }
     // mechanic statistics operator menu
@@ -511,8 +532,9 @@ public class Menu {
         System.out.println("5. List the number of service in a specific date");
         System.out.println("6. List the number of service in a month");
         System.out.println("7. List the number of service in a year");
-        System.out.println("8. Exit");
-        int choice = getValidatedInput(1, 8);
+        System.out.println("8. Return to Mechanic Menu");
+        System.out.println("9. Exit");
+        int choice = getValidatedInput(1, 9);
 
         switch (choice) {
             case 1:
@@ -564,6 +586,10 @@ public class Menu {
                 break;
             case 8:
                 Menu.MechanicMenu();
+                break;
+            case 9:
+                ThankYouMenu();
+                System.exit(0);
                 break;
         }
     }
@@ -772,9 +798,9 @@ public class Menu {
         System.out.println("----- What do you want to update? -----");
         System.out.println("1. Full name.");
         System.out.println("2. Date of birth.");
-        System.out.println("3. Email.");
-        System.out.println("4. Address.");
-        System.out.println("5. Phone number.");
+        System.out.println("3. Address.");
+        System.out.println("4. Phone number.");
+        System.out.println("5. Email.");
         System.out.println("6. Password.");
         System.out.println("7. No update, return to Client Menu.");
         System.out.println("8. Exit.");

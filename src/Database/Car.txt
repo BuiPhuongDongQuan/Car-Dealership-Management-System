@@ -23,3 +23,5 @@ C21,Vinfast,VF3,2024,730.000.000,White,89km,Sold
 C22,Vinfast,VF5,2024,500.000.000,Blue,133km,Sold
 C23,Vinfast,VF6,2024,600.000.000,Red,100km,Available
 C24,Vinfast,VF5,2024,500.000.000,White,0km,Available
+C25,Vinfast,VF5,2024,500.000.000,Blue,0km,Available
+C26,Yamaha,XSR155,2022,83.000.000,Blue,10000km,Sold

@@ -1,3 +1,12 @@
+/*
+  RMIT University Vietnam
+  Course: COSC2081 Programming 1
+  Semester: 2024B
+  Group Assignment
+  Author: Javalorant
+  ID: s3978862, s3975939, s3980424
+*/
+
 package Components;
 
 import Features.Features;
@@ -33,7 +42,7 @@ public class ServiceType {
                 "ID", "Name", "Associated Part", "Price");
 
         for (ServiceType service : servicetypes) {
-            System.out.printf("%-8s%-35s%-30s $%,.2f\n",
+            System.out.printf("%-8s%-35s%-30s %,d VND\n",
                     service.getId(), service.getServicetype(), service.getRepalcedpart(), service.getPrice());
         }
     }
@@ -53,7 +62,7 @@ public class ServiceType {
             String serviceID = serviceId[i].trim();
             String serviceTypeName = serviceType[i].trim();
             String replacedPartList = replacedParts[i].trim();
-            long servicePrice = Long.parseLong(serviceCost[i].trim().replace(".", "").trim());
+            long servicePrice = Long.parseLong(serviceCost[i].trim().replace(".", ""));
 
             // Add the Service object to the list
             servicetypes.add(new ServiceType(serviceID, serviceTypeName, replacedPartList, servicePrice));

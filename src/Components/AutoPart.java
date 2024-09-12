@@ -1,3 +1,12 @@
+/*
+  RMIT University Vietnam
+  Course: COSC2081 Programming 1
+  Semester: 2024B
+  Group Assignment
+  Author: Javalorant
+  ID: s3978862, s3975939, s3980424
+*/
+
 package Components;
 
 import Features.Features;
@@ -39,7 +48,7 @@ public class AutoPart {
                 "ID", "Name", "Brand", "Model", "Condition", "Warranty", "Price");
 
         for (AutoPart autoPart : autoParts) {
-            System.out.printf("%-8s %-20s %-10s %-10s %-15s %-15s $%,.2f\n",
+            System.out.printf("%-8s %-20s %-10s %-10s %-15s %-15s %,d VND\n",
                     autoPart.getId(), autoPart.getName(), autoPart.getBrand(), autoPart.getModel(),
                     autoPart.getCondition(), autoPart.getWarranty(), autoPart.getPrice());
         }
@@ -77,12 +86,16 @@ public class AutoPart {
     //get Auto Part ID duplicate
     public AutoPart getPart(String partID){
         readData();
-        for(AutoPart part: autoParts){
-            if(partID.equals(part.getId())){
+        for(AutoPart part: autoParts) {
+            if (partID.equals(part.getId())) {
                 return part;
+            }
+        }
+        return null;
+    }
               
     public boolean validateAutoPartID(String autoPartID){
-        extractDatabase();
+        readData();
         boolean validateautoPartID = false;
         for(AutoPart autoPart :autoParts) {
             if (autoPart.getId().equals(autoPartID)) {
@@ -93,7 +106,7 @@ public class AutoPart {
     }
 
     public void printAutoPartInfo(String autopartID){
-        extractDatabase();
+        readData();
         for(AutoPart autoPart :autoParts) {
             if(autoPart.id.equals(autopartID)){
                 System.out.println("- AutoPart: " + autoPart.id);
@@ -108,7 +121,7 @@ public class AutoPart {
     }
 
     public AutoPart getautoPart(String autoPartId){
-        extractDatabase();
+        readData();
 
         for(AutoPart autoPart:autoParts){
             if(autoPart.id.equals(autoPartId)){

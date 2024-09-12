@@ -28,4 +28,4 @@ P26,Drive Shaft,Spicer,DS-3348,Refurbished,6 months,4.320.000
 P27,Starter Motor,Denso,SM-7768,New,2 years,6.000.000
 P28,Shock Absorber,Bilstein,SA-2245,New,2 years,2.640.000
 P29,Throttle Body,Bosch,TB-9934,Refurbished,6 months,6.000.000
-P30,Window Regulator,Dorman,WR-3344,New,1 year,2.160.000
+P30,Window Regulator,Dorman,WR-3344,New,1 year,2.160.00

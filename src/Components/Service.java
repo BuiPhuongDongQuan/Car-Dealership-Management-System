@@ -1,3 +1,12 @@
+/*
+  RMIT University Vietnam
+  Course: COSC2081 Programming 1
+  Semester: 2024B
+  Group Assignment
+  Author: Javalorant
+  ID: s3978862, s3975939, s3980424
+*/
+
 package Components;
 
 import Features.Features;
@@ -256,7 +265,7 @@ public class Service{
         String priceFormat = String.format("The total revenue of this mechanic is: %,d", mechanicRevenue);
         System.out.println(priceFormat + " VND");
     }
-}
+
 
     //create service order
     public void createOrder(User client, ServiceType serviceType, String mechanicId) throws IOException {
