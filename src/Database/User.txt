@@ -5,3 +5,4 @@ U3,Admin,01/01/1900,admin,0132456132,admin@gmail.com,Manager,Active,Regular,admi
 U4,Quang Nhat,09-04-2004,Vuong quoc Binh Chanh,0131599991,quangnhat@gmail.com,Client,Active,Platinum,quangnhat,quangnhat,11752040000
 U5,Thanh Phuong,01-01-1968,HM,098713997,thanhphuong@gmail.com,Client,Active,Regular,thanhphuong,thanhphuong,0
 U6,Dong Bui,01-02-1971,HM,0372455799,dongbui@gmail.com,Client,Active,Regular,dongbui,dongbui,360000
+
