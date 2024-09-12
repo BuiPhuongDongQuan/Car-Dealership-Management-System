@@ -65,6 +65,7 @@ public class Menu {
         return choice;
     }
 
+    //choose role
     public static void SystemMenu() throws IOException {
         System.out.println("Returning to System Menu...");
         System.out.println("============================== System Menu - Welcome to Auto316 Management System ==============================");
@@ -641,6 +642,7 @@ public class Menu {
         }
     }
 
+    //client login
     public static void ClientLoginMenu() throws IOException {
         System.out.println("============================== Client - Login ==============================");
         System.out.print("Enter your username (or type 'esc' to go back): ");
@@ -661,68 +663,46 @@ public class Menu {
 
     }
 
-    //Allow client to register
+    //client register
     public static void ClientRegisterMenu() throws IOException {
         System.out.println("============================== Client - Register ==============================");
 
-        System.out.print("Enter your username (or type 'esc' to go back): ");
-        String username = sc.readLine();
-        if (username.equalsIgnoreCase("esc")) {
-            SystemMenu();
+        String username = getInput("Enter your username (or type 'esc' to go back): ");
+        if (client.usernameValidation(username)) {
+            System.out.println("Username already exists. Moving you back to Client Welcome Menu.");
+            ClientWelcomeMenu();
             return;
         }
 
-        if(client.usernameValidation(username)) {
-            System.out.println("Username existed. Moving you back to Client Welcome Menu");
-            ClientWelcomeMenu();
-        } else {
-            System.out.print("Enter your password (or type 'esc' to go back): ");
-            String password = sc.readLine();
-            if (password.equalsIgnoreCase("esc")) {
-                SystemMenu();
-                return;
-            }
+        String password = getInput("Enter your password (or type 'esc' to go back): ");
+        String fullname = getInput("Enter your full name (or type 'esc' to go back): ");
+        String dateOfBirth = getInput("Enter your date of birth (or type 'esc' to go back): ");
+        String email = getInput("Enter your email (or type 'esc' to go back): ");
+        String address = getInput("Enter your address (or type 'esc' to go back): ");
+        String phoneNumber = getInput("Enter your phone number (or type 'esc' to go back): ");
 
-            System.out.print("Enter your full name (or type 'esc' to go back): ");
-            String fullname = sc.readLine();
-            if (fullname.equalsIgnoreCase("esc")) {
-                SystemMenu();
-                return;
-            }
-
-            System.out.print("Enter your date of birth (or type 'esc' to go back): ");
-            String dateOfBirth = sc.readLine();
-            if (dateOfBirth.equalsIgnoreCase("esc")) {
-                SystemMenu();
-                return;
-            }
-
-            System.out.print("Enter your email (or type 'esc' to go back): ");
-            String email = sc.readLine();
-            if (email.equalsIgnoreCase("esc")) {
-                SystemMenu();
-                return;
-            }
-
-            System.out.print("Enter your address (or type 'esc' to go back): ");
-            String address = sc.readLine();
-            if (address.equalsIgnoreCase("esc")) {
-                SystemMenu();
-                return;
-            }
-
-            System.out.print("Enter your phone number (or type 'esc' to go back): ");
-            String phoneNumber = sc.readLine();
-            if (phoneNumber.equalsIgnoreCase("esc")) {
-                SystemMenu();
-                return;
-            }
-
-            client.register(fullname, dateOfBirth, address, phoneNumber, email, username, password);
-            System.out.println("Registration completed!");
-            ClientWelcomeMenu();
-        }
+        client.register(fullname, dateOfBirth, address, phoneNumber, email, username, password);
+        System.out.println("Registration completed!");
+        ClientWelcomeMenu();
     }
+
+    // Helper method to handle input and 'esc' functionality
+    public static String getInput(String prompt) throws IOException {
+        String input;
+        do {
+            System.out.print(prompt);
+            input = sc.readLine();
+            if (input.equalsIgnoreCase("esc")) {
+                SystemMenu();
+                throw new IOException("User exited"); // Stops further execution and returns to menu
+            }
+            if (input.trim().isEmpty()) {
+                System.out.println("This field cannot be empty. Please try again.");
+            }
+        } while (input.trim().isEmpty());
+        return input;
+    }
+
 
     // Client menu
     public static void ClientMenu() throws IOException {
@@ -759,7 +739,7 @@ public class Menu {
                 break;
             case 5:
                 System.out.println("============================== Auto Part Categories ==============================");
-                autoPart.viewAllAutoPartSort("none");
+                autoPart.viewAllAutoPartSort();
                 ClientMenu();
                 break;
             case 6:
@@ -845,8 +825,8 @@ public class Menu {
 
                 System.out.println("How would you like to sort?");
                 System.out.println("1. View all cars.");
-                System.out.println("1. Ascending price.");
-                System.out.println("2. Descending price.");
+                System.out.println("2. Ascending price.");
+                System.out.println("3. Descending price.");
                 System.out.println("4. Return to View Car Detail Menu.");
                 option = getValidatedInput(1, 4);
                 System.out.println();
@@ -874,8 +854,8 @@ public class Menu {
 
                 System.out.println("How would you like to sort?");
                 System.out.println("1. View all cars.");
-                System.out.println("1. Ascending price.");
-                System.out.println("2. Descending price.");
+                System.out.println("2. Ascending price.");
+                System.out.println("3. Descending price.");
                 System.out.println("4. Return to View Car Detail Menu.");
                 int statusSortOption = getValidatedInput(1, 4);
 
@@ -948,6 +928,7 @@ public class Menu {
         }
     }
 
+    //create auto part transaction
     public static void CreateAutoPartTransactionMenu() throws IOException {
         System.out.print("Enter the auto part ID you want to order (or type 'esc' to go back): ");
         String autoPartID = sc.readLine();
@@ -970,7 +951,7 @@ public class Menu {
             System.out.println("Here is the auto part info: ");
             autoPart.printAutoPartInfo(autoPartID);
 
-            saleTransaction.createOrder(client.getUser(client.getUsername()), null, autoPart.getautoPart(autoPartID), salespersonID);
+            saleTransaction.createOrder(client.getUser(client.getUsername()), null, autoPart.getPart(autoPartID), salespersonID);
         } else if (!salesperson.validateSalespersonID(salespersonID)) {
             System.out.println("Salesperson not found.");
             CreateAutoPartTransactionMenu();
@@ -980,6 +961,7 @@ public class Menu {
         }
     }
 
+    //create service transaction menu
     public static void CreateServiceTransactionMenu() throws IOException {
         System.out.print("Enter the service ID you wanted to order (or type 'esc' to go back): ");
         String serviceTypeID = sc.readLine();

@@ -1,5 +1,8 @@
 #ID, Fullname, Date of birth, Address, Phone Number, Email, User type, Status, Membership, Username, Password, TotalSpending
-U1,Nguyen Minh Khoi,11-11-2004,Q7,123456789,123@gmail.com,Manager,Active,none,admin,admin,0
-U2,hello,03-03-2004,HM,07894561,dongquan@gmail.com,Client,Active,Platinum,dongquan,dongquan,31493424162
-U4,Hello,09-04-2004,BC,206432032,quangnhat@gmail.com,Mechanic,Active,Regular,quangnhat,quangnhat2004,0
-U5,MINH KHOI,11-11-2004,Q4,06516501620,minhkhoi@gmail.com,Salesperson,Active,none,minhkhoi,minhkhoi2004,0
+U1,Minh KHoi,11-11-2004,Giang ho Q4,01626131,minhkhoi@gmail.com,Mechanic,Active,Regular,minhkhoi,minhkhoi,0
+U2,DongQuan,03-07-2004,Hoc Mon,0132456132,dongquan@gmial.com,Salesperson,Active,Regular,dongquan,dongquan,0
+U3,Admin,01/01/1900,admin,0132456132,admin@gmail.com,Manager,Active,Regular,admin,admin,0
+U4,Quang Nhat,09-04-2004,Vuong quoc Binh Chanh,0131599991,quangnhat@gmail.com,Client,Active,Platinum,quangnhat,quangnhat,11752040000
+U5,Thanh Phuong,01-01-1968,HM,098713997,thanhphuong@gmail.com,Client,Active,Regular,thanhphuong,thanhphuong,0
+U6,Dong Bui,01-02-1971,HM,0372455799,dongbui@gmail.com,Client,Active,Regular,dongbui,dongbui,360000
+

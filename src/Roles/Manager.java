@@ -20,7 +20,11 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
 
-
+/**
+ * The Manager class extends the User class and provides additional functionalities
+ * for a manager such as viewing client, mechanic, and salesperson information,
+ * adding/removing cars and auto parts, and managing users.
+ */
 public class Manager extends User {
     private final String car_data = "src/Database/Car.txt";
     private final String part_data = "src/Database/AutoPart.txt";
@@ -32,8 +36,12 @@ public class Manager extends User {
         super(id, fullname, dateOfBirth, address, phoneNumber, email, userType, status, membership ,username, password, totalSpending);
     }
 
-    // allow manager login
-    public void login(String username, String password) throws IOException{
+    /**
+     * Allow the manager to log in by verifying the username and password.
+     * @param username The manager's username.
+     * @param password The manager's password.
+     * @throws IOException If an input or output error occurs.
+     */    public void login(String username, String password) throws IOException{
         readData();
 
         User user = new User();
@@ -56,7 +64,10 @@ public class Manager extends User {
         }
     }
 
-    // manager view client information
+    /**
+     * Manager views the information of all clients.
+     * @throws IOException If an input or output error occurs.
+     */
     public void viewClientInformation() throws IOException{
         readData();
         List<User> clients = getClients();
@@ -74,7 +85,10 @@ public class Manager extends User {
        }
     }
 
-    //manager view mechanic information
+    /**
+     * Manager views the information of all mechanics.
+     * @throws IOException If an input or output error occurs.
+     */
     public void viewMechanicInformation() throws IOException {
         readData();
         List<User> mechanics = getMechanics();
@@ -91,7 +105,11 @@ public class Manager extends User {
         }
     }
 
-    //manager view salesperson information
+
+    /**
+     * Manager views the information of all salespersons.
+     * @throws IOException If an input or output error occurs.
+     */
     public void viewSalespersonInformation() throws IOException{
         readData();
         List<User> salespersons = getSalesperson();
@@ -109,12 +127,19 @@ public class Manager extends User {
         }
     }
 
-    //manager view all components
+    /**
+     * Manager views all component information from the provided file path.
+     * @param filepath The path of the file to view the information.
+     */
     public void viewAllInformation(String filepath){
         Features.readAllLines(filepath);
     }
 
-    //manager add car
+
+    /**
+     * Manager adds a new car to the system by entering car details.
+     * @throws IOException If an input or output error occurs.
+     */
     public void addCar() throws IOException{
         Scanner sc = new Scanner(System.in);
         int carCount = Features.countLine(car_data);
@@ -153,7 +178,9 @@ public class Manager extends User {
         System.out.println("New car added!");
     }
 
-    //add new auto part
+    /**
+     * Manager adds a new auto part to the system by entering part details.
+     */
     public void addPart(){
         Scanner sc = new Scanner(System.in);
         int partCount = Features.countLine(part_data);
@@ -188,14 +215,20 @@ public class Manager extends User {
         System.out.println("New part added!");
     }
 
-    //manager remove users
+    /**
+     * Manager removes a user from the system.
+     * @param user The user to be removed.
+     */
     public void removeUser(User user){
         String deleteUser = user.getId() + "," +user.getFullname() + "," +user.getDateOfBirth() + "," +user.getAddress() + "," +user.getPhoneNumber() + "," +user.getEmail() + "," + user.getUserType()+ "," +user.getStatus()+ "," + user.getMembership() +"," +user.getUsername() + "," +user.getPassword() + "," +user.getTotalSpending();
         Features.removeLine(user_data, deleteUser);
         System.out.println("User removed successfully.");
     }
 
-    //manager remove cars
+    /**
+     * Manager removes a car from the system.
+     * @param car The car to be removed.
+     */
     public void removeCar(Car car){
 
         String formattedPrice = String.format("%,d", car.getPrice()).replace(",", ".");
@@ -205,7 +238,10 @@ public class Manager extends User {
         System.out.println("Car removed successfully.");
     }
 
-    //manager remove parts
+    /**
+     * Manager removes a user from the system.
+     * @param part The autoPart to be removed.
+     */
     public void removePart(AutoPart part){
         String formattedPrice = String.format("$%.0f", part.getPrice());
         String deletePart = part.getId() + "," + part.getName() + "," + part.getBrand() + "," + part.getModel() + "," + part.getCondition() + "," + part.getWarranty() + "," + formattedPrice;
@@ -213,4 +249,3 @@ public class Manager extends User {
         System.out.println("Part removed successfully.");
     }
 }
-

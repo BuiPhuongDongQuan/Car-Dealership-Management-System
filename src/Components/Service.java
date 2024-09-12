@@ -28,7 +28,6 @@ public class Service{
     private String serviceTypeId;
     private String listOfReplacedPart;
     private long serviceCost;
-    private String additionalNotes;
 
     ArrayList<Service> services = new ArrayList<>();
 
@@ -36,7 +35,7 @@ public class Service{
 
     }
 
-    public Service(String id, String serviceDate, String clientId, String mechanicId, String serviceType, String listOfReplacedPart, long serviceCost, String additionalNotes){
+    public Service(String id, String serviceDate, String clientId, String mechanicId, String serviceType, String listOfReplacedPart, long serviceCost){
         this.id = id;
         this.serviceDate = serviceDate;
         this.clientId = clientId;
@@ -44,74 +43,9 @@ public class Service{
         this.serviceTypeId = serviceType;
         this.listOfReplacedPart = listOfReplacedPart;
         this.serviceCost = serviceCost;
-        this.additionalNotes = additionalNotes;
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getServiceDate() {
-        return serviceDate;
-    }
-
-    public void setServiceDate(String serviceDate) {
-        this.serviceDate = serviceDate;
-    }
-
-    public String getClientId() {
-        return clientId;
-    }
-
-    public void setClientId(String clientId) {
-        this.clientId = clientId;
-    }
-
-    public String getMechanicId() {
-        return mechanicId;
-    }
-
-    public void setMechanicId(String mechanicId) {
-        this.mechanicId = mechanicId;
-    }
-
-    public String getServiceTypeId() {
-        return serviceTypeId;
-    }
-
-    public void setServiceTypeId(String serviceTypeId) {
-        this.serviceTypeId = serviceTypeId;
-    }
-
-    public String getListOfReplacedPart() {
-        return listOfReplacedPart;
-    }
-
-    public void setListOfReplacedPart(String listOfReplacedPart) {
-        this.listOfReplacedPart = listOfReplacedPart;
-    }
-
-    public long getServiceCost() {
-        return serviceCost;
-    }
-
-    public void setServiceCost(long serviceCost) {
-        this.serviceCost = serviceCost;
-    }
-
-    public String getAdditionalNotes() {
-        return additionalNotes;
-    }
-
-    public void setAdditionalNotes(String additionalNotes) {
-        this.additionalNotes = additionalNotes;
-    }
-
-
+    //extract data from database when there are updates and add object to arraylist
     public void readData() {
         services.clear();
 
@@ -123,11 +57,10 @@ public class Service{
         String[] serviceType = Features.ReadCol(4, service_data, ";");
         String[] listOfReplacedPart = Features.ReadCol(5, service_data, ";");
         String[] serviceCost = Features.ReadCol(6, service_data, ";");
-        String[] additionalNotes = Features.ReadCol(7, service_data, ";");
 
         // Check if arrays have the same length
         for (int i = 0; i < countLine - 1; i++) {
-            services.add(new Service(id[i], serviceDate[i], clientId[i], mechanicId[i], serviceType[i], listOfReplacedPart[i], Long.parseLong(serviceCost[i]), additionalNotes[i]));
+            services.add(new Service(id[i], serviceDate[i], clientId[i], mechanicId[i], serviceType[i], listOfReplacedPart[i], Long.parseLong(serviceCost[i])));
         }
     }
 
@@ -202,11 +135,11 @@ public class Service{
     public void listAllServicesDate(String serviceDate){
         readData();
         System.out.println("Here is the service in : " + serviceDate);
-        System.out.println("ID, Client ID, Mechanic ID, Service Type, List of Replaced Part, Service Cost, Additional Notes ");
+        System.out.println("ID, Client ID, Mechanic ID, Service Type, List of Replaced Part, Service Cost");
         for(Service service: services) {
             if (service.getServiceDate().equals(serviceDate)) {
                 String costFormat = String .format("%,d", service.getServiceCost());
-                System.out.println(service.getId() +", "+ service.getClientId() +", "+ service.getMechanicId() +", "+ service.getServiceTypeId() +", "+ service.getListOfReplacedPart() + ", "+ costFormat +"VND" +", "+ service.getAdditionalNotes());
+                System.out.println(service.getId() +", "+ service.getClientId() +", "+ service.getMechanicId() +", "+ service.getServiceTypeId() +", "+ service.getListOfReplacedPart() + ", "+ costFormat +"VND");
             }
         }
     }
@@ -215,7 +148,7 @@ public class Service{
     public void listAllServicesMonth(String serviceMonth) {
         readData();
         System.out.println("Here is the service in month : " + serviceMonth);
-        System.out.println("ID, Client ID, Mechanic ID, Service Type, List of Replaced Part, Service Cost, Additional Notes ");
+        System.out.println("ID, Client ID, Mechanic ID, Service Type, List of Replaced Part, Service Cost");
 
         String regex = "(\\d{2})-(\\d{2})-(\\d{4})";
         Pattern pattern = Pattern.compile(regex);
@@ -226,7 +159,7 @@ public class Service{
                 String month = matcher.group(2);
                 if (serviceMonth.equals(month)) {
                     String costFormat = String .format("%,d", service.getServiceCost());
-                    System.out.println(service.getId() +", "+ service.getClientId() +", "+ service.getMechanicId() +", "+ service.getServiceTypeId() +", "+ service.getListOfReplacedPart() + ", "+ costFormat +"VND" +", "+ service.getAdditionalNotes());
+                    System.out.println(service.getId() +", "+ service.getClientId() +", "+ service.getMechanicId() +", "+ service.getServiceTypeId() +", "+ service.getListOfReplacedPart() + ", "+ costFormat +"VND");
                 }
             }
         }
@@ -236,7 +169,7 @@ public class Service{
     public void listAllServicesYear(String serviceYear) {
         readData();
         System.out.println("Here is the service in year : " + serviceYear);
-        System.out.println("ID, Client ID, Mechanic ID, Service Type, List of Replaced Part, Service Cost, Additional Notes ");
+        System.out.println("ID, Client ID, Mechanic ID, Service Type, List of Replaced Part, Service Cost");
 
         String regex = "(\\d{2})-(\\d{2})-(\\d{4})";
         Pattern pattern = Pattern.compile(regex);
@@ -247,7 +180,7 @@ public class Service{
                 String year = matcher.group(3);
                 if (serviceYear.equals(year)) {
                     String costFormat = String .format("%,d", service.getServiceCost());
-                    System.out.println(service.getId() +", "+ service.getClientId() +", "+ service.getMechanicId() +", "+ service.getServiceTypeId() +", "+ service.getListOfReplacedPart() + ", "+ costFormat +"VND" +", "+ service.getAdditionalNotes());
+                    System.out.println(service.getId() +", "+ service.getClientId() +", "+ service.getMechanicId() +", "+ service.getServiceTypeId() +", "+ service.getListOfReplacedPart() + ", "+ costFormat +"VND");
                 }
             }
         }
@@ -266,8 +199,9 @@ public class Service{
         System.out.println(priceFormat + " VND");
     }
 
-
-    //create service order
+    //create an order for a client involving a service
+    //calculates the total order amount based on the client's membership discount, confirms the order,
+    //updates the car's status if applicable, and saves the transaction data to the file.
     public void createOrder(User client, ServiceType serviceType, String mechanicId) throws IOException {
         Scanner sc = new Scanner(System.in);
 
@@ -313,8 +247,8 @@ public class Service{
             serviceDate = Features.getDate();
 
             // Format order data and write to file
-            String data = "\n" + id + "," + serviceDate + "," + clientId + "," + mechanicId + "," +
-                    serviceTypeId + "," + listOfReplacedPart + "," + serviceCost + ",N/A"; // Additional notes can be set as needed
+            String data = "\n" + id + ";" + serviceDate + ";" + clientId + ";" + mechanicId + ";" +
+                    serviceTypeId + ";" + listOfReplacedPart + ";" + serviceCost; // Additional notes can be set as needed
             Features.writeToFile(service_data, data);
 
             // Update customer spending and membership status
@@ -327,6 +261,7 @@ public class Service{
         Menu.ClientMenu();
     }
 
+    //get a service object by its ID (returns null if not found)
     public Service getService(String id) {
         readData();
 
@@ -338,6 +273,7 @@ public class Service{
         return null;
     }
 
+    //check if service id is valid
     public boolean validateServiceID(String serviceID){
         readData();
         boolean validateServiceID = false;
@@ -349,6 +285,9 @@ public class Service{
         return validateServiceID;
     }
 
+    //create an order for a client involving a service
+    //calculates the total order amount based on the client's membership discount, confirms the order,
+    //updates the car's status if applicable, and saves the transaction data to the file.
     public void searchOrder(String orderID, User client) throws IOException {
         Service service = getService(orderID);
         if(client.getId().equals(service.getClientId())){
@@ -365,6 +304,7 @@ public class Service{
         Menu.ClientMenu();
     }
 
+    //get all service by current client
     public void printAllService(User client) {
         readData();
         boolean hasPurchases = false;
@@ -385,5 +325,37 @@ public class Service{
         if (!hasPurchases) {
             System.out.println("No purchases found for client ID: " + clientId);
         }
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getServiceDate() {
+        return serviceDate;
+    }
+
+    public String getClientId() {
+        return clientId;
+    }
+
+    public String getMechanicId() {
+        return mechanicId;
+    }
+
+    public String getServiceTypeId() {
+        return serviceTypeId;
+    }
+
+    public String getListOfReplacedPart() {
+        return listOfReplacedPart;
+    }
+
+    public long getServiceCost() {
+        return serviceCost;
     }
 }

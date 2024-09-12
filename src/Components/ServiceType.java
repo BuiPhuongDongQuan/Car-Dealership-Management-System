@@ -34,20 +34,8 @@ public class ServiceType {
 
     }
 
-    //view all part and sort by ascending or descending
-    public void viewAllServiceSort(String sortOrder) {
-        extractDatabase();
-        // Print header
-        System.out.printf("%-8s%-35s%-31s%-20s\n" ,
-                "ID", "Name", "Associated Part", "Price");
-
-        for (ServiceType service : servicetypes) {
-            System.out.printf("%-8s%-35s%-30s %,d VND\n",
-                    service.getId(), service.getServicetype(), service.getRepalcedpart(), service.getPrice());
-        }
-    }
-
-    public void extractDatabase() {
+    //extract data from database when there are updates and add object to arraylist
+    public void readData() {
         // Clear the list to ensure no duplicate information
         servicetypes.clear();
 
@@ -69,9 +57,22 @@ public class ServiceType {
         }
     }
 
+    //view all part and sort by ascending or descending
+    public void viewAllServiceSort(String sortOrder) {
+        readData();
+        // Print header
+        System.out.printf("%-8s%-35s%-31s%-20s\n" ,
+                "ID", "Name", "Associated Part", "Price");
+
+        for (ServiceType service : servicetypes) {
+            System.out.printf("%-8s%-35s%-30s %,d VND\n",
+                    service.getId(), service.getServicetype(), service.getRepalcedpart(), service.getPrice());
+        }
+    }
+
     //validate service
     public boolean validateServiceTypeID(String serviceID){
-        extractDatabase();
+        readData();
         boolean validateServiceTypeID = false;
         for(ServiceType service:servicetypes) {
             if (service.getId().equals(serviceID)) {
@@ -81,9 +82,9 @@ public class ServiceType {
         return validateServiceTypeID;
     }
 
-    //print service infor
+    //print service information
     public void printServiceInfo(String serviceID){
-        extractDatabase();
+        readData();
         for(ServiceType service:servicetypes) {
             if(service.id.equals(serviceID)){
                 System.out.println("- Service ID: " + service.id);
@@ -94,8 +95,9 @@ public class ServiceType {
         }
     }
 
+    //get a service type object by its ID (returns null if not found)
     public ServiceType getService(String serviceID){
-        extractDatabase();
+        readData();
 
         for(ServiceType service:servicetypes) {
             if(service.id.equals(serviceID)){
@@ -118,23 +120,11 @@ public class ServiceType {
         return servicetype;
     }
 
-    public void setServicetype(String servicetype) {
-        this.servicetype = servicetype;
-    }
-
     public String getRepalcedpart() {
         return repalcedpart;
     }
 
-    public void setRepalcedpart(String repalcedpart) {
-        this.repalcedpart = repalcedpart;
-    }
-
     public long getPrice() {
         return price;
-    }
-
-    public void setPrice(long price) {
-        this.price = price;
     }
 }
