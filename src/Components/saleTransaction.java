@@ -1,3 +1,12 @@
+/*
+  RMIT University Vietnam
+  Course: COSC2081 Programming 1
+  Semester: 2024B
+  Group Assignment
+  Author: Javalorant
+  ID: s3978862, s3975939, s3980424
+*/
+
 package Components;
 
 import Features.Features;
@@ -194,7 +203,7 @@ public class saleTransaction {
         for (saleTransaction transaction : transactions) {
             if(transaction.getTransactionDate().equals(transactionDate)) {
                 String priceFormat = String.format("%,d", transaction.getTotalAmount());
-                System.out.println(transaction.getId() +","+ transaction.getClientId() +","+ transaction.getSalespersonId() +","+ transaction.getCarId() +","+ transaction.getDiscount() +","+ priceFormat +"VND");
+                System.out.println(transaction.getId() +", "+ transaction.getClientId() +", "+ transaction.getSalespersonId() +", "+ transaction.getCarId() +", "+ transaction.getDiscount() +", "+ priceFormat +"VND");
             }
         }
     }
@@ -214,7 +223,7 @@ public class saleTransaction {
                 String month = matcher.group(2);
                 if(transactionMonth.equals(month)) {
                     String priceFormat = String.format("%,d", transaction.getTotalAmount());
-                    System.out.println(transaction.getId() +","+ transaction.getClientId() +","+ transaction.getSalespersonId() +","+ transaction.getCarId() +","+ transaction.getDiscount() +","+ priceFormat + "VND");
+                    System.out.println(transaction.getId() +", "+ transaction.getClientId() +", "+ transaction.getSalespersonId() +", "+ transaction.getCarId() +", "+ transaction.getDiscount() +", "+ priceFormat + "VND");
                 }
             }
         }
@@ -235,7 +244,7 @@ public class saleTransaction {
                 String year = matcher.group(3);
                 if (transactionYear.equals(year)) {
                     String priceFormat = String.format("%,d", transaction.getTotalAmount());
-                    System.out.println(transaction.getId() +","+ transaction.getClientId() +","+ transaction.getSalespersonId() +","+ transaction.getCarId() +","+ transaction.getDiscount() +","+ priceFormat +"VND");
+                    System.out.println(transaction.getId() +", "+ transaction.getClientId() +", "+ transaction.getSalespersonId() +", "+ transaction.getCarId() +", "+ transaction.getDiscount() +", "+ priceFormat +"VND");
                 }
             }
         }
