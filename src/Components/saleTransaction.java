@@ -36,72 +36,8 @@ public class saleTransaction {
         this.totalAmount = totalAmount;
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getTransactionDate() {
-        return transactionDate;
-    }
-
-    public void setTransactionDate(String transactionDate) {
-        this.transactionDate = transactionDate;
-    }
-
-    public String getClientId() {
-        return clientId;
-    }
-
-    public void setClientId(String clientId) {
-        this.clientId = clientId;
-    }
-
-    public String getCarId() {
-        return carId;
-    }
-
-    public void setCarId(String carId) {
-        this.carId = carId;
-    }
-
-    public String getAutoPartId() {
-        return autoPartId;
-    }
-
-    public void setAutoPartId(String autoPartId) {
-        this.autoPartId = autoPartId;
-    }
-
-    public String getSalespersonId() {
-        return salespersonId;
-    }
-
-    public void setSalespersonId(String salespersonId) {
-        this.salespersonId = salespersonId;
-    }
-
-    public String getDiscount() {
-        return discount;
-    }
-
-    public void setDiscount(String discount) {
-        this.discount = discount;
-    }
-
-    public long getTotalAmount() {
-        return totalAmount;
-    }
-
-    public void setTotalAmount(long totalAmount) {
-        this.totalAmount = totalAmount;
-    }
-
+    //extract data from database when there are updates and add object to arraylist
     public void readData() {
-
         int countLine = Features.countLine(transaction_data);
         String[] id = Features.ReadCol(0, transaction_data, ";");
         String[] transactionDate = Features.ReadCol(1, transaction_data, ";");
@@ -118,9 +54,8 @@ public class saleTransaction {
         }
     }
 
-
     //calculate total amount
-    public void calculateTotalAmount() {
+    public long calculateTotalAmount() {
         readData();
         long totalAmount = 0;
         for (saleTransaction transaction : transactions) {
@@ -128,10 +63,11 @@ public class saleTransaction {
         }
         String priceFormat = String.format("The transaction total amount is: %,d", totalAmount);
         System.out.println(priceFormat + " VND");
+        return totalAmount;
     }
 
     //calculate total amount on a specific date
-    public void calculateTotalAmountDate(String transactionDate) {
+    public long calculateTotalAmountDate(String transactionDate) {
         readData();
         long totalAmount = 0;
         for (saleTransaction transaction : transactions) {
@@ -141,10 +77,11 @@ public class saleTransaction {
         }
         String priceFormat = String.format("The transaction total amount is: %,d", totalAmount);
         System.out.println(priceFormat + " VND");
+        return totalAmount;
     }
 
     //calculate total amount in a month
-    public void calculateTotalAmountMonth(String transactionMonth) {
+    public long calculateTotalAmountMonth(String transactionMonth) {
         readData();
         long totalAmount = 0;
         String regex = "(\\d{2})-(\\d{2})-(\\d{4})";
@@ -161,6 +98,7 @@ public class saleTransaction {
         }
         String priceFormat = String.format("The transaction total amount is: %,d", totalAmount);
         System.out.println(priceFormat + " VND");
+        return totalAmount;
     }
 
     //calculate total amount in a year
@@ -238,6 +176,9 @@ public class saleTransaction {
         }
     }
 
+    //create an order for a client involving a car, an auto part, or both
+    //calculates the total order amount based on the client's membership discount, confirms the order,
+    //updates the car's status if applicable, and saves the transaction data to the file.
     public void createOrder(User client, Car car, AutoPart autoPart, String salespersonID) throws IOException {
         Scanner sc = new Scanner(System.in);
 
@@ -327,6 +268,20 @@ public class saleTransaction {
         Menu.ClientMenu();
     }
 
+    //calculate transaction amount of a salesperson
+    public void calculateAmountOfSalesperson(String salespersonID) throws IOException {
+        readData();
+        long salespersonAmount = 0;
+        for(saleTransaction saleTransactions: transactions) {
+            if(saleTransactions.getSalespersonId().equals(salespersonID)) {
+                salespersonAmount += saleTransactions.getTotalAmount();
+            }
+        }
+        String priceFormat = String.format("The total amount of this salesperson is: %,d", salespersonAmount);
+        System.out.println(priceFormat + " VND");
+    }
+
+    //get a saleTransaction object by its ID (returns null if not found)
     public saleTransaction getSaleTransaction(String id) {
         readData();
 
@@ -407,6 +362,39 @@ public class saleTransaction {
         }
     }
 
+    public String getId() {
+        return id;
+    }
 
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getTransactionDate() {
+        return transactionDate;
+    }
+
+    public String getClientId() {
+        return clientId;
+    }
+
+    public String getCarId() {
+        return carId;
+    }
+
+    public String getAutoPartId() {
+        return autoPartId;
+    }
+
+    public String getSalespersonId() {
+        return salespersonId;
+    }
+
+    public String getDiscount() {
+        return discount;
+    }
+
+    public long getTotalAmount() {
+        return totalAmount;
+    }
 }
-

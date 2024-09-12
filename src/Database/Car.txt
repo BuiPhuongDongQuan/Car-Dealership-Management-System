@@ -3,7 +3,7 @@ C1,Mercedes,EQSSedan,2025,5.009.000.000,Black,0km,Sold
 C2,Mercedes,S-Class,2018,5.039.000.000,Silver,102km,Sold
 C3,Mercedes,Maybach,2022,8.199.000.000,White,0km,Sold
 C4,Mercedes,GLC,2019,2.299.000.000,Blue,79km,Sold
-C5,Mercedes,G-Class,2023,11.750.000.000,Green,134km,Available
+C5,Mercedes,G-Class,2023,11.750.000.000,Green,134km,Sold
 C6,Porsche,718CaymanS,2020,3.199.000.000,Red,0km,Available
 C7,Porsche,718BoxsterS,2017,2.980.000.000,Yellow,265km,Available
 C8,Porsche,911CarreraCabriolet,2021,8.470.000.000,Black,200km,Available
@@ -21,6 +21,5 @@ C19,Roll-Royce,ContinentalGT,2014,10.941.000.000,Red,199km,Sold
 C20,Roll-Royce,MullinerBacalar,2024,47.256.040.000,Yellow,0km,Sold
 C21,Vinfast,VF3,2024,730.000.000,White,89km,Sold
 C22,Vinfast,VF5,2024,500.000.000,Blue,133km,Sold
-C23,Vinfast,VF7,2024,924.000.000,Red,210km,Sold
-C24,Vinfast,VF8,2024,1.220.000.000,Black,163km,Sold
-C25,Vinfast,VF9,2024,2.014.000.000,Silver,330km,Sold
+C23,Vinfast,VF6,2024,600.000.000,Red,100km,Available
+C24,Vinfast,VF5,2024,500.000.000,White,0km,Available

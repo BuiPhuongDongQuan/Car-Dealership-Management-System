@@ -39,9 +39,44 @@ public class Car {
 
     }
 
+    //extract data from database when there are updates and add object to arraylist
+    public void readData() {
+        // Empty the ArrayList to ensure no duplicate information
+        cars.clear();
+
+        int countLine = Features.countLine(car_data);
+        String[] id = Features.ReadCol(0, car_data, ",");
+        String[] make = Features.ReadCol(1, car_data, ",");
+        String[] model = Features.ReadCol(2, car_data, ",");
+        String[] year = Features.ReadCol(3, car_data, ",");
+        String[] price = Features.ReadCol(4, car_data, ",");
+        String[] color = Features.ReadCol(5, car_data, ",");
+        String[] mileage = Features.ReadCol(6, car_data, ",");
+        String[] status = Features.ReadCol(7, car_data, ",");
+
+        for (int i = 0; i < countLine - 1; i++) {
+            // Ensure correct parsing
+            String carId = id[i].trim();
+            String carMake = make[i].trim();
+            String carModel = model[i].trim();
+            int carYear = Integer.parseInt(year[i].trim());
+            long carPrice = Long.parseLong(price[i].trim().replace(".", ""));
+            String carColor = color[i].trim();
+
+            // Handle mileage properly
+            float carMileage = 0f;
+            if (!mileage[i].trim().equalsIgnoreCase("Available")) {
+                carMileage = Float.parseFloat(mileage[i].trim().replace("km", "").replace(",", "").trim());
+            }
+
+            String carStatus = status[i].trim();
+            cars.add(new Car(carId, carMake, carModel, carYear, carPrice, carColor, carMileage, carStatus));
+        }
+    }
+
     //view all car and sort by ascending or descending
     public void viewAllCarSort(String sortOrder){
-        extractDatabase();
+        readData();
 
         printCarDetailHeader();
 
@@ -80,9 +115,9 @@ public class Car {
         printTableBottomBorder();
     }
 
-    //view all car within specific category
+    //view all car within specific brand
     public void viewCarBrandSort(String category, String sortOrder) {
-        extractDatabase();
+        readData();
 
         ArrayList<Car> brandCar = new ArrayList<>();
 
@@ -129,7 +164,6 @@ public class Car {
         printTableBottomBorder();
     }
 
-
     //get all available category
     public String getCarBrandList(){
         String[] category = Features.ReadCol(1,car_data, ",");
@@ -145,8 +179,9 @@ public class Car {
         return list;
     }
 
+    //view all car within specific status
     public void viewCarStatusSort(String status, String sortOrder) {
-        extractDatabase();
+        readData();
 
         ArrayList<Car> statusCar = new ArrayList<>();
 
@@ -195,7 +230,7 @@ public class Car {
 
     //view car within a price range
     public void viewPriceRangeSort() {
-        extractDatabase();
+        readData();
 
         ArrayList<Car> priceRangeSort = new ArrayList<>();
         Scanner keyboard = new Scanner(System.in);
@@ -241,42 +276,6 @@ public class Car {
         }
     }
 
-
-    //extract data from database when there are updates and add object to arraylist
-    public void extractDatabase() {
-        // Empty the ArrayList to ensure no duplicate information
-        cars.clear();
-
-        int countLine = Features.countLine(car_data);
-        String[] id = Features.ReadCol(0, car_data, ",");
-        String[] make = Features.ReadCol(1, car_data, ",");
-        String[] model = Features.ReadCol(2, car_data, ",");
-        String[] year = Features.ReadCol(3, car_data, ",");
-        String[] price = Features.ReadCol(4, car_data, ",");
-        String[] color = Features.ReadCol(5, car_data, ",");
-        String[] mileage = Features.ReadCol(6, car_data, ",");
-        String[] status = Features.ReadCol(7, car_data, ",");
-
-        for (int i = 0; i < countLine - 1; i++) {
-            // Ensure correct parsing
-            String carId = id[i].trim();
-            String carMake = make[i].trim();
-            String carModel = model[i].trim();
-            int carYear = Integer.parseInt(year[i].trim());
-            long carPrice = Long.parseLong(price[i].trim().replace(".", ""));
-            String carColor = color[i].trim();
-
-            // Handle mileage properly
-            float carMileage = 0f;
-            if (!mileage[i].trim().equalsIgnoreCase("Available")) {
-                carMileage = Float.parseFloat(mileage[i].trim().replace("km", "").replace(",", "").trim());
-            }
-
-            String carStatus = status[i].trim();
-            cars.add(new Car(carId, carMake, carModel, carYear, carPrice, carColor, carMileage, carStatus));
-        }
-    }
-
     //print table header and top border
     public static void printCarDetailHeader(){
         System.out.println();
@@ -293,6 +292,7 @@ public class Car {
         printTableBottomBorder();
     }
 
+    //print table footer and bottom border
     public static void printTableBottomBorder(){
         for(int i = 0; i <=180;i++){
             System.out.print("-");
@@ -302,7 +302,7 @@ public class Car {
 
     //validate carID
     public boolean validateCarID(String carID){
-        extractDatabase();
+        readData();
         boolean validateCarID = false;
         for(Car car:cars) {
             if (car.getId().equals(carID)) {
@@ -314,7 +314,7 @@ public class Car {
 
     //display car info
     public void printCarInfo(String carID){
-        extractDatabase();
+        readData();
         for(Car car:cars){
             if(car.id.equals(carID)){
                 System.out.println("- CarID: " + car.id);
@@ -328,9 +328,9 @@ public class Car {
         }
     }
 
+    //get a Car object by its ID (returns null if not found)
     public Car getCar(String carID){
-        extractDatabase();
-
+        readData();
         for(Car car:cars){
             if(car.id.equals(carID)){
                 return car;
@@ -339,10 +339,12 @@ public class Car {
         return null;
     }
 
+    //check if the auto part is available for purchase
     public boolean isAvailable() {
         return "Available".equalsIgnoreCase(status);
     }
 
+    //update the status of a car in the database
     public static void updateCarStatusInDatabase(Car car) throws IOException {
         //
         List<String> lines = Files.readAllLines(Paths.get(car_data));
@@ -357,9 +359,9 @@ public class Car {
                 updatedLines.add(line);
             }
         }
-
         Files.write(Paths.get(car_data), updatedLines);
     }
+
 
     public String getId() {
         return id;
@@ -373,48 +375,24 @@ public class Car {
         return make;
     }
 
-    public void setMake(String make) {
-        this.make = make;
-    }
-
     public String getModel() {
         return model;
-    }
-
-    public void setModel(String model) {
-        this.model = model;
     }
 
     public int getYear() {
         return year;
     }
 
-    public void setYear(int year) {
-        this.year = year;
-    }
-
     public long getPrice() {
         return price;
-    }
-
-    public void setPrice(long price) {
-        this.price = price;
     }
 
     public String getColor() {
         return color;
     }
 
-    public void setColor(String color) {
-        this.color = color;
-    }
-
     public float getMileage() {
         return mileage;
-    }
-
-    public void setMileage(float mileage) {
-        this.mileage = mileage;
     }
 
     public String getStatus() {

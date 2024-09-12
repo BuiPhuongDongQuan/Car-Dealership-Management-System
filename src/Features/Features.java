@@ -50,6 +50,7 @@ public class Features {
         return colData.toArray(new String[0]);
     }
 
+    //writes a given string to a specified file path.
     public static void writeToFile(String filePath, String string){
         try{
             FileWriter fw = new FileWriter(filePath, true);
@@ -144,9 +145,48 @@ public class Features {
             e.printStackTrace();
         }
     }
+
+    //returns the current date as a string in the format "dd-MM-yyyy"
     public static String getDate(){
         String pattern = "dd-MM-yyyy";
         String dateInString = new SimpleDateFormat(pattern).format(new Date());
         return dateInString;
+    }
+
+    //remove specific line in database
+    //Source: https://www.youtube.com/watch?v=ij07fW5q4oo
+    public static void removeLine(String filepath, String deleteLine) {
+        String tempFile = "src/Database/temp.txt";
+        File oldFile = new File(filepath);
+        File newFile = new File(tempFile);
+
+        String currentLine;
+
+        try {
+            FileWriter fw = new FileWriter(tempFile, true);
+            BufferedWriter bw = new BufferedWriter(fw);
+            PrintWriter pw = new PrintWriter(bw);
+
+            FileReader fr = new FileReader(filepath);
+            BufferedReader br = new BufferedReader(fr);
+
+            while ((currentLine = br.readLine()) != null) {
+                if (!currentLine.trim().equals(deleteLine)) {
+                    pw.println(currentLine);
+                }
+            }
+            pw.flush();
+            pw.close();
+            fr.close();
+            br.close();
+            bw.close();
+            fw.close();
+
+            oldFile.delete();
+            File dump = new File(filepath);
+            newFile.renameTo(dump);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }
 }

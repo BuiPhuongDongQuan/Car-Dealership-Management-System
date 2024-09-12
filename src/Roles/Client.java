@@ -68,7 +68,7 @@ public class Client extends User {
     public void register(String fullName, String dateOfBirth, String address, String phoneNumber, String email, String username, String password) throws IOException {
         int countLine = Features.countLine(user_data);
         String id = "U" + countLine; // Generate a unique ID
-        String user_type = "Customer";
+        String user_type = "Client";
         String status = "Active";
         String membership = "Regular";
         long totalSpending = 0;
